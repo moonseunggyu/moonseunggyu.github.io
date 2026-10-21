@@ -27,6 +27,10 @@ img{-webkit-user-drag:none;user-select:none;-webkit-user-select:none}
     <a href="#top" onClick="{{ goTop }}" aria-label="처음으로" style="flex:1 0 220px;display:flex;align-items:center;min-height:48px;text-decoration:none">
       <dc-import name="LogoTomato" hint-size="210px,42px"></dc-import>
     </a>
+    <sc-if value="{{ showBurger }}" hint-placeholder-val="{{ false }}">
+      <button type="button" onClick="{{ toggleMenu }}" aria-label="{{ menuLabel }}" aria-expanded="{{ menuAria }}" aria-controls="mobile-menu" style="flex:0 0 auto;margin-left:auto;width:46px;height:46px;display:grid;place-items:center;padding:0;border-radius:14px;border:2px solid #1E1A26;background:{{ burgerBg }};color:{{ burgerFg }};box-shadow:3px 3px 0 #1E1A26;cursor:pointer;transition:background .2s,color .2s"><span style="font-family:'Material Symbols Rounded';font-weight:400;font-style:normal;line-height:1;letter-spacing:normal;text-transform:none;white-space:nowrap;font-variation-settings:'FILL' 1,'wght' 600;user-select:none;font-size:28px">{{ menuIcon }}</span></button>
+    </sc-if>
+    <sc-if value="{{ showNav }}" hint-placeholder-val="{{ true }}">
     <nav aria-label="주요 메뉴" style="flex:0 1 auto;margin-left:auto;min-width:0;max-width:100%;overflow-x:auto;scrollbar-width:none;padding:4px 0 6px">
       <div style="display:flex;gap:8px;width:max-content">
         <a href="#topic" onClick="{{ nav.topic.go }}" style="display:flex;align-items:center;gap:6px;height:40px;padding:0 16px 0 13px;border-radius:999px;border-width:1.5px;border-style:solid;border-color:{{ nav.topic.bd }};background:{{ nav.topic.bg }};color:{{ nav.topic.fg }};font-size:15px;font-weight:700;letter-spacing:-0.02em;white-space:nowrap;text-decoration:none;transition:background .2s,color .2s,border-color .2s" style-hover="border-color:#FF4A1C"><span style="font-family:'Material Symbols Rounded';font-weight:400;font-style:normal;line-height:1;letter-spacing:normal;text-transform:none;white-space:nowrap;font-variation-settings:'FILL' 1,'wght' 500;user-select:none;font-size:19px">lightbulb</span>공모주제</a>
@@ -35,8 +39,20 @@ img{-webkit-user-drag:none;user-select:none;-webkit-user-select:none}
         <a href="#notice" onClick="{{ nav.notice.go }}" style="display:flex;align-items:center;gap:6px;height:40px;padding:0 16px 0 13px;border-radius:999px;border-width:1.5px;border-style:solid;border-color:{{ nav.notice.bd }};background:{{ nav.notice.bg }};color:{{ nav.notice.fg }};font-size:15px;font-weight:700;letter-spacing:-0.02em;white-space:nowrap;text-decoration:none;transition:background .2s,color .2s,border-color .2s" style-hover="border-color:#FF4A1C"><span style="font-family:'Material Symbols Rounded';font-weight:400;font-style:normal;line-height:1;letter-spacing:normal;text-transform:none;white-space:nowrap;font-variation-settings:'FILL' 1,'wght' 500;user-select:none;font-size:19px">priority_high</span>유의사항</a>
       </div>
     </nav>
+    </sc-if>
   </div>
 </header>
+<sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+  <div onClick="{{ closeMenu }}" style="position:fixed;left:0;right:0;bottom:0;top:{{ gnbH }};z-index:45;background:rgba(30,26,38,.45)">
+    <nav id="mobile-menu" aria-label="모바일 메뉴" onClick="{{ stop }}" style="display:flex;flex-direction:column;gap:10px;padding:18px 20px 24px;background:#FFF4E8;border-bottom:2.5px solid #1E1A26;border-radius:0 0 28px 28px;box-shadow:0 6px 0 #1E1A26">
+      <a href="#topic" onClick="{{ nav.topic.mgo }}" style="display:flex;align-items:center;gap:12px;height:58px;padding:0 16px 0 18px;border-radius:18px;border:2px solid {{ nav.topic.mbd }};background:{{ nav.topic.bg }};color:{{ nav.topic.fg }};font-size:18px;font-weight:800;letter-spacing:-0.02em;white-space:nowrap;text-decoration:none"><span style="font-family:'Material Symbols Rounded';font-weight:400;font-style:normal;line-height:1;letter-spacing:normal;text-transform:none;white-space:nowrap;font-variation-settings:'FILL' 1,'wght' 500;user-select:none;font-size:24px">lightbulb</span>공모주제<span style="margin-left:auto;font-family:'Material Symbols Rounded';font-weight:400;font-style:normal;line-height:1;letter-spacing:normal;text-transform:none;white-space:nowrap;user-select:none;font-size:22px;opacity:.5">chevron_right</span></a>
+      <a href="#info" onClick="{{ nav.info.mgo }}" style="display:flex;align-items:center;gap:12px;height:58px;padding:0 16px 0 18px;border-radius:18px;border:2px solid {{ nav.info.mbd }};background:{{ nav.info.bg }};color:{{ nav.info.fg }};font-size:18px;font-weight:800;letter-spacing:-0.02em;white-space:nowrap;text-decoration:none"><span style="font-family:'Material Symbols Rounded';font-weight:400;font-style:normal;line-height:1;letter-spacing:normal;text-transform:none;white-space:nowrap;font-variation-settings:'FILL' 1,'wght' 500;user-select:none;font-size:24px">event_note</span>공모안내<span style="margin-left:auto;font-family:'Material Symbols Rounded';font-weight:400;font-style:normal;line-height:1;letter-spacing:normal;text-transform:none;white-space:nowrap;user-select:none;font-size:22px;opacity:.5">chevron_right</span></a>
+      <a href="#award" onClick="{{ nav.award.mgo }}" style="display:flex;align-items:center;gap:12px;height:58px;padding:0 16px 0 18px;border-radius:18px;border:2px solid {{ nav.award.mbd }};background:{{ nav.award.bg }};color:{{ nav.award.fg }};font-size:18px;font-weight:800;letter-spacing:-0.02em;white-space:nowrap;text-decoration:none"><span style="font-family:'Material Symbols Rounded';font-weight:400;font-style:normal;line-height:1;letter-spacing:normal;text-transform:none;white-space:nowrap;font-variation-settings:'FILL' 1,'wght' 500;user-select:none;font-size:24px">emoji_events</span>시상 안내<span style="margin-left:auto;font-family:'Material Symbols Rounded';font-weight:400;font-style:normal;line-height:1;letter-spacing:normal;text-transform:none;white-space:nowrap;user-select:none;font-size:22px;opacity:.5">chevron_right</span></a>
+      <a href="#notice" onClick="{{ nav.notice.mgo }}" style="display:flex;align-items:center;gap:12px;height:58px;padding:0 16px 0 18px;border-radius:18px;border:2px solid {{ nav.notice.mbd }};background:{{ nav.notice.bg }};color:{{ nav.notice.fg }};font-size:18px;font-weight:800;letter-spacing:-0.02em;white-space:nowrap;text-decoration:none"><span style="font-family:'Material Symbols Rounded';font-weight:400;font-style:normal;line-height:1;letter-spacing:normal;text-transform:none;white-space:nowrap;font-variation-settings:'FILL' 1,'wght' 500;user-select:none;font-size:24px">priority_high</span>유의사항<span style="margin-left:auto;font-family:'Material Symbols Rounded';font-weight:400;font-style:normal;line-height:1;letter-spacing:normal;text-transform:none;white-space:nowrap;user-select:none;font-size:22px;opacity:.5">chevron_right</span></a>
+      <a href="#apply" onClick="{{ menuApply }}" style="margin-top:8px;display:flex;align-items:center;justify-content:center;gap:8px;height:58px;border-radius:999px;background:#FF4A1C;color:#FFFFFF;border:2.5px solid #1E1A26;box-shadow:0 5px 0 #1E1A26;font-size:19px;font-weight:800;letter-spacing:-0.02em;text-decoration:none"><span style="font-family:'Material Symbols Rounded';font-weight:400;font-style:normal;line-height:1;letter-spacing:normal;text-transform:none;white-space:nowrap;font-variation-settings:'FILL' 1,'wght' 500;user-select:none;font-size:28px">edit_note</span>공모전 접수하기</a>
+    </nav>
+  </div>
+</sc-if>
 <div aria-hidden="true" style="height:{{ gnbH }}"></div>
 
 <main>
@@ -65,7 +81,7 @@ img{-webkit-user-drag:none;user-select:none;-webkit-user-select:none}
 
   <div style="position:relative;z-index:2;max-width:880px;margin:0 auto;display:flex;flex-direction:column;align-items:center;text-align:center">
     <p style="display:flex;align-items:center;justify-content:center;gap:8px;margin:0 0 22px;font-size:clamp(13px,1.6vw,15px);font-weight:700;color:#423A40;letter-spacing:-0.01em;text-wrap:balance">2026 EBS 자기주도학습센터 우수 수기 공모전</p>
-    <h1 style="margin:48px 0 0;font-size:clamp(30px,7vw,76px);white-space:nowrap;font-weight:900;line-height:1.14;letter-spacing:-0.05em;color:#1E1A26">
+    <h1 style="margin:48px 0 0;font-size:{{ h1Fs }};white-space:nowrap;font-weight:900;line-height:1.14;letter-spacing:-0.05em;color:#1E1A26;display:flex;flex-direction:{{ h1Dir }};align-items:center;justify-content:center;column-gap:.26em;row-gap:.06em">
       <span style="position:relative;display:inline-block">오늘의 나,<span data-th="sticker" style="position:absolute;left:-0.25em;bottom:calc(100% + 8px);transform:rotate(-5deg);display:flex;align-items:center;gap:5px;padding:7px 14px 7px 11px;border-radius:999px;background:#FFC024;border:2.5px solid #1E1A26;box-shadow:3px 3px 0 #1E1A26;font-size:clamp(13px,1.5vw,16px);font-weight:800;letter-spacing:-0.02em;line-height:1;color:#1E1A26;white-space:nowrap"><span style="font-family:'Material Symbols Rounded';font-weight:400;font-style:normal;line-height:1;letter-spacing:normal;text-transform:none;white-space:nowrap;font-variation-settings:'FILL' 1,'wght' 600;user-select:none;font-size:1.15em">{{ statusIcon }}</span>12.1(화) ~ 12.30(수)</span></span> 
       <span style="position:relative;display:inline-block;background-image:linear-gradient(transparent 58%, #FFCBB5 58%, #FFCBB5 94%, transparent 94%);padding:0 .06em">내일의 꿈<svg aria-hidden="true" viewBox="0 0 300 24" style="position:absolute;left:-2%;bottom:-.3em;width:104%;height:auto;overflow:visible"><path data-draw="" d="M4 14 C 50 4, 100 22, 150 12 S 250 4, 296 14" style="fill:none;stroke:#2448E0;stroke-width:5;stroke-linecap:round"></path></svg><svg aria-hidden="true" viewBox="0 0 100 87" style="position:absolute;left:calc(100% + .08em);top:-.2em;width:.9em;height:.78em;overflow:visible;pointer-events:none"><path data-trail="" d="M2 84 C 30 82, 50 70, 52 48 S 62 14, 92 10" style="fill:none;stroke:#1E1A26;stroke-width:4.2;stroke-linecap:round"></path></svg><img data-plane="" src="assets/illust/t/plane.png" alt="" draggable="false" style="position:absolute;left:calc(100% + .75em);top:-.65em;width:1.1em;height:auto;pointer-events:none;user-select:none"></span>
     </h1>
@@ -253,28 +269,28 @@ img{-webkit-user-drag:none;user-select:none;-webkit-user-select:none}
 
     <div data-reveal="" style="margin:clamp(40px,6vw,60px) auto 0;max-width:880px">
       <div role="table" aria-label="등급별 시상 내역" style="border:1.5px solid rgba(255,244,232,.24);border-radius:24px;overflow:hidden;background:#18265E">
-        <div role="row" style="display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,.8fr) minmax(0,1fr) minmax(0,1.05fr);background:rgba(0,0,0,.16);font-size:clamp(12.5px,1.5vw,14px);font-weight:700;color:#FFC024">
-          <span role="columnheader" style="padding:14px clamp(10px,2.4vw,28px)">구분</span><span role="columnheader" style="padding:14px 6px;text-align:center">인원</span><span role="columnheader" style="padding:14px 6px;text-align:right">상금</span><span role="columnheader" style="padding:14px clamp(10px,2.4vw,28px) 14px 6px;text-align:right">총 상금</span>
+        <div role="row" style="display:grid;grid-template-columns:{{ tblCols }};background:rgba(0,0,0,.16);font-size:clamp(12.5px,1.5vw,14px);font-weight:700;color:#FFC024">
+          <span role="columnheader" style="padding:14px clamp(10px,2.4vw,28px)">구분</span><span role="columnheader" style="padding:14px 6px;text-align:center;white-space:nowrap">인원<sc-if value="{{ mobile }}" hint-placeholder-val="{{ false }}"> × 상금</sc-if></span><span role="columnheader" style="display:{{ tblPrize }};padding:14px 6px;text-align:right">상금</span><span role="columnheader" style="padding:14px clamp(10px,2.4vw,28px) 14px 6px;text-align:right;white-space:nowrap">총 상금</span>
         </div>
-        <div role="row" style="display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,.8fr) minmax(0,1fr) minmax(0,1.05fr);align-items:center;border-top:1px solid rgba(255,244,232,.14);font-size:clamp(14px,1.9vw,18px)">
+        <div role="row" style="display:grid;grid-template-columns:{{ tblCols }};align-items:center;border-top:1px solid rgba(255,244,232,.14);font-size:clamp(14px,1.9vw,18px)">
           <span role="cell" style="display:flex;align-items:center;gap:clamp(6px,1.2vw,12px);padding:clamp(14px,2vw,20px) clamp(10px,2.4vw,28px);font-weight:800"><span style="flex:0 0 auto;width:clamp(28px,3.4vw,38px);height:clamp(28px,3.4vw,38px);display:grid;place-items:center;border-radius:50%;background:#FFC024"><span style="font-family:'Material Symbols Rounded';font-weight:400;font-style:normal;line-height:1;letter-spacing:normal;text-transform:none;white-space:nowrap;font-variation-settings:'FILL' 1,'wght' 500;user-select:none;font-size:clamp(17px,2vw,22px);color:#101B47">emoji_events</span></span>대상</span>
-          <span role="cell" style="padding:0 6px;text-align:center;color:#DADDEB">1명</span><span role="cell" style="padding:0 6px;text-align:right;font-weight:700">500만 원</span><span role="cell" style="padding:0 clamp(10px,2.4vw,28px) 0 6px;text-align:right;font-weight:800;color:#FFC024">500만 원</span>
+          <span role="cell" style="padding:0 6px;text-align:center;color:#DADDEB;white-space:nowrap">1명<sc-if value="{{ mobile }}" hint-placeholder-val="{{ false }}"><span style="color:#8E95B5"> × </span>500만</sc-if></span><span role="cell" style="display:{{ tblPrize }};padding:0 6px;text-align:right;font-weight:700">500만 원</span><span role="cell" style="padding:0 clamp(10px,2.4vw,28px) 0 6px;text-align:right;font-weight:800;color:#FFC024;white-space:nowrap">500만 원</span>
         </div>
-        <div role="row" style="display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,.8fr) minmax(0,1fr) minmax(0,1.05fr);align-items:center;border-top:1px solid rgba(255,244,232,.14);font-size:clamp(14px,1.9vw,18px)">
+        <div role="row" style="display:grid;grid-template-columns:{{ tblCols }};align-items:center;border-top:1px solid rgba(255,244,232,.14);font-size:clamp(14px,1.9vw,18px)">
           <span role="cell" style="display:flex;align-items:center;gap:clamp(6px,1.2vw,12px);padding:clamp(14px,2vw,20px) clamp(10px,2.4vw,28px);font-weight:800"><span style="flex:0 0 auto;width:clamp(28px,3.4vw,38px);height:clamp(28px,3.4vw,38px);display:grid;place-items:center;border-radius:50%;background:rgba(255,192,36,.18)"><span style="font-family:'Material Symbols Rounded';font-weight:400;font-style:normal;line-height:1;letter-spacing:normal;text-transform:none;white-space:nowrap;font-variation-settings:'FILL' 1,'wght' 500;user-select:none;font-size:clamp(17px,2vw,22px);color:#FFC024">workspace_premium</span></span>최우수상</span>
-          <span role="cell" style="padding:0 6px;text-align:center;color:#DADDEB">2명</span><span role="cell" style="padding:0 6px;text-align:right;font-weight:700">250만 원</span><span role="cell" style="padding:0 clamp(10px,2.4vw,28px) 0 6px;text-align:right;font-weight:800;color:#FFC024">500만 원</span>
+          <span role="cell" style="padding:0 6px;text-align:center;color:#DADDEB;white-space:nowrap">2명<sc-if value="{{ mobile }}" hint-placeholder-val="{{ false }}"><span style="color:#8E95B5"> × </span>250만</sc-if></span><span role="cell" style="display:{{ tblPrize }};padding:0 6px;text-align:right;font-weight:700">250만 원</span><span role="cell" style="padding:0 clamp(10px,2.4vw,28px) 0 6px;text-align:right;font-weight:800;color:#FFC024;white-space:nowrap">500만 원</span>
         </div>
-        <div role="row" style="display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,.8fr) minmax(0,1fr) minmax(0,1.05fr);align-items:center;border-top:1px solid rgba(255,244,232,.14);font-size:clamp(14px,1.9vw,18px)">
+        <div role="row" style="display:grid;grid-template-columns:{{ tblCols }};align-items:center;border-top:1px solid rgba(255,244,232,.14);font-size:clamp(14px,1.9vw,18px)">
           <span role="cell" style="display:flex;align-items:center;gap:clamp(6px,1.2vw,12px);padding:clamp(14px,2vw,20px) clamp(10px,2.4vw,28px);font-weight:800"><span style="flex:0 0 auto;width:clamp(28px,3.4vw,38px);height:clamp(28px,3.4vw,38px);display:grid;place-items:center;border-radius:50%;background:rgba(255,192,36,.18)"><span style="font-family:'Material Symbols Rounded';font-weight:400;font-style:normal;line-height:1;letter-spacing:normal;text-transform:none;white-space:nowrap;font-variation-settings:'FILL' 1,'wght' 500;user-select:none;font-size:clamp(17px,2vw,22px);color:#FFC024">military_tech</span></span>우수상</span>
-          <span role="cell" style="padding:0 6px;text-align:center;color:#DADDEB">5명</span><span role="cell" style="padding:0 6px;text-align:right;font-weight:700">100만 원</span><span role="cell" style="padding:0 clamp(10px,2.4vw,28px) 0 6px;text-align:right;font-weight:800;color:#FFC024">500만 원</span>
+          <span role="cell" style="padding:0 6px;text-align:center;color:#DADDEB;white-space:nowrap">5명<sc-if value="{{ mobile }}" hint-placeholder-val="{{ false }}"><span style="color:#8E95B5"> × </span>100만</sc-if></span><span role="cell" style="display:{{ tblPrize }};padding:0 6px;text-align:right;font-weight:700">100만 원</span><span role="cell" style="padding:0 clamp(10px,2.4vw,28px) 0 6px;text-align:right;font-weight:800;color:#FFC024;white-space:nowrap">500만 원</span>
         </div>
-        <div role="row" style="display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,.8fr) minmax(0,1fr) minmax(0,1.05fr);align-items:center;border-top:1px solid rgba(255,244,232,.14);font-size:clamp(14px,1.9vw,18px)">
+        <div role="row" style="display:grid;grid-template-columns:{{ tblCols }};align-items:center;border-top:1px solid rgba(255,244,232,.14);font-size:clamp(14px,1.9vw,18px)">
           <span role="cell" style="display:flex;align-items:center;gap:clamp(6px,1.2vw,12px);padding:clamp(14px,2vw,20px) clamp(10px,2.4vw,28px);font-weight:800"><span style="flex:0 0 auto;width:clamp(28px,3.4vw,38px);height:clamp(28px,3.4vw,38px);display:grid;place-items:center;border-radius:50%;background:rgba(255,192,36,.18)"><span style="font-family:'Material Symbols Rounded';font-weight:400;font-style:normal;line-height:1;letter-spacing:normal;text-transform:none;white-space:nowrap;font-variation-settings:'FILL' 1,'wght' 500;user-select:none;font-size:clamp(17px,2vw,22px);color:#FFC024">star</span></span>장려상</span>
-          <span role="cell" style="padding:0 6px;text-align:center;color:#DADDEB">30명</span><span role="cell" style="padding:0 6px;text-align:right;font-weight:700">50만 원</span><span role="cell" style="padding:0 clamp(10px,2.4vw,28px) 0 6px;text-align:right;font-weight:800;color:#FFC024">1,500만 원</span>
+          <span role="cell" style="padding:0 6px;text-align:center;color:#DADDEB;white-space:nowrap">30명<sc-if value="{{ mobile }}" hint-placeholder-val="{{ false }}"><span style="color:#8E95B5"> × </span>50만</sc-if></span><span role="cell" style="display:{{ tblPrize }};padding:0 6px;text-align:right;font-weight:700">50만 원</span><span role="cell" style="padding:0 clamp(10px,2.4vw,28px) 0 6px;text-align:right;font-weight:800;color:#FFC024;white-space:nowrap">1,500만 원</span>
         </div>
-        <div role="row" style="display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,.8fr) minmax(0,1fr) minmax(0,1.05fr);align-items:center;border-top:1.5px dashed rgba(255,192,36,.4);background:rgba(255,192,36,.08);font-size:clamp(14px,1.9vw,18px)">
+        <div role="row" style="display:grid;grid-template-columns:{{ tblCols }};align-items:center;border-top:1.5px dashed rgba(255,192,36,.4);background:rgba(255,192,36,.08);font-size:clamp(14px,1.9vw,18px)">
           <span role="cell" style="padding:clamp(14px,2vw,20px) clamp(10px,2.4vw,28px);font-weight:800;color:#FFC024">합계</span>
-          <span role="cell" style="padding:0 6px;text-align:center;font-weight:800">38명</span><span role="cell" style="padding:0 6px;text-align:right;color:#C6CBE0">–</span><span role="cell" style="padding:0 clamp(10px,2.4vw,28px) 0 6px;text-align:right;font-weight:900;color:#FFF4E8">3,000만 원</span>
+          <span role="cell" style="padding:0 6px;text-align:center;font-weight:800">38명</span><span role="cell" style="display:{{ tblPrize }};padding:0 6px;text-align:right;color:#C6CBE0">–</span><span role="cell" style="padding:0 clamp(10px,2.4vw,28px) 0 6px;text-align:right;font-weight:900;color:#FFF4E8;white-space:nowrap">3,000만 원</span>
         </div>
       </div>
       <p style="display:flex;align-items:flex-start;gap:6px;margin:14px 4px 0;font-size:14px;line-height:1.55;color:#C6CBE0"><span style="font-family:'Material Symbols Rounded';font-weight:400;font-style:normal;line-height:1;letter-spacing:normal;text-transform:none;white-space:nowrap;font-variation-settings:'FILL' 1,'wght' 500;user-select:none;font-size:18px;margin-top:1px">info</span>상금 및 경품 가액에 따른 제세공과금(22%)은 수상자 본인 부담입니다.</p>
@@ -609,7 +625,7 @@ const MUTED = '#948B89', INK = '#1E1A26', LINE = '#D9D4C6', ERR = '#C2412A', GRE
 
 class Component extends DCLogic {
   state = {
-    wide: true, active: '', ctaHidden: true,
+    wide: true, mobile: false, menuOpen: false, active: '', ctaHidden: true,
     f: { name: '', grade: '', school: '', region: '', center: '', year: '', month: '', gName: '', gPhone: '' },
     agree: { a: false, b: false, c: false },
     privacyOpen: false, file: null, fileErr: '', drag: false, tried: false, done: false,
@@ -617,9 +633,16 @@ class Component extends DCLogic {
   fileRef = React.createRef();
 
   componentDidMount() {
-    this.onResize = () => { const w = window.innerWidth >= 1024; if (w !== this.state.wide) this.setState({ wide: w }); };
+    this.onResize = () => {
+      const w = window.innerWidth >= 1024, m = window.innerWidth < 768;
+      if (w !== this.state.wide || m !== this.state.mobile) this.setState(st => ({ wide: w, mobile: m, menuOpen: m ? st.menuOpen : false }));
+    };
     this.onScroll = () => { if (this.raf) return; this.raf = requestAnimationFrame(() => { this.raf = 0; this.track(); }); };
-    this.onKey = e => { if (e.key === 'Escape' && this.state.done) this.setState({ done: false }); };
+    this.onKey = e => {
+      if (e.key !== 'Escape') return;
+      if (this.state.done) this.setState({ done: false });
+      else if (this.state.menuOpen) this.setState({ menuOpen: false });
+    };
     window.addEventListener('resize', this.onResize);
     window.addEventListener('scroll', this.onScroll, { passive: true });
     window.addEventListener('keydown', this.onKey);
@@ -636,6 +659,7 @@ class Component extends DCLogic {
     window.addEventListener('load', this.onLoad);
   }
   componentDidUpdate() {
+    document.documentElement.style.overflow = this.state.menuOpen ? 'hidden' : '';
     document.querySelectorAll('img:not([draggable])').forEach(i => i.setAttribute('draggable', 'false'));
     this.drawBubbles && this.drawBubbles();
     requestAnimationFrame(() => this.drawBubbles && this.drawBubbles());
@@ -671,6 +695,7 @@ class Component extends DCLogic {
     window.removeEventListener('scroll', this.onScroll);
     window.removeEventListener('keydown', this.onKey);
     window.removeEventListener('load', this.onLoad);
+    document.documentElement.style.overflow = '';
     if (this.io) this.io.disconnect();
     if (this.dio) this.dio.disconnect();
     if (this.ro) this.ro.disconnect();
@@ -690,6 +715,9 @@ class Component extends DCLogic {
     const el = document.getElementById(id); if (!el) return;
     const y = el.getBoundingClientRect().top + window.scrollY - this.headerH() + 1;
     window.scrollTo({ top: Math.max(0, y), behavior: this.motionOn() ? 'smooth' : 'auto' });
+  }
+  closeMenuThen(fn) {
+    this.setState({ menuOpen: false }, () => { document.documentElement.style.overflow = ''; fn && fn(); });
   }
   scrollToField(id) {
     const el = document.getElementById(id); if (!el) return;
@@ -836,8 +864,13 @@ class Component extends DCLogic {
     const nav = {};
     ['topic', 'info', 'award', 'notice'].forEach(id => {
       const on = s.active === id;
-      nav[id] = { bg: on ? GREEN : '#FFFFFF', fg: on ? '#FFFFFF' : INK, bd: on ? GREEN : '#EADDD2', go: e => { e.preventDefault(); this.scrollToId(id); } };
+      nav[id] = {
+        bg: on ? GREEN : '#FFFFFF', fg: on ? '#FFFFFF' : INK, bd: on ? GREEN : '#EADDD2', mbd: on ? INK : '#EADDD2',
+        go: e => { e.preventDefault(); this.scrollToId(id); },
+        mgo: e => { e.preventDefault(); this.closeMenuThen(() => this.scrollToId(id)); },
+      };
     });
+    const mob = s.mobile;
 
     const all = this.errors();
     const e = s.tried ? { ...all } : {};
@@ -887,9 +920,18 @@ class Component extends DCLogic {
       heroSide: s.wide, heroStack: !s.wide,
       showWideObjects: fo && s.wide, showNarrowObjects: fo && !s.wide,
       nav,
-      goTop: ev => { ev.preventDefault(); window.scrollTo({ top: 0, behavior: this.motionOn() ? 'smooth' : 'auto' }); },
+      mobile: mob, showNav: !mob, showBurger: mob, menuOpen: mob && s.menuOpen,
+      menuIcon: s.menuOpen ? 'close' : 'menu', menuLabel: s.menuOpen ? '메뉴 닫기' : '메뉴 열기', menuAria: s.menuOpen ? 'true' : 'false',
+      burgerBg: s.menuOpen ? INK : '#FFFFFF', burgerFg: s.menuOpen ? '#FFFFFF' : INK,
+      toggleMenu: () => this.setState(st => ({ menuOpen: !st.menuOpen })),
+      closeMenu: () => this.setState({ menuOpen: false }),
+      menuApply: ev => { ev.preventDefault(); this.closeMenuThen(() => this.scrollToId('apply')); },
+      h1Fs: mob ? 'clamp(38px,11.2vw,48px)' : 'clamp(30px,7vw,76px)', h1Dir: mob ? 'column' : 'row',
+      tblCols: mob ? 'minmax(0,1.15fr) minmax(0,1.25fr) minmax(0,1fr)' : 'minmax(0,1.5fr) minmax(0,.8fr) minmax(0,1fr) minmax(0,1.05fr)',
+      tblPrize: mob ? 'none' : 'block',
+      goTop: ev => { ev.preventDefault(); this.closeMenuThen(() => window.scrollTo({ top: 0, behavior: this.motionOn() ? 'smooth' : 'auto' })); },
       goApply: ev => { ev.preventDefault(); this.scrollToId('apply'); },
-      cta: { op: s.ctaHidden ? 0 : 1, ty: s.ctaHidden ? '0 24px' : '0 0', pe: s.ctaHidden ? 'none' : 'auto' },
+      cta: (() => { const hide = s.ctaHidden || (mob && s.menuOpen); return { op: hide ? 0 : 1, ty: hide ? '0 24px' : '0 0', pe: hide ? 'none' : 'auto' }; })(),
 
       f, on, e, eOn, bd, sc,
       hintOn: { start: !eOn.start, gPhone: !eOn.gPhone },
