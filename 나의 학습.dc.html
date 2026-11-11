@@ -144,13 +144,13 @@ a:hover { color: #1438A6; }
     <section data-screen-label="출석 관리" style="display:flex;flex-direction:column;gap:16px">
       <p style="margin:0;font-size:15px;line-height:24px;color:#4A5260">과정을 누르면 과정별 출결 내역을 볼 수 있어요.</p>
       <div style="overflow-x:auto">
-      <div style="border-top:2px solid #2A2A2A;min-width:900px">
-        <div aria-hidden="true" style="display:grid;grid-template-columns:64px minmax(200px,1fr) 176px 96px 272px 112px;align-items:center;height:52px;padding:0 4px;background-color:#EEF0F3;border-bottom:1px solid #D5DAE1;font-size:15px;font-weight:600;color:#2A2A2A">
-          <span style="text-align:center">구분</span><span style="padding-left:16px">과정명</span><span style="text-align:center">교육 기간</span><span style="text-align:center">진행</span><span style="padding-left:16px">출결 현황</span><span style="text-align:center">출결 상세</span>
+      <div style="border-top:2px solid #2A2A2A;min-width:800px">
+        <div aria-hidden="true" style="display:grid;grid-template-columns:64px minmax(200px,1fr) 176px 96px 272px;align-items:center;height:52px;padding:0 4px;background-color:#EEF0F3;border-bottom:1px solid #D5DAE1;font-size:15px;font-weight:600;color:#2A2A2A">
+          <span style="text-align:center">구분</span><span style="padding-left:16px">과정명</span><span style="text-align:center">교육 기간</span><span style="text-align:center">진행</span><span style="padding-left:16px">출결 현황</span>
         </div>
         <ul style="list-style:none;margin:0;padding:0">
           <sc-for list="{{ attCourses }}" as="c" hint-placeholder-count="5">
-            <li onClick="{{ c.open }}" style="display:grid;grid-template-columns:64px minmax(200px,1fr) 176px 96px 272px 112px;align-items:center;min-height:72px;padding:12px 4px;background:{{ c.bg }};border-bottom:1px solid #D5DAE1;color:#2A2A2A;cursor:pointer" style-hover="color:#1A47D1">
+            <li onClick="{{ c.open }}" style="display:grid;grid-template-columns:64px minmax(200px,1fr) 176px 96px 272px;align-items:center;min-height:72px;padding:12px 4px;background:{{ c.bg }};border-bottom:1px solid #D5DAE1;color:#2A2A2A;cursor:pointer" style-hover="color:#1A47D1">
               <span style="display:flex;justify-content:center"><x-import component-from-global-scope="Sangsang.TypeTag" type="{{ c.type }}" size="sm" hint-size="40px,20px"></x-import></span>
               <span style="padding-left:16px;min-width:0;display:flex;flex-direction:column">
                 <span style="min-width:0;max-width:100%;font-size:17px;line-height:26px;font-weight:600;color:inherit;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ c.title }}</span>
@@ -162,9 +162,6 @@ a:hover { color: #1438A6; }
                 <sc-for list="{{ c.counts }}" as="k" hint-placeholder-count="4">
                   <x-import component-from-global-scope="Sangsang.Badge" tone="{{ k.tone }}" size="sm" hint-size="52px,20px">{{ k.text }}</x-import>
                 </sc-for>
-              </span>
-              <span style="display:flex;justify-content:center">
-                <button type="button" onClick="{{ c.openBtn }}" aria-label="{{ c.openLabel }}" style="height:32px;padding:0 8px 0 12px;border:1px solid #C4CBD6;border-radius:6px;background:#FFFFFF;font:inherit;font-size:14px;font-weight:500;color:#2A2A2A;display:flex;align-items:center;gap:2px;cursor:pointer" style-hover="border-color:#2A2A2A">보기<x-import component-from-global-scope="Sangsang.Icon" name="chevron-right" size="{{ 16 }}" hint-size="16px,16px"></x-import></button>
               </span>
             </li>
           </sc-for>
@@ -913,8 +910,7 @@ const CERTS = [
 const NOTES = [
   { id: 1, title: '「신임 리더 코칭 스킬」 수강 신청이 승인됐어요', date: '2026.11.03', time: '2026.11.03 14:20', unread: true,
     paras: ['신청하신 과정이 승인됐어요. 나의 강의실에서 바로 학습을 시작할 수 있어요.'],
-    info: [['과정명', '신임 리더 코칭 스킬'], ['학습 기간', '2026.09.01 – 11.30'], ['승인자', '박지훈 팀장']],
-    action: { label: '강의실로 가기', tab: 'classroom' } },
+    info: [['과정명', '신임 리더 코칭 스킬'], ['학습 기간', '2026.09.01 – 11.30'], ['승인자', '박지훈 팀장']] },
   { id: 2, title: '외부교육 · 자격 「산업안전기사」 등록이 반려됐어요', date: '2026.09.24', time: '2026.09.24 10:05', unread: true,
     paras: ['등록하신 자격증이 반려됐어요. 아래 사유를 확인하고 다시 신청해 주세요.'],
     info: [['자격증명', '산업안전기사'], ['반려 사유', '자격증 사본의 성명과 자격증 번호가 가려져 있어요.']],
@@ -929,12 +925,10 @@ const NOTES = [
     action: { label: '등록 내역 보기', tab: 'external', extId: 3 } },
   { id: 5, title: '「문제 해결 사고법」 과정이 미이수로 종료됐어요', date: '2026.09.01', time: '2026.09.01 09:00', unread: false,
     paras: ['학습 기간이 끝나 과정이 종료됐어요. 진도율 미달로 미이수 처리됐어요.', '다음 차수가 열리면 다시 신청할 수 있어요.'],
-    info: [['과정명', '문제 해결 사고법'], ['진도율', '45% / 80%']],
-    action: { label: '강의실로 가기', tab: 'classroom' } },
+    info: [['과정명', '문제 해결 사고법'], ['진도율', '45% / 80%']] },
   { id: 6, title: '「반도체 8대 공정 이해」 과정이 배정됐어요', date: '2026.10.01', time: '2026.10.01 09:00', unread: false,
     paras: ['소속 팀 필수 교육으로 과정이 배정됐어요. 나의 강의실에서 바로 학습할 수 있어요.'],
-    info: [['과정명', '반도체 8대 공정 이해'], ['학습 기간', '2026.10.01 – 12.31']],
-    action: { label: '강의실로 가기', tab: 'classroom' }, from: '반도체사업부' },
+    info: [['과정명', '반도체 8대 공정 이해'], ['학습 기간', '2026.10.01 – 12.31']], from: '반도체사업부' },
   { id: 7, title: '「2026 상반기 정보보안 교육」 수료증이 발급됐어요', date: '2026.05.22', time: '2026.05.22 17:40', unread: false,
     paras: ['과정을 수료해서 수료증이 발급됐어요. 수료증 · 배지에서 내려받을 수 있어요.'],
     info: [['과정명', '2026 상반기 정보보안 교육'], ['수료일', '2026.05.22']],
@@ -1328,7 +1322,7 @@ class Component extends DCLogic {
           noteFooter: B && c ? [
             React.createElement(B, { key: 'x', variant: 'ghost', style: { marginRight: 'auto', color: '#B0202A' }, onClick: () => this.setState({ delNoteIds: [c.id], noteId: null }) }, '삭제'),
             React.createElement(B, { key: 'c', variant: 'outline', onClick: () => this.setState({ noteId: null }) }, '닫기'),
-            React.createElement(B, { key: 'g', variant: 'primary', onClick: () => go(c.action) }, c.action.label)
+            null
           ] : null
         };
       })(),

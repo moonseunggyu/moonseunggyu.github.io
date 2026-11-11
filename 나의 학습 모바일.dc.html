@@ -717,7 +717,7 @@ class Component extends DCLogic {
     const sheetDefs = {
       cancel: { title: '신청을 취소할까요?', sec: '닫기', pri: '신청 취소', variant: 'danger', act: () => { this.setState(st => ({ applies: st.applies.filter(a => a.id !== sh.id), sheet: null })); this.toast('신청을 취소했어요'); } },
       reason: { title: '반려 사유', sec: '확인' },
-      note: { title: '쪽지', sec: '닫기', pri: cnRaw ? cnRaw.action.label : '', variant: 'primary', act: () => { const a = cnRaw.action; this.go(a.tab, a.extId ? { extView: 'detail', extId: a.extId } : {}); } },
+      note: { title: '쪽지', sec: '닫기', pri: '', variant: 'primary', act: () => { const a = cnRaw.action; this.go(a.tab, a.extId ? { extView: 'detail', extId: a.extId } : {}); } },
       pw: { title: '비밀번호 확인', sec: '취소', pri: '확인', variant: 'primary', act: () => this.submitPw() },
       delExt: { title: '기록을 삭제할까요?', sec: '닫기', pri: '삭제', variant: 'danger', act: () => { this.setState(st => ({ exts: st.exts.filter(x => x.id !== st.extId), extView: 'list', sheet: null })); this.top(); this.toast('기록을 삭제했어요'); } },
       doc: { title: isConf ? '학습기록 미리보기' : '수료증 미리보기', sec: '닫기', pri: 'PDF 저장', variant: 'primary', act: () => { this.setState({ sheet: null }); this.toast('PDF 파일을 저장했어요'); } }
