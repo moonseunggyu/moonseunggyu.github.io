@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap" rel="stylesheet">
+<style>
+@font-face { font-family: 'Pretendard Variable'; src: url('assets/fonts/PretendardVariable.woff2') format('woff2'); font-weight: 45 920; font-display: swap; }
+html, body { margin: 0; background: #F4F6F9; }
+body { font-family: "Pretendard Variable", Pretendard, -apple-system, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif; color: #2A2A2A; font-size: 14px; line-height: 22px; -webkit-font-smoothing: antialiased; }
+a { color: #1A47D1; text-decoration: none; }
+a:hover { color: #1438A6; text-decoration: underline; }
+</style>
+</helmet>
+<div style="max-width:1300px;margin:0 auto;padding:48px 24px 64px;display:flex;flex-direction:column;gap:24px">
+
+  <header style="display:flex;flex-direction:column;gap:16px">
+    <img src="assets/logo.png" alt="MiCo School 상상이상" style="height:44px;width:auto;align-self:flex-start">
+    <div style="display:flex;flex-direction:column;gap:6px">
+      <h1 style="margin:0;font-size:24px;line-height:34px;font-weight:700;letter-spacing:-0.01em">WYD 포털 → 상상이상 LMS 1단계 화면 대응표</h1>
+      <p style="margin:0;color:#666E7A;text-wrap:pretty">사용자 사이트(임직원 교육생)만. 레이아웃·흐름은 WYD, 메뉴 이름·묶음은 1단계 메뉴 트리, 스타일은 상상이상 디자인 시스템을 따릅니다. 번호는 디자인 작업용 임시 번호예요.</p>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:24px;align-items:center;padding:16px 20px;background:#FFFFFF;border:1px solid #E3E7ED;border-radius:12px">
+      <div style="display:flex;gap:8px;align-items:baseline"><span style="font-size:20px;font-weight:700">33</span><span style="color:#666E7A">화면</span></div>
+      <div style="display:flex;gap:8px;align-items:center"><span style="display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:4px;font-size:12px;font-weight:600;background:#EEF0F3;color:#4A5260">기본</span><span style="font-weight:700">13</span><span style="color:#666E7A">WYD에 있는 화면</span></div>
+      <div style="display:flex;gap:8px;align-items:center"><span style="display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:4px;font-size:12px;font-weight:600;background:#EAF0FF;color:#1A47D1">신규</span><span style="font-weight:700">20</span><span style="color:#666E7A">WYD에 없어서 추가</span></div>
+      <div style="display:flex;gap:8px;align-items:center"><span style="display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:4px;font-size:12px;font-weight:600;background:#E5EAF4;color:#002060">모바일 375</span><span style="font-weight:700">3</span><span style="color:#666E7A">출석 체크인만. 나머지는 PC 1300</span></div>
+    </div>
+  </header>
+
+  <section data-screen-label="공통" style="background:#FFFFFF;border:1px solid #E3E7ED;border-radius:12px;overflow:hidden">
+    <div style="padding:20px 24px;display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline"><h2 style="margin:0;font-size:18px;line-height:27px;font-weight:600">공통</h2><span style="color:#666E7A;font-size:13px">WYD: GNB · 메가메뉴 · 푸터</span></div>
+    <div style="display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1.3fr) 104px minmax(0,1.9fr)">
+      <div style="padding:10px 16px;background:#F8F9FB;border-top:1px solid #E3E7ED;font-size:12px;font-weight:600;color:#4A5260">상상이상 화면</div>
+      <div style="padding:10px 16px;background:#F8F9FB;border-top:1px solid #E3E7ED;font-size:12px;font-weight:600;color:#4A5260">대응 WYD 화면</div>
+      <div style="padding:10px 16px;background:#F8F9FB;border-top:1px solid #E3E7ED;font-size:12px;font-weight:600;color:#4A5260">구분</div>
+      <div style="padding:10px 16px;background:#F8F9FB;border-top:1px solid #E3E7ED;font-size:12px;font-weight:600;color:#4A5260">바뀌는 점</div>
+
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;display:flex;gap:10px"><span style="color:#666E7A;font-size:13px">01</span><span style="font-weight:600">로그인 (SSO 실패 시)</span></div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;color:#666E7A">없음 · 인증 메일 링크로 진입</div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED"><span style="display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:4px;font-size:12px;font-weight:600;background:#EAF0FF;color:#1A47D1">신규</span></div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;color:#4A5260;text-wrap:pretty">평소엔 그룹웨어·ERP SSO로 바로 진입. 실패했을 때만 사번·비밀번호 화면과 실패 안내</div>
+
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;display:flex;gap:10px"><span style="color:#666E7A;font-size:13px">02</span><span style="font-weight:600">2차 인증</span></div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;color:#666E7A">없음 · 인증 메일이 비슷한 역할</div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED"><span style="display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:4px;font-size:12px;font-weight:600;background:#EAF0FF;color:#1A47D1">신규</span></div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;color:#4A5260;text-wrap:pretty">SMS·메일 중 선택, 인증번호 6자리, 재전송 타이머</div>
+
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;display:flex;gap:10px"><span style="color:#666E7A;font-size:13px">03</span><span style="font-weight:600">약관 동의</span></div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;color:#666E7A">없음 · 푸터의 약관 링크만 있음</div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED"><span style="display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:4px;font-size:12px;font-weight:600;background:#EAF0FF;color:#1A47D1">신규</span></div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;color:#4A5260;text-wrap:pretty">첫 로그인 1회. 필수·선택 항목 구분, 전체 동의</div>
+
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;display:flex;gap:10px"><span style="color:#666E7A;font-size:13px">04</span><span style="font-weight:600">GNB · 메가메뉴</span></div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED">GNB + 메가메뉴 (WYD 소개 · 교육 과정 · 지원센터 · 나의 학습방 · 언어)</div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED"><span style="display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:4px;font-size:12px;font-weight:600;background:#EEF0F3;color:#4A5260">기본</span></div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;color:#4A5260;text-wrap:pretty">메뉴를 교육 과정 · 나의 학습 · 공동학습 · 성장기록 · 지원센터로 교체. 공동학습·성장기록은 메뉴만(화면 미제작). 언어 선택 숨김. 우측에 내 정보</div>
+
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;display:flex;gap:10px"><span style="color:#666E7A;font-size:13px">05</span><span style="font-weight:600">푸터</span></div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED">푸터 (기관명 · 약관 · 지원센터 링크)</div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED"><span style="display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:4px;font-size:12px;font-weight:600;background:#EEF0F3;color:#4A5260">기본</span></div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;color:#4A5260;text-wrap:pretty">구성 유지, 네이비 바탕 + 흰 로고</div>
+
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;display:flex;gap:10px"><span style="color:#666E7A;font-size:13px">06</span><span style="font-weight:600">오류 · 점검</span></div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;color:#666E7A">없음 · 공지 글로만 점검 안내</div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED"><span style="display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:4px;font-size:12px;font-weight:600;background:#EAF0FF;color:#1A47D1">신규</span></div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;color:#4A5260;text-wrap:pretty">페이지 없음 · 권한 없음 · 일시 오류 · 시스템 점검(시간·문의처)</div>
+    </div>
+  </section>
+
+  <section data-screen-label="메인" style="background:#FFFFFF;border:1px solid #E3E7ED;border-radius:12px;overflow:hidden">
+    <div style="padding:20px 24px;display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline"><h2 style="margin:0;font-size:18px;line-height:27px;font-weight:600">메인</h2><span style="color:#666E7A;font-size:13px">WYD: 홈</span></div>
+    <div style="display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1.3fr) 104px minmax(0,1.9fr)">
+      <div style="padding:10px 16px;background:#F8F9FB;border-top:1px solid #E3E7ED;font-size:12px;font-weight:600;color:#4A5260">상상이상 화면</div>
+      <div style="padding:10px 16px;background:#F8F9FB;border-top:1px solid #E3E7ED;font-size:12px;font-weight:600;color:#4A5260">대응 WYD 화면</div>
+      <div style="padding:10px 16px;background:#F8F9FB;border-top:1px solid #E3E7ED;font-size:12px;font-weight:600;color:#4A5260">구분</div>
+      <div style="padding:10px 16px;background:#F8F9FB;border-top:1px solid #E3E7ED;font-size:12px;font-weight:600;color:#4A5260">바뀌는 점</div>
+
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;display:flex;gap:10px"><span style="color:#666E7A;font-size:13px">07</span><span style="font-weight:600">메인</span></div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED">홈 (사진 히어로 + 우측 퀵링크 3개 + 대회 요약 + 공지 4개)</div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED"><span style="display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:4px;font-size:12px;font-weight:600;background:#EEF0F3;color:#4A5260">기본</span></div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;color:#4A5260;text-wrap:pretty">히어로·퀵링크·공지 배치 그대로. 퀵링크는 나의 강의실 · 수료증 · 자주 묻는 질문. 대회 요약 자리는 이어서 학습, 그 아래 추천 강의(일반 과정 카드)</div>
+
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;display:flex;gap:10px"><span style="color:#666E7A;font-size:13px">08</span><span style="font-weight:600">메인 배너</span></div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED">홈 하단 외부 소식 배너</div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED"><span style="display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:4px;font-size:12px;font-weight:600;background:#EEF0F3;color:#4A5260">기본</span></div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;color:#4A5260;text-wrap:pretty">관리자가 등록하는 캠페인 배너 자리</div>
+
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;display:flex;gap:10px"><span style="color:#666E7A;font-size:13px">09</span><span style="font-weight:600">공지 팝업</span></div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;color:#666E7A">없음</div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED"><span style="display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:4px;font-size:12px;font-weight:600;background:#EAF0FF;color:#1A47D1">신규</span></div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;color:#4A5260;text-wrap:pretty">메인 진입 시 레이어 팝업, "오늘 하루 보지 않기"</div>
+    </div>
+  </section>
+
+  <section data-screen-label="교육 과정" style="background:#FFFFFF;border:1px solid #E3E7ED;border-radius:12px;overflow:hidden">
+    <div style="padding:20px 24px;display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline"><h2 style="margin:0;font-size:18px;line-height:27px;font-weight:600">교육 과정</h2><span style="color:#666E7A;font-size:13px">WYD: 교육 과정</span></div>
+    <div style="display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1.3fr) 104px minmax(0,1.9fr)">
+      <div style="padding:10px 16px;background:#F8F9FB;border-top:1px solid #E3E7ED;font-size:12px;font-weight:600;color:#4A5260">상상이상 화면</div>
+      <div style="padding:10px 16px;background:#F8F9FB;border-top:1px solid #E3E7ED;font-size:12px;font-weight:600;color:#4A5260">대응 WYD 화면</div>
+      <div style="padding:10px 16px;background:#F8F9FB;border-top:1px solid #E3E7ED;font-size:12px;font-weight:600;color:#4A5260">구분</div>
+      <div style="padding:10px 16px;background:#F8F9FB;border-top:1px solid #E3E7ED;font-size:12px;font-weight:600;color:#4A5260">바뀌는 점</div>
+
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;display:flex;gap:10px"><span style="color:#666E7A;font-size:13px">10</span><span style="font-weight:600">과정 목록 · 카드형</span></div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED">교육 과정 (공통·선택 교양 탭 + 과목 검색 + 사진 카드 + 검색 결과 없음)</div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED"><span style="display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:4px;font-size:12px;font-weight:600;background:#EEF0F3;color:#4A5260">기본</span></div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;color:#4A5260;text-wrap:pretty">탭은 전체 · 필수 · 선택, 카테고리 칩 추가. 카드는 사진 · 유형 · 상태 · 제목 · 소개 · 학습 기간. 대상·방식·정원·마감 없음</div>
+
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;display:flex;gap:10px"><span style="color:#666E7A;font-size:13px">11</span><span style="font-weight:600">과정 목록 · 목록형</span></div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;color:#666E7A">없음 · 카드형만 있음</div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED"><span style="display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:4px;font-size:12px;font-weight:600;background:#EAF0FF;color:#1A47D1">신규</span></div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;color:#4A5260;text-wrap:pretty">같은 결과를 표로. 카드형·목록형 보기 전환</div>
+
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;display:flex;gap:10px"><span style="color:#666E7A;font-size:13px">12</span><span style="font-weight:600">과정 상세</span></div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED">과정 상세 (대표 이미지 + 정보 + 신청 버튼 + 과정소개 · 강의목차 · 수강후기 탭)</div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED"><span style="display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:4px;font-size:12px;font-weight:600;background:#EEF0F3;color:#4A5260">기본</span></div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;color:#4A5260;text-wrap:pretty">과정 소개 · 목차 · 학습 기간 · 수료 기준 · 신청 버튼만. [수강 신청]을 누르면 그 자리에서 [승인 대기중]. 수강후기·신청기간·복습기간·교육대상 뺌</div>
+    </div>
+  </section>
+
+  <section data-screen-label="나의 학습" style="background:#FFFFFF;border:1px solid #E3E7ED;border-radius:12px;overflow:hidden">
+    <div style="padding:20px 24px;display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline"><h2 style="margin:0;font-size:18px;line-height:27px;font-weight:600">나의 학습</h2><span style="color:#666E7A;font-size:13px">WYD: 나의 학습방 · 수강 현황 · 증명서 발급 · 마이페이지(학습 이력 · 외부교육 포함)</span></div>
+    <div style="display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1.3fr) 104px minmax(0,1.9fr)">
+      <div style="padding:10px 16px;background:#F8F9FB;border-top:1px solid #E3E7ED;font-size:12px;font-weight:600;color:#4A5260">상상이상 화면</div>
+      <div style="padding:10px 16px;background:#F8F9FB;border-top:1px solid #E3E7ED;font-size:12px;font-weight:600;color:#4A5260">대응 WYD 화면</div>
+      <div style="padding:10px 16px;background:#F8F9FB;border-top:1px solid #E3E7ED;font-size:12px;font-weight:600;color:#4A5260">구분</div>
+      <div style="padding:10px 16px;background:#F8F9FB;border-top:1px solid #E3E7ED;font-size:12px;font-weight:600;color:#4A5260">바뀌는 점</div>
+
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;display:flex;gap:10px"><span style="color:#666E7A;font-size:13px">13</span><span style="font-weight:600">나의 강의실</span></div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED">나의 학습방 (수강 진도율 카드 + 수강 중인 과정 표 · 상태 필터) + 수강 현황 "수강 중" 탭</div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED"><span style="display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:4px;font-size:12px;font-weight:600;background:#EEF0F3;color:#4A5260">기본</span></div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;color:#4A5260;text-wrap:pretty">진도 카드는 필수·선택 이수 현황. 필터는 전체 · 수강 전 · 학습 중 · 수료 · 미이수. 관리자 배정 과정도 여기 바로 표시</div>
+
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;display:flex;gap:10px"><span style="color:#666E7A;font-size:13px">14</span><span style="font-weight:600">강의실 홈</span></div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;color:#666E7A">없음 · "강의실 입장" 버튼만 있음</div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED"><span style="display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:4px;font-size:12px;font-weight:600;background:#EAF0FF;color:#1A47D1">신규</span></div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;color:#4A5260;text-wrap:pretty">과정별 홈. 진도율 / 권장 진도율, 이어보기, 차시 목록, 평가·과제·설문 할 일</div>
+
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;display:flex;gap:10px"><span style="color:#666E7A;font-size:13px">15</span><span style="font-weight:600">학습 플레이어</span></div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;color:#666E7A">없음 · 외부 영상 링크</div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED"><span style="display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:4px;font-size:12px;font-weight:600;background:#EAF0FF;color:#1A47D1">신규</span></div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;color:#4A5260;text-wrap:pretty">중단 지점부터 이어보기, 차시 이동</div>
+
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;display:flex;gap:10px"><span style="color:#666E7A;font-size:13px">16</span><span style="font-weight:600">평가 응시 · 결과</span></div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;color:#666E7A">없음</div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED"><span style="display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:4px;font-size:12px;font-weight:600;background:#EAF0FF;color:#1A47D1">신규</span></div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;color:#4A5260;text-wrap:pretty">문항 이동 · 남은 시간 · 제출. 결과는 점수 · 합격 기준 · 재응시</div>
+
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;display:flex;gap:10px"><span style="color:#666E7A;font-size:13px">17</span><span style="font-weight:600">과제 제출 · 피드백</span></div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;color:#666E7A">없음</div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED"><span style="display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:4px;font-size:12px;font-weight:600;background:#EAF0FF;color:#1A47D1">신규</span></div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;color:#4A5260;text-wrap:pretty">파일 첨부 · 제출, 강사 피드백 · 점수 확인</div>
+
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;display:flex;gap:10px"><span style="color:#666E7A;font-size:13px">18</span><span style="font-weight:600">설문</span></div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;color:#666E7A">없음</div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED"><span style="display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:4px;font-size:12px;font-weight:600;background:#EAF0FF;color:#1A47D1">신규</span></div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;color:#4A5260;text-wrap:pretty">과정 만족도 설문. 객관식 · 척도 · 서술</div>
+
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;display:flex;gap:10px"><span style="color:#666E7A;font-size:13px">19</span><span style="font-weight:600">신청 내역</span></div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;color:#666E7A">없음 · 선택 교양 탭에서 취소만 가능</div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED"><span style="display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:4px;font-size:12px;font-weight:600;background:#EAF0FF;color:#1A47D1">신규</span></div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;color:#4A5260;text-wrap:pretty">승인 대기 · 승인 · 반려(사유) 표, 신청 취소. 표 패턴은 WYD 수강 현황</div>
+
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;display:flex;gap:10px"><span style="color:#666E7A;font-size:13px">20</span><span style="font-weight:600">수료증</span></div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED">증명서 발급 (표 + 증명서 미리보기 모달 · 인쇄 · JPG · PDF)</div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED"><span style="display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:4px;font-size:12px;font-weight:600;background:#EEF0F3;color:#4A5260">기본</span></div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;color:#4A5260;text-wrap:pretty">수료 기준 충족 시 자동 발급. 미리보기 모달 패턴 그대로</div>
+
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;display:flex;gap:10px"><span style="color:#666E7A;font-size:13px">21</span><span style="font-weight:600">배지</span></div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;color:#666E7A">없음</div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED"><span style="display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:4px;font-size:12px;font-weight:600;background:#EAF0FF;color:#1A47D1">신규</span></div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;color:#4A5260;text-wrap:pretty">수료증 화면의 탭. 1단계는 과정 수료 배지만 (역량·누적시간 배지는 2단계)</div>
+
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;display:flex;gap:10px"><span style="color:#666E7A;font-size:13px">22</span><span style="font-weight:600">출석 체크인 · QR / NFC</span></div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;color:#666E7A">없음</div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;display:flex;flex-wrap:wrap;gap:4px"><span style="display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:4px;font-size:12px;font-weight:600;background:#EAF0FF;color:#1A47D1">신규</span><span style="display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:4px;font-size:12px;font-weight:600;background:#E5EAF4;color:#002060">모바일</span></div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;color:#4A5260;text-wrap:pretty">QR 스캔 / NFC 태깅 대기, 입실 · 퇴실 구분</div>
+
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;display:flex;gap:10px"><span style="color:#666E7A;font-size:13px">23</span><span style="font-weight:600">체크인 결과</span></div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;color:#666E7A">없음</div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;display:flex;flex-wrap:wrap;gap:4px"><span style="display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:4px;font-size:12px;font-weight:600;background:#EAF0FF;color:#1A47D1">신규</span><span style="display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:4px;font-size:12px;font-weight:600;background:#E5EAF4;color:#002060">모바일</span></div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;color:#4A5260;text-wrap:pretty">출석 · 지각 · 조퇴 판정과 시각, 실패 시 다시 시도</div>
+
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;display:flex;gap:10px"><span style="color:#666E7A;font-size:13px">24</span><span style="font-weight:600">내 출결 기록</span></div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;color:#666E7A">없음</div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;display:flex;flex-wrap:wrap;gap:4px"><span style="display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:4px;font-size:12px;font-weight:600;background:#EAF0FF;color:#1A47D1">신규</span><span style="display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:4px;font-size:12px;font-weight:600;background:#E5EAF4;color:#002060">모바일</span></div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;color:#4A5260;text-wrap:pretty">과정 차수별 일자 목록. 출석 · 지각 · 조퇴 · 결석</div>
+
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;display:flex;gap:10px"><span style="color:#666E7A;font-size:13px">25</span><span style="font-weight:600">학습 이력</span></div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED">수강 현황 "종료된 과정" 탭 (진도율 · 수료 여부 표)</div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED"><span style="display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:4px;font-size:12px;font-weight:600;background:#EEF0F3;color:#4A5260">기본</span></div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;color:#4A5260;text-wrap:pretty">사내 교육 + 외부교육 + 자격·어학 통합 표. 이수시간 · 점수 · 수료 여부, 연도 필터</div>
+
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;display:flex;gap:10px"><span style="color:#666E7A;font-size:13px">26</span><span style="font-weight:600">외부교육 · 자격 목록</span></div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;color:#666E7A">없음</div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED"><span style="display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:4px;font-size:12px;font-weight:600;background:#EAF0FF;color:#1A47D1">신규</span></div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;color:#4A5260;text-wrap:pretty">등록 건과 상태: 작성중 · 승인 대기 · 반려 · 승인</div>
+
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;display:flex;gap:10px"><span style="color:#666E7A;font-size:13px">27</span><span style="font-weight:600">외부교육 · 자격 등록</span></div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;color:#666E7A">없음 · 폼 패턴은 1:1 문의</div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED"><span style="display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:4px;font-size:12px;font-weight:600;background:#EAF0FF;color:#1A47D1">신규</span></div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;color:#4A5260;text-wrap:pretty">외부교육(교육명 · 기관 · 기간 · 시간) / 어학·자격(점수 · 등급 · 유효기간) + 증빙 업로드</div>
+
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;display:flex;gap:10px"><span style="color:#666E7A;font-size:13px">28</span><span style="font-weight:600">외부교육 · 자격 상세 · 재신청</span></div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;color:#666E7A">없음</div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED"><span style="display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:4px;font-size:12px;font-weight:600;background:#EAF0FF;color:#1A47D1">신규</span></div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;color:#4A5260;text-wrap:pretty">반려 사유 확인 → 고쳐서 재신청</div>
+    </div>
+  </section>
+
+  <section data-screen-label="지원센터" style="background:#FFFFFF;border:1px solid #E3E7ED;border-radius:12px;overflow:hidden">
+    <div style="padding:20px 24px;display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline"><h2 style="margin:0;font-size:18px;line-height:27px;font-weight:600">지원센터</h2><span style="color:#666E7A;font-size:13px">WYD: 지원센터</span></div>
+    <div style="display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1.3fr) 104px minmax(0,1.9fr)">
+      <div style="padding:10px 16px;background:#F8F9FB;border-top:1px solid #E3E7ED;font-size:12px;font-weight:600;color:#4A5260">상상이상 화면</div>
+      <div style="padding:10px 16px;background:#F8F9FB;border-top:1px solid #E3E7ED;font-size:12px;font-weight:600;color:#4A5260">대응 WYD 화면</div>
+      <div style="padding:10px 16px;background:#F8F9FB;border-top:1px solid #E3E7ED;font-size:12px;font-weight:600;color:#4A5260">구분</div>
+      <div style="padding:10px 16px;background:#F8F9FB;border-top:1px solid #E3E7ED;font-size:12px;font-weight:600;color:#4A5260">바뀌는 점</div>
+
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;display:flex;gap:10px"><span style="color:#666E7A;font-size:13px">29</span><span style="font-weight:600">공지사항 목록 · 상세</span></div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED">공지사항 목록 + 상세 (첨부파일 · 이전/다음 글)</div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED"><span style="display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:4px;font-size:12px;font-weight:600;background:#EEF0F3;color:#4A5260">기본</span></div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;color:#4A5260;text-wrap:pretty">구조 유지, 중요 공지 상단 고정</div>
+
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;display:flex;gap:10px"><span style="color:#666E7A;font-size:13px">30</span><span style="font-weight:600">FAQ</span></div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED">FAQ 아코디언</div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED"><span style="display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:4px;font-size:12px;font-weight:600;background:#EEF0F3;color:#4A5260">기본</span></div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;color:#4A5260;text-wrap:pretty">카테고리 칩 추가 (로그인 · 수강 · 평가 · 수료증 · 출석)</div>
+
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;display:flex;gap:10px"><span style="color:#666E7A;font-size:13px">31</span><span style="font-weight:600">1:1 문의</span></div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED">문의하기 (등록 폼 + 내 문의 내역 + 운영 시간)</div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED"><span style="display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:4px;font-size:12px;font-weight:600;background:#EEF0F3;color:#4A5260">기본</span></div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;color:#4A5260;text-wrap:pretty">구조 유지, 내 문의 상세(답변) 추가</div>
+
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;display:flex;gap:10px"><span style="color:#666E7A;font-size:13px">32</span><span style="font-weight:600">자료실</span></div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED">자료실 목록</div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED"><span style="display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:4px;font-size:12px;font-weight:600;background:#EEF0F3;color:#4A5260">기본</span></div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;color:#4A5260;text-wrap:pretty">양식 · 교재 다운로드, 파일 형식 · 용량 표시</div>
+    </div>
+  </section>
+
+  <section data-screen-label="내 정보" style="background:#FFFFFF;border:1px solid #E3E7ED;border-radius:12px;overflow:hidden">
+    <div style="padding:20px 24px;display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline"><h2 style="margin:0;font-size:18px;line-height:27px;font-weight:600">내 정보</h2><span style="color:#666E7A;font-size:13px">GNB 우측</span></div>
+    <div style="display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1.3fr) 104px minmax(0,1.9fr)">
+      <div style="padding:10px 16px;background:#F8F9FB;border-top:1px solid #E3E7ED;font-size:12px;font-weight:600;color:#4A5260">상상이상 화면</div>
+      <div style="padding:10px 16px;background:#F8F9FB;border-top:1px solid #E3E7ED;font-size:12px;font-weight:600;color:#4A5260">대응 WYD 화면</div>
+      <div style="padding:10px 16px;background:#F8F9FB;border-top:1px solid #E3E7ED;font-size:12px;font-weight:600;color:#4A5260">구분</div>
+      <div style="padding:10px 16px;background:#F8F9FB;border-top:1px solid #E3E7ED;font-size:12px;font-weight:600;color:#4A5260">바뀌는 점</div>
+
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;display:flex;gap:10px"><span style="color:#666E7A;font-size:13px">33</span><span style="font-weight:600">프로필</span></div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;color:#666E7A">없음</div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED"><span style="display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:4px;font-size:12px;font-weight:600;background:#EAF0FF;color:#1A47D1">신규</span></div>
+      <div style="padding:14px 16px;border-top:1px solid #E3E7ED;color:#4A5260;text-wrap:pretty">소속 · 직급 · 사번(SSO 연동, 읽기 전용), 연락처 · 알림 수신 · 2차 인증 수단</div>
+    </div>
+  </section>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:24px">
+    <section data-screen-label="가져오지 않는 것" style="background:#FFFFFF;border:1px solid #E3E7ED;border-radius:12px;padding:20px 24px;display:flex;flex-direction:column;gap:12px">
+      <h2 style="margin:0;font-size:18px;line-height:27px;font-weight:600">WYD에서 가져오지 않는 것</h2>
+      <ul style="margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px;color:#4A5260">
+        <li>WYD 소개 전체 (세계청년대회란 · 상징 · 일정 · 오시는 길 · 역대 주제 · 주제가)</li>
+        <li>언어 선택 모달 · GNB 언어 메뉴 (다국어는 2단계)</li>
+        <li>과정 상세의 수강후기 탭 · 신청기간 · 복습기간 · 교육대상</li>
+        <li>수강 현황 독립 화면 → 나의 강의실(수강 중)과 학습 이력(종료)으로 나눔</li>
+        <li>WYD 색 · 로고 · 사진 · 일러스트</li>
+      </ul>
+    </section>
+    <section data-screen-label="기본값" style="background:#FFFFFF;border:1px solid #E3E7ED;border-radius:12px;padding:20px 24px;display:flex;flex-direction:column;gap:12px">
+      <h2 style="margin:0;font-size:18px;line-height:27px;font-weight:600">이렇게 정해 두고 갈게요</h2>
+      <ul style="margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px;color:#4A5260">
+        <li>과정 상세의 총 학습시간은 목차 머리에만 표시 (예: 총 12차시 · 3시간 15분)</li>
+        <li>신청 취소는 신청 내역에서. 상세 버튼은 [승인 대기중](비활성)으로만 바뀜</li>
+        <li>관리자 배정 과정은 상세에서 [수강 신청] 대신 [강의실 입장]</li>
+        <li>내 정보(프로필)는 마지막 지원센터 묶음과 함께 작업</li>
+        <li>학습 이력 · 외부교육 · 자격은 나의 학습(마이페이지) 안에 둠</li>
+        <li>공동학습 · 성장기록은 GNB 메뉴만. 화면은 아직 만들지 않음</li>
+        <li>즐겨찾기는 기능 미확정이라 GNB·화면 어디에도 넣지 않음</li>
+      </ul>
+    </section>
+  </div>
+
+  <section data-screen-label="작업 순서" style="background:#FFFFFF;border:1px solid #E3E7ED;border-radius:12px;padding:20px 24px;display:flex;flex-direction:column;gap:16px">
+    <h2 style="margin:0;font-size:18px;line-height:27px;font-weight:600">작업 순서</h2>
+    <ol style="margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px">
+      <li style="display:flex;flex-direction:column;gap:4px;padding:16px;border:1px solid #E3E7ED;border-radius:8px"><span style="font-weight:700;color:#1C59FE">01</span><span style="font-weight:600">공통 · 메인</span><span style="font-size:13px;color:#666E7A">01–09</span></li>
+      <li style="display:flex;flex-direction:column;gap:4px;padding:16px;border:1px solid #E3E7ED;border-radius:8px"><span style="font-weight:700;color:#1C59FE">02</span><span style="font-weight:600">교육 과정</span><span style="font-size:13px;color:#666E7A">10–12</span></li>
+      <li style="display:flex;flex-direction:column;gap:4px;padding:16px;border:1px solid #E3E7ED;border-radius:8px"><span style="font-weight:700;color:#1C59FE">03</span><span style="font-weight:600">나의 학습</span><span style="font-size:13px;color:#666E7A">13–28</span></li>
+      <li style="display:flex;flex-direction:column;gap:4px;padding:16px;border:1px solid #E3E7ED;border-radius:8px"><span style="font-weight:700;color:#1C59FE">04</span><span style="font-weight:600">지원센터 · 내 정보</span><span style="font-size:13px;color:#666E7A">29–33</span></li>
+    </ol>
+  </section>
+</div>
+</x-dc>
+</body>
+</html>

@@ -1,0 +1,1372 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="ds/tokens.css">
+<link rel="stylesheet" href="ds/bundle.css">
+<script src="ds/bundle.js"></script>
+<style>
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; background: #F4F6F9; }
+body { font-family: "Pretendard Variable", Pretendard, -apple-system, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif; color: #2A2A2A; font-size: 14px; line-height: 22px; -webkit-font-smoothing: antialiased; word-break: keep-all; }
+a { color: #1A47D1; }
+a:hover { color: #1438A6; }
+</style>
+</helmet>
+<dc-import name="GNB" active="나의 학습" hint-size="100%,72px" style="position:relative;z-index:50"></dc-import>
+
+<main data-screen-label="나의 학습" style="max-width:1348px;margin:0 auto;padding:32px 24px 80px;display:grid;grid-template-columns:232px minmax(0,1fr);align-items:start;gap:48px">
+  <aside style="position:sticky;top:calc(var(--gnb-offset, 0px) + 24px);transition:top .25s ease, max-height .25s ease;max-height:calc(100vh - 48px - var(--gnb-offset, 0px));overflow-y:auto;scrollbar-width:none;-ms-overflow-style:none;display:flex;flex-direction:column;gap:20px;background:linear-gradient(#F4F6F9 30%, rgba(244,246,249,0)) center top / 100% 40px no-repeat local, linear-gradient(rgba(244,246,249,0), #F4F6F9 70%) center bottom / 100% 40px no-repeat local, radial-gradient(farthest-side at 50% 0, rgba(16,24,40,0.16), rgba(16,24,40,0)) center top / 100% 14px no-repeat scroll, radial-gradient(farthest-side at 50% 100%, rgba(16,24,40,0.16), rgba(16,24,40,0)) center bottom / 100% 14px no-repeat scroll, #F4F6F9">
+    <h1 style="margin:0;font-size:28px;line-height:38px;font-weight:700">나의 학습</h1>
+    <nav aria-label="나의 학습 메뉴" style="display:flex;flex-direction:column;border-top:2px solid #2A2A2A">
+      <sc-for list="{{ navGroups }}" as="g" hint-placeholder-count="3">
+      <div style="display:flex;flex-direction:column;border-bottom:1px solid #D5DAE1">
+      <h2 style="margin:0"><button type="button" aria-expanded="{{ g.expanded }}" onClick="{{ g.toggle }}" style="width:100%;height:56px;padding:0 4px;border:0;background:transparent;font:inherit;font-size:17px;font-weight:700;color:#2A2A2A;display:flex;align-items:center;justify-content:space-between;gap:8px;cursor:pointer;text-align:left" style-hover="color:#1C59FE">{{ g.label }}<span aria-hidden="true" style="display:flex;color:#666E7A;transform:rotate({{ g.rot }});transition:transform .25s ease"><x-import component-from-global-scope="Sangsang.Icon" name="chevron-down" size="{{ 18 }}" hint-size="18px,18px"></x-import></span></button></h2>
+      <div style="display:grid;grid-template-rows:{{ g.rows }};transition:grid-template-rows .32s cubic-bezier(.2,.7,.2,1)">
+      <div style="overflow:hidden;min-height:0;visibility:{{ g.vis }};transition:visibility .32s">
+      <ul style="list-style:none;margin:0 0 8px;padding:0;border-top:1px solid #E3E7ED">
+        <sc-for list="{{ g.items }}" as="t" hint-placeholder-count="4">
+          <li style="padding-left:12px">
+            <sc-if value="{{ t.on }}" hint-placeholder-val="{{ false }}">
+              <button type="button" aria-current="page" onClick="{{ t.pick }}" style="width:100%;display:flex;align-items:center;justify-content:space-between;gap:8px;height:48px;padding:0 4px;border:0;background:transparent;font:inherit;font-size:16px;font-weight:700;color:#1C59FE;text-align:left;cursor:pointer">{{ t.label }}<x-import component-from-global-scope="Sangsang.Icon" name="chevron-right" size="{{ 18 }}" hint-size="18px,18px"></x-import></button>
+            </sc-if>
+            <sc-if value="{{ t.off }}" hint-placeholder-val="{{ true }}">
+              <button type="button" onClick="{{ t.pick }}" style="width:100%;display:flex;align-items:center;height:48px;padding:0 4px;border:0;background:transparent;font:inherit;font-size:16px;font-weight:600;color:#2A2A2A;text-align:left;cursor:pointer" style-hover="color:#1C59FE">{{ t.label }}</button>
+            </sc-if>
+            <sc-if value="{{ t.soon }}" hint-placeholder-val="{{ false }}">
+              <button type="button" aria-disabled="true" onClick="{{ t.pick }}" style="width:100%;display:flex;align-items:center;height:48px;padding:0 4px;border:0;background:transparent;font:inherit;font-size:16px;font-weight:500;color:#8A919C;text-align:left;cursor:pointer">{{ t.label }}</button>
+            </sc-if>
+            <sc-if value="{{ t.hasSubs }}" hint-placeholder-val="{{ false }}">
+              <ul style="list-style:none;margin:-4px 0 0;padding:0 0 12px;display:flex;flex-direction:column">
+                <sc-for list="{{ t.subs }}" as="u" hint-placeholder-count="1">
+                  <li>
+                    <sc-if value="{{ u.on }}" hint-placeholder-val="{{ false }}">
+                      <button type="button" aria-current="page" onClick="{{ u.pick }}" style="width:100%;display:flex;align-items:center;gap:8px;height:40px;padding:0 4px 0 16px;border:0;background:transparent;font:inherit;font-size:15px;font-weight:700;color:#1C59FE;text-align:left;cursor:pointer"><span aria-hidden="true" style="width:4px;height:4px;border-radius:9999px;background:currentColor"></span>{{ u.label }}</button>
+                    </sc-if>
+                    <sc-if value="{{ u.off }}" hint-placeholder-val="{{ true }}">
+                      <button type="button" onClick="{{ u.pick }}" style="width:100%;display:flex;align-items:center;gap:8px;height:40px;padding:0 4px 0 16px;border:0;background:transparent;font:inherit;font-size:15px;font-weight:500;color:#4A5260;text-align:left;cursor:pointer" style-hover="color:#1C59FE"><span aria-hidden="true" style="width:4px;height:4px;border-radius:9999px;background:currentColor"></span>{{ u.label }}</button>
+                    </sc-if>
+                  </li>
+                </sc-for>
+              </ul>
+            </sc-if>
+          </li>
+        </sc-for>
+      </ul>
+      </div>
+      </div>
+      </div>
+      </sc-for>
+    </nav>
+  </aside>
+
+  <div style="min-width:0;display:flex;flex-direction:column;gap:32px">
+  <div style="display:flex;flex-direction:column;gap:12px">
+    <nav aria-label="현재 위치">
+      <ol style="display:flex;align-items:center;flex-wrap:wrap;gap:4px;list-style:none;margin:0;padding:0;font-size:13px;line-height:20px;color:#666E7A">
+        <li style="display:flex;align-items:center"><a href="메인.dc.html" aria-label="홈" style="display:inline-flex;align-items:center;color:#666E7A;text-decoration:none" style-hover="color:#2A2A2A"><x-import component-from-global-scope="Sangsang.Icon" name="home" size="{{ 15 }}" hint-size="15px,15px"></x-import></a></li>
+        <sc-for list="{{ crumbItems }}" as="c" hint-placeholder-count="2">
+          <li style="display:flex;align-items:center;gap:4px">
+            <x-import component-from-global-scope="Sangsang.Icon" name="chevron-right" size="{{ 14 }}" hint-size="14px,14px"></x-import>
+            <sc-if value="{{ c.link }}" hint-placeholder-val="{{ true }}">
+              <a href="{{ c.href }}" onClick="{{ c.go }}" style="color:#666E7A;text-decoration:none" style-hover="color:#2A2A2A;text-decoration:underline">{{ c.label }}</a>
+            </sc-if>
+            <sc-if value="{{ c.current }}" hint-placeholder-val="{{ false }}">
+              <span aria-current="page" style="color:#2A2A2A;font-weight:600">{{ c.label }}</span>
+            </sc-if>
+          </li>
+        </sc-for>
+      </ol>
+    </nav>
+    <div style="display:flex;flex-direction:column;gap:6px">
+      <h2 style="margin:0;font-size:28px;line-height:38px;font-weight:700">{{ tabLabel }}</h2>
+      <p style="margin:0;font-size:16px;line-height:24px;color:#4A5260">{{ tabDesc }}</p>
+    </div>
+  </div>
+
+  <sc-if value="{{ isHistory }}" hint-placeholder-val="{{ false }}">
+    <section data-screen-label="학습 이력" style="display:flex;flex-direction:column;gap:16px">
+      <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px 24px;font-size:15px;color:#4A5260">
+        <span>전체 <b style="font-weight:700;color:#2A2A2A">{{ histCount }}</b>개 과정</span>
+        <span>수료 <b style="font-weight:700;color:#2A2A2A">{{ histDone }}</b>개</span>
+        <span>총 이수시간 <b style="font-weight:700;color:#1A47D1">{{ histHours }}</b></span>
+      </div>
+      <div role="tablist" aria-label="학습 이력 구분" style="display:flex;column-gap:32px;border-bottom:1px solid #E3E7ED">
+        <sc-for list="{{ histTabs }}" as="t" hint-placeholder-count="2">
+          <sc-if value="{{ t.on }}" hint-placeholder-val="{{ false }}">
+            <button type="button" role="tab" aria-selected="true" onClick="{{ t.pick }}" style="height:56px;padding:0;margin-bottom:-1px;border:0;border-bottom:2px solid #2A2A2A;background:transparent;font:inherit;font-size:18px;font-weight:700;color:#2A2A2A;cursor:pointer">{{ t.label }}</button>
+          </sc-if>
+          <sc-if value="{{ t.off }}" hint-placeholder-val="{{ true }}">
+            <button type="button" role="tab" aria-selected="false" onClick="{{ t.pick }}" style="height:56px;padding:0;margin-bottom:-1px;border:0;border-bottom:2px solid transparent;background:transparent;font:inherit;font-size:18px;font-weight:500;color:#666E7A;cursor:pointer" style-hover="color:#2A2A2A">{{ t.label }}</button>
+          </sc-if>
+        </sc-for>
+      </div>
+      <div style="overflow-x:auto">
+      <div style="border-top:2px solid #2A2A2A;min-width:760px">
+        <div aria-hidden="true" style="display:grid;grid-template-columns:64px minmax(200px,1fr) 168px 104px 80px 104px;align-items:center;height:52px;padding:0 4px;background-color:#EEF0F3;border-bottom:1px solid #D5DAE1;font-size:15px;font-weight:600;color:#2A2A2A">
+          <span style="text-align:center">구분</span><span style="padding-left:16px">과정명</span><span style="text-align:center">학습 기간</span><span style="text-align:center">이수시간</span><span style="text-align:center">점수</span><span style="text-align:center">수료 여부</span>
+        </div>
+        <ul style="list-style:none;margin:0;padding:0">
+          <sc-for list="{{ hist }}" as="c" hint-placeholder-count="8">
+            <li style="display:grid;grid-template-columns:64px minmax(200px,1fr) 168px 104px 80px 104px;align-items:center;min-height:68px;padding:12px 4px;background:{{ c.bg }};border-bottom:1px solid #D5DAE1">
+              <span style="display:flex;justify-content:center"><x-import component-from-global-scope="Sangsang.TypeTag" type="{{ c.type }}" size="sm" hint-size="40px,20px"></x-import></span>
+              <span style="align-self:stretch;margin:-12px 0;min-width:0;display:flex">
+                <sc-if value="{{ c.link }}" hint-placeholder-val="{{ false }}">
+                  <a href="과정 상세.dc.html" style="flex:1;min-width:0;padding:12px 16px;display:flex;align-items:center;color:#2A2A2A;text-decoration:none" style-hover="color:#1A47D1"><span style="min-width:0;font-size:17px;line-height:26px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ c.title }}</span></a>
+                </sc-if>
+                <sc-if value="{{ c.noLink }}" hint-placeholder-val="{{ true }}">
+                  <span style="flex:1;min-width:0;padding:12px 16px;display:flex;align-items:center"><span style="min-width:0;font-size:17px;line-height:26px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ c.title }}</span></span>
+                </sc-if>
+              </span>
+              <span style="text-align:center;font-size:15px;color:#4A5260">{{ c.period }}</span>
+              <span style="text-align:center;font-size:15px;color:{{ c.hInk }}">{{ c.hText }}</span>
+              <span style="text-align:center;font-size:15px;font-weight:{{ c.sWeight }};color:{{ c.sInk }}">{{ c.sText }}</span>
+              <span style="display:flex;justify-content:center"><x-import component-from-global-scope="Sangsang.StatusBadge" status="{{ c.status }}" size="sm" hint-size="64px,20px"></x-import></span>
+            </li>
+          </sc-for>
+        </ul>
+        <sc-if value="{{ histEmpty }}" hint-placeholder-val="{{ false }}">
+          <p style="margin:0;padding:56px 16px;text-align:center;font-size:16px;color:#666E7A;border-bottom:1px solid #D5DAE1">{{ histEmptyMsg }}</p>
+        </sc-if>
+      </div>
+      </div>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{ isAttend }}" hint-placeholder-val="{{ false }}">
+    <sc-if value="{{ attList }}" hint-placeholder-val="{{ true }}">
+    <section data-screen-label="출석 관리" style="display:flex;flex-direction:column;gap:16px">
+      <p style="margin:0;font-size:15px;line-height:24px;color:#4A5260">과정을 누르면 과정별 출결 내역을 볼 수 있어요.</p>
+      <div style="overflow-x:auto">
+      <div style="border-top:2px solid #2A2A2A;min-width:900px">
+        <div aria-hidden="true" style="display:grid;grid-template-columns:64px minmax(200px,1fr) 176px 96px 272px 112px;align-items:center;height:52px;padding:0 4px;background-color:#EEF0F3;border-bottom:1px solid #D5DAE1;font-size:15px;font-weight:600;color:#2A2A2A">
+          <span style="text-align:center">구분</span><span style="padding-left:16px">과정명</span><span style="text-align:center">교육 기간</span><span style="text-align:center">진행</span><span style="padding-left:16px">출결 현황</span><span style="text-align:center">출결 상세</span>
+        </div>
+        <ul style="list-style:none;margin:0;padding:0">
+          <sc-for list="{{ attCourses }}" as="c" hint-placeholder-count="5">
+            <li onClick="{{ c.open }}" style="display:grid;grid-template-columns:64px minmax(200px,1fr) 176px 96px 272px 112px;align-items:center;min-height:72px;padding:12px 4px;background:{{ c.bg }};border-bottom:1px solid #D5DAE1;color:#2A2A2A;cursor:pointer" style-hover="color:#1A47D1">
+              <span style="display:flex;justify-content:center"><x-import component-from-global-scope="Sangsang.TypeTag" type="{{ c.type }}" size="sm" hint-size="40px,20px"></x-import></span>
+              <span style="padding-left:16px;min-width:0;display:flex;flex-direction:column">
+                <span style="min-width:0;max-width:100%;font-size:17px;line-height:26px;font-weight:600;color:inherit;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ c.title }}</span>
+                <span style="font-size:13px;line-height:20px;color:#666E7A">{{ c.round }}</span>
+              </span>
+              <span style="text-align:center;font-size:15px;color:#4A5260">{{ c.period }}</span>
+              <span style="display:flex;justify-content:center"><x-import component-from-global-scope="Sangsang.Badge" tone="{{ c.progTone }}" size="sm" hint-size="52px,20px">{{ c.prog }}</x-import></span>
+              <span style="padding-left:16px;display:flex;flex-wrap:wrap;gap:6px">
+                <sc-for list="{{ c.counts }}" as="k" hint-placeholder-count="4">
+                  <x-import component-from-global-scope="Sangsang.Badge" tone="{{ k.tone }}" size="sm" hint-size="52px,20px">{{ k.text }}</x-import>
+                </sc-for>
+              </span>
+              <span style="display:flex;justify-content:center">
+                <button type="button" onClick="{{ c.openBtn }}" aria-label="{{ c.openLabel }}" style="height:32px;padding:0 8px 0 12px;border:1px solid #C4CBD6;border-radius:6px;background:#FFFFFF;font:inherit;font-size:14px;font-weight:500;color:#2A2A2A;display:flex;align-items:center;gap:2px;cursor:pointer" style-hover="border-color:#2A2A2A">보기<x-import component-from-global-scope="Sangsang.Icon" name="chevron-right" size="{{ 16 }}" hint-size="16px,16px"></x-import></button>
+              </span>
+            </li>
+          </sc-for>
+        </ul>
+      </div>
+      </div>
+    </section>
+    </sc-if>
+    <sc-if value="{{ attDetail }}" hint-placeholder-val="{{ false }}">
+    <section data-screen-label="출석 관리 상세" style="display:flex;flex-direction:column;gap:16px">
+      <div style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px 24px">
+        <div style="display:flex;flex-direction:column;gap:6px;min-width:0">
+          <div style="display:flex;align-items:center;gap:8px">
+            <x-import component-from-global-scope="Sangsang.TypeTag" type="{{ ac.type }}" size="sm" hint-size="40px,20px"></x-import>
+            <x-import component-from-global-scope="Sangsang.Badge" tone="{{ ac.progTone }}" size="sm" hint-size="52px,20px">{{ ac.prog }}</x-import>
+          </div>
+          <h2 style="margin:0;font-size:22px;line-height:32px;font-weight:700;color:#2A2A2A">{{ ac.title }}</h2>
+          <p style="margin:0;font-size:15px;line-height:22px;color:#666E7A">{{ ac.round }} · {{ ac.period }}</p>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
+          <div style="display:flex;flex-wrap:wrap;gap:6px">
+            <sc-for list="{{ ac.counts }}" as="k" hint-placeholder-count="4">
+              <x-import component-from-global-scope="Sangsang.Badge" tone="{{ k.tone }}" size="sm" hint-size="52px,20px">{{ k.text }}</x-import>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+      <div style="overflow-x:auto">
+      <div style="border-top:2px solid #2A2A2A;min-width:900px">
+        <div aria-hidden="true" style="display:grid;grid-template-columns:152px minmax(200px,1fr) 96px 96px 104px 112px;align-items:center;height:52px;padding:0 4px;background-color:#EEF0F3;border-bottom:1px solid #D5DAE1;font-size:15px;font-weight:600;color:#2A2A2A">
+          <span style="text-align:center">교육일</span><span style="padding-left:16px">교육 내용</span><span style="text-align:center">입실</span><span style="text-align:center">퇴실</span><span style="text-align:center">출결</span><span style="text-align:center">문의</span>
+        </div>
+        <ul style="list-style:none;margin:0;padding:0">
+          <sc-for list="{{ attends }}" as="a" hint-placeholder-count="3">
+            <li style="display:grid;grid-template-columns:152px minmax(200px,1fr) 96px 96px 104px 112px;align-items:center;min-height:64px;padding:10px 4px;background:{{ a.bg }};border-bottom:1px solid #D5DAE1">
+              <span style="text-align:center;font-size:15px;color:#4A5260">{{ a.dateLabel }}</span>
+              <span style="padding-left:16px;min-width:0;font-size:16px;line-height:24px;color:#2A2A2A;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ a.session }}</span>
+              <span style="text-align:center;font-size:15px;color:{{ a.inInk }}">{{ a.inTime }}</span>
+              <span style="text-align:center;font-size:15px;color:{{ a.outInk }}">{{ a.outTime }}</span>
+              <span style="display:flex;justify-content:center"><x-import component-from-global-scope="Sangsang.Badge" tone="{{ a.tone }}" size="sm" hint-size="48px,20px">{{ a.st }}</x-import></span>
+              <span style="display:flex;justify-content:center">
+                <sc-if value="{{ a.canAsk }}" hint-placeholder-val="{{ false }}">
+                  <button type="button" onClick="{{ a.ask }}" aria-label="{{ a.askLabel }}" style="height:32px;padding:0 12px;border:1px solid #C4CBD6;border-radius:6px;background:#FFFFFF;font:inherit;font-size:14px;font-weight:500;color:#2A2A2A;cursor:pointer" style-hover="border-color:#2A2A2A">문의하기</button>
+                </sc-if>
+                <sc-if value="{{ a.asked }}" hint-placeholder-val="{{ false }}">
+                  <span style="font-size:14px;color:#666E7A">답변 대기</span>
+                </sc-if>
+                <sc-if value="{{ a.noAsk }}" hint-placeholder-val="{{ true }}">
+                  <span aria-label="문의 대상 아님" style="font-size:15px;color:#666E7A">–</span>
+                </sc-if>
+              </span>
+            </li>
+          </sc-for>
+        </ul>
+      </div>
+      </div>
+      <div style="display:flex;justify-content:center;padding-top:16px">
+        <x-import component-from-global-scope="Sangsang.Button" variant="outline" onClick="{{ attBack }}" hint-size="96px,44px">목록</x-import>
+      </div>
+    </section>
+    </sc-if>
+  </sc-if>
+
+  <sc-if value="{{ isCourses }}" hint-placeholder-val="{{ false }}">
+    <section data-screen-label="수강 현황" style="display:flex;flex-direction:column;gap:24px">
+      <sc-if value="{{ csOngoing }}" hint-placeholder-val="{{ true }}">
+        <div data-screen-label="수강 중인 과정" style="display:flex;flex-direction:column;gap:16px">
+          <span style="font-size:15px;color:#4A5260">총 <b style="font-weight:700;color:#2A2A2A">{{ ongoingCount }}</b>개</span>
+          <div style="overflow-x:auto">
+          <div style="border-top:2px solid #2A2A2A;min-width:820px">
+            <div aria-hidden="true" style="display:grid;grid-template-columns:64px minmax(200px,1fr) 152px 88px 80px 104px 120px;align-items:center;height:52px;padding:0 4px;background-color:#EEF0F3;border-bottom:1px solid #D5DAE1;font-size:15px;font-weight:600;color:#2A2A2A">
+              <span style="text-align:center">구분</span><span style="padding-left:16px">과정명</span><span style="text-align:center">학습 기간</span><span style="text-align:center">상태</span><span style="text-align:center">진도율</span><span style="text-align:center">완료일</span><span style="text-align:center">강의실</span>
+            </div>
+            <ul style="list-style:none;margin:0;padding:0">
+              <sc-for list="{{ ongoing }}" as="c" hint-placeholder-count="5">
+                <li style="display:grid;grid-template-columns:64px minmax(200px,1fr) 152px 88px 80px 104px 120px;align-items:center;min-height:68px;padding:12px 4px;background:{{ c.bg }};border-bottom:1px solid #D5DAE1">
+                  <span style="display:flex;justify-content:center"><x-import component-from-global-scope="Sangsang.TypeTag" type="{{ c.type }}" size="sm" hint-size="40px,20px"></x-import></span>
+                  <span style="padding-left:16px;min-width:0;font-size:17px;line-height:26px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ c.title }}</span>
+                  <span style="text-align:center;font-size:15px;color:#4A5260">{{ c.period }}</span>
+                  <span style="display:flex;justify-content:center"><x-import component-from-global-scope="Sangsang.StatusBadge" status="{{ c.status }}" size="sm" hint-size="64px,20px"></x-import></span>
+                  <span style="text-align:center;font-size:15px;color:{{ c.pctInk }}">{{ c.pctText }}</span>
+                  <span style="text-align:center;font-size:15px;color:#4A5260">{{ c.doneText }}</span>
+                  <span style="display:flex;justify-content:center"><span style="width:104px;display:flex"><x-import component-from-global-scope="Sangsang.Button" variant="primary" block="{{ true }}" onClick="{{ c.enter }}" hint-size="104px,40px">강의실 입장</x-import></span></span>
+                </li>
+              </sc-for>
+            </ul>
+          </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ csEnded }}" hint-placeholder-val="{{ false }}">
+        <div data-screen-label="종료된 과정" style="display:flex;flex-direction:column;gap:16px">
+          <span style="font-size:15px;color:#4A5260">총 <b style="font-weight:700;color:#2A2A2A">{{ endedCount }}</b>개 · 학습 기간이 끝난 과정은 다시 학습할 수 없어요.</span>
+          <div style="overflow-x:auto">
+          <div style="border-top:2px solid #2A2A2A;min-width:620px">
+            <div aria-hidden="true" style="display:grid;grid-template-columns:64px minmax(200px,1fr) 152px 80px 104px;align-items:center;height:52px;padding:0 4px;background-color:#EEF0F3;border-bottom:1px solid #D5DAE1;font-size:15px;font-weight:600;color:#2A2A2A">
+              <span style="text-align:center">구분</span><span style="padding-left:16px">과정명</span><span style="text-align:center">학습 기간</span><span style="text-align:center">진도율</span><span style="text-align:center">수료 여부</span>
+            </div>
+            <ul style="list-style:none;margin:0;padding:0">
+              <sc-for list="{{ ended }}" as="c" hint-placeholder-count="7">
+                <li style="display:grid;grid-template-columns:64px minmax(200px,1fr) 152px 80px 104px;align-items:center;min-height:68px;padding:12px 4px;background:{{ c.bg }};border-bottom:1px solid #D5DAE1">
+                  <span style="display:flex;justify-content:center"><x-import component-from-global-scope="Sangsang.TypeTag" type="{{ c.type }}" size="sm" hint-size="40px,20px"></x-import></span>
+                  <span style="padding-left:16px;min-width:0;font-size:17px;line-height:26px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ c.title }}</span>
+                  <span style="text-align:center;font-size:15px;color:#4A5260">{{ c.period }}</span>
+                  <span style="text-align:center;font-size:15px;color:#4A5260">{{ c.pctText }}</span>
+                  <span style="display:flex;justify-content:center">
+                    <sc-if value="{{ c.hasResult }}" hint-placeholder-val="{{ true }}"><x-import component-from-global-scope="Sangsang.StatusBadge" status="{{ c.status }}" size="sm" hint-size="64px,20px"></x-import></sc-if>
+                    <sc-if value="{{ c.noResult }}" hint-placeholder-val="{{ false }}"><span style="font-size:15px;color:#666E7A">–</span></sc-if>
+                  </span>
+                </li>
+              </sc-for>
+            </ul>
+          </div>
+          </div>
+        </div>
+      </sc-if>
+
+    </section>
+  </sc-if>
+
+  <sc-if value="{{ isNotes }}" hint-placeholder-val="{{ false }}">
+    <section data-screen-label="쪽지함" style="display:flex;flex-direction:column;gap:16px">
+      <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 24px">
+        <span style="font-size:15px;color:#4A5260">총 <b style="font-weight:700;color:#2A2A2A">{{ noteCount }}</b>건 · 안 읽음 <b style="font-weight:700;color:#1A47D1">{{ unreadCount }}</b>건</span>
+        <div style="display:flex;gap:8px">
+          <x-import component-from-global-scope="Sangsang.Button" variant="outline" size="sm" disabled="{{ noSel }}" onClick="{{ askDelNotes }}" hint-size="96px,32px">선택 삭제</x-import>
+          <x-import component-from-global-scope="Sangsang.Button" variant="outline" size="sm" icon="check" disabled="{{ noUnread }}" onClick="{{ readAll }}" hint-size="96px,32px">모두 읽음</x-import>
+        </div>
+      </div>
+      <div style="border-top:2px solid #2A2A2A">
+        <div style="display:grid;grid-template-columns:56px 72px minmax(0,1fr) 128px 112px;align-items:center;height:52px;padding:0 4px;background-color:#EEF0F3;border-bottom:1px solid #D5DAE1;font-size:15px;font-weight:600;color:#2A2A2A">
+          <span style="display:flex;justify-content:center"><x-import component-from-global-scope="Sangsang.Checkbox" aria-label="전체 선택" checked="{{ allSel }}" onChange="{{ toggleAllNotes }}" hint-size="20px,20px"></x-import></span>
+          <span aria-hidden="true" style="text-align:center">상태</span><span aria-hidden="true" style="padding-left:16px">제목</span><span aria-hidden="true" style="text-align:center">보낸 사람</span><span aria-hidden="true" style="text-align:center">받은 날짜</span>
+        </div>
+        <ul style="list-style:none;margin:0;padding:0">
+          <sc-for list="{{ notes }}" as="n" hint-placeholder-count="8">
+            <li style="display:grid;grid-template-columns:56px minmax(0,1fr);align-items:center;background:{{ n.bg }};border-bottom:1px solid #D5DAE1">
+              <span style="display:flex;justify-content:center;padding-left:4px"><x-import component-from-global-scope="Sangsang.Checkbox" aria-label="{{ n.selLabel }}" checked="{{ n.sel }}" onChange="{{ n.toggle }}" hint-size="20px,20px"></x-import></span>
+              <button type="button" onClick="{{ n.open }}" style="width:100%;display:grid;grid-template-columns:72px minmax(0,1fr) 128px 112px;align-items:center;min-height:64px;padding:0 4px 0 0;border:0;background:transparent;font:inherit;color:#2A2A2A;text-align:left;cursor:pointer" style-hover="color:#1A47D1">
+                <span style="display:flex;justify-content:center;font-size:14px;font-weight:600;color:{{ n.stColor }}">{{ n.stLabel }}</span>
+                <span style="padding-left:16px;font-size:17px;line-height:26px;font-weight:{{ n.weight }};white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ n.title }}</span>
+                <span style="text-align:center;font-size:15px;color:#4A5260">{{ n.from }}</span>
+                <span style="text-align:center;font-size:15px;color:#4A5260">{{ n.date }}</span>
+              </button>
+            </li>
+          </sc-for>
+        </ul>
+      </div>
+      <div style="display:flex;justify-content:center;padding-top:16px">
+        <x-import component-from-global-scope="Sangsang.Button" variant="outline" onClick="{{ backToClassroom }}" hint-size="120px,40px">나의 강의실로</x-import>
+      </div>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{ isClassroom }}" hint-placeholder-val="{{ true }}">
+    <div data-screen-label="나의 강의실" style="display:flex;flex-direction:column;gap:80px">
+      <section data-screen-label="나의 정보 · 쪽지함" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,400px),1fr));background:#FFFFFF;border:1px solid #E3E7ED;border-radius:12px;overflow:hidden">
+        <div style="padding:24px 28px;border-right:1px solid #E3E7ED;margin-right:-1px;display:flex;flex-direction:column;gap:16px">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding-bottom:14px;border-bottom:1px solid #E3E7ED">
+            <h2 style="margin:0;font-size:18px;line-height:27px;font-weight:700">나의 정보</h2>
+            <x-import component-from-global-scope="Sangsang.Button" variant="outline" size="sm" icon="edit" onClick="{{ openPw }}" hint-size="88px,32px">정보 수정</x-import>
+          </div>
+          <div style="display:flex;align-items:center;gap:24px">
+            <span role="img" aria-label="김미코 프로필" style="flex:none;width:64px;height:64px;border-radius:9999px;background:#EEF3FF;color:#1C59FE;display:flex;align-items:center;justify-content:center"><x-import component-from-global-scope="Sangsang.Icon" name="user" size="{{ 32 }}" hint-size="32px,32px"></x-import></span>
+            <dl style="margin:0;flex:1;min-width:0;display:grid;grid-template-columns:72px minmax(0,1fr);row-gap:6px;column-gap:16px;font-size:15px;line-height:24px">
+              <dt style="color:#666E7A">이름</dt><dd style="margin:0;font-weight:700">김미코</dd>
+              <dt style="color:#666E7A">소속</dt><dd style="margin:0">반도체사업부 · 책임</dd>
+              <dt style="color:#666E7A">이메일</dt><dd style="margin:0;overflow:hidden;text-overflow:ellipsis">mikim@mico.kr</dd>
+              <dt style="color:#666E7A">휴대폰</dt><dd style="margin:0">010-1234-5678</dd>
+            </dl>
+          </div>
+        </div>
+        <div style="padding:24px 28px;display:flex;flex-direction:column;gap:16px">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding-bottom:14px;border-bottom:1px solid #E3E7ED">
+            <h2 style="margin:0;font-size:18px;line-height:27px;font-weight:700">쪽지함</h2>
+            <a href="#" onClick="{{ openNotesAll }}" style="display:flex;align-items:center;gap:2px;font-size:14px;font-weight:500;color:#4A5260;text-decoration:none" style-hover="color:#2A2A2A">전체 보기<x-import component-from-global-scope="Sangsang.Icon" name="chevron-right" size="{{ 16 }}" hint-size="16px,16px"></x-import></a>
+          </div>
+          <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column">
+            <sc-for list="{{ notesPreview }}" as="n" hint-placeholder-count="3">
+              <li style="display:grid;grid-template-columns:8px minmax(0,1fr) auto;align-items:center;gap:12px;min-height:40px">
+                <span aria-hidden="true" style="width:8px;height:8px;border-radius:9999px;background:{{ n.dot }}"></span>
+                <a href="#" onClick="{{ n.open }}" style="min-width:0;font-size:15px;line-height:24px;font-weight:{{ n.weight }};color:#2A2A2A;text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" style-hover="color:#1A47D1">{{ n.title }}<sc-if value="{{ n.unread }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">(읽지 않음)</span></sc-if></a>
+                <span style="font-size:14px;color:#666E7A">{{ n.date }}</span>
+              </li>
+            </sc-for>
+          </ul>
+        </div>
+      </section>
+
+      <sc-if value="{{ hasCourses }}" hint-placeholder-val="{{ true }}">
+        <section data-screen-label="수강 과정" aria-label="수강 과정" style="display:flex;flex-direction:column;gap:16px">
+          <div style="display:flex;align-items:baseline;gap:8px;padding-bottom:14px;border-bottom:1px solid #E3E7ED">
+            <h2 style="margin:0;font-size:20px;line-height:30px;font-weight:700;color:#2A2A2A">현재 수강 중인 과정</h2>
+            <span style="font-size:15px;color:#4A5260"><b style="font-weight:700;color:#1A47D1">{{ count }}</b>개</span>
+          </div>
+
+          <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px">
+            <sc-for list="{{ items }}" as="c" hint-placeholder-count="5">
+              <li style="display:grid;grid-template-columns:clamp(140px,26%,240px) minmax(0,1fr) 176px;min-height:160px;background:#FFFFFF;border:1px solid #E3E7ED;border-radius:12px;overflow:hidden">
+                <div style="position:relative;background:#EAF0FF"><div role="img" aria-label="{{ c.alt }}" style="position:absolute;inset:0;background:#EAF0FF center/cover no-repeat;background-image:{{ c.bgImg }}"></div></div>
+                <div style="display:contents">
+                  <div style="min-width:0;padding:20px 24px;display:flex;flex-direction:column;justify-content:center;gap:6px">
+                    <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+                      <x-import component-from-global-scope="Sangsang.TypeTag" type="{{ c.type }}" size="sm" hint-size="40px,20px"></x-import>
+                      <x-import component-from-global-scope="Sangsang.StatusBadge" status="{{ c.status }}" size="sm" hint-size="56px,20px"></x-import>
+                      <span style="font-size:13px;color:#666E7A">{{ c.cat }}</span>
+                    </div>
+                    <h3 style="margin:2px 0 0;font-size:18px;line-height:27px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><a href="과정 상세.dc.html" style="color:#2A2A2A;text-decoration:none" style-hover="color:#1A47D1">{{ c.title }}</a></h3>
+                    <div style="display:flex;gap:16px;font-size:14px;line-height:22px;color:#666E7A;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">
+                      <span>학습 기간 <span style="color:#2A2A2A;font-weight:600">{{ c.period }}</span></span>
+                      <span>학습 시간 <span style="color:#2A2A2A;font-weight:600">{{ c.hours }}</span></span>
+                    </div>
+                    <span style="min-height:22px;display:flex;align-items:center;gap:12px;font-size:14px;line-height:22px;color:#4A5260;white-space:nowrap;overflow:hidden">
+                      <sc-if value="{{ c.hasNote }}" hint-placeholder-val="{{ false }}"><span style="overflow:hidden;text-overflow:ellipsis">{{ c.noteLabel }} <b style="font-weight:600;color:#2A2A2A">{{ c.noteVal }}</b></span></sc-if>
+                      <sc-if value="{{ c.isDone }}" hint-placeholder-val="{{ false }}"><a href="#cert" onClick="{{ goCert }}" style="display:flex;align-items:center;gap:4px;font-weight:600;color:#1A47D1;text-decoration:none" style-hover="text-decoration:underline"><x-import component-from-global-scope="Sangsang.Icon" name="award" size="{{ 16 }}" hint-size="16px,16px"></x-import>수료증 보기</a></sc-if>
+                    </span>
+                  </div>
+                  <div style="padding:20px 24px 20px 0;display:flex;flex-direction:column;justify-content:center;gap:12px">
+                    <div style="display:flex;flex-direction:column;gap:6px">
+                      <div style="display:flex;justify-content:space-between;align-items:baseline;font-size:13px;color:#666E7A"><span>진도율</span><span style="font-size:16px;font-weight:700;color:#2A2A2A">{{ c.pctLabel }}</span></div>
+                      <div role="progressbar" aria-valuenow="{{ c.pct }}" aria-valuemin="0" aria-valuemax="100" aria-label="진도율" style="height:6px;border-radius:9999px;background:#EEF0F3;overflow:hidden"><div style="width:{{ c.pctLabel }};height:100%;border-radius:9999px;background:#1C59FE"></div></div>
+                    </div>
+                    <sc-if value="{{ c.isStart }}" hint-placeholder-val="{{ false }}">
+                      <x-import component-from-global-scope="Sangsang.Button" variant="primary" block="{{ true }}" hint-size="100%,40px">학습 시작</x-import>
+                    </sc-if>
+                    <sc-if value="{{ c.isContinue }}" hint-placeholder-val="{{ true }}">
+                      <x-import component-from-global-scope="Sangsang.Button" variant="primary" block="{{ true }}" iconRight="arrow-right" hint-size="100%,40px">이어서 학습</x-import>
+                    </sc-if>
+                    <sc-if value="{{ c.isDone }}" hint-placeholder-val="{{ false }}">
+                      <x-import component-from-global-scope="Sangsang.Button" variant="secondary" block="{{ true }}" hint-size="100%,40px">복습하기</x-import>
+                    </sc-if>
+                    <sc-if value="{{ c.isFail }}" hint-placeholder-val="{{ false }}">
+                      <x-import component-from-global-scope="Sangsang.Button" variant="outline" block="{{ true }}" hint-size="100%,40px">학습 결과 보기</x-import>
+                    </sc-if>
+                  </div>
+                </div>
+              </li>
+            </sc-for>
+          </ul>
+          <sc-if value="{{ hasMore }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;justify-content:flex-end">
+              <x-import component-from-global-scope="Sangsang.Button" variant="outline" iconRight="chevron-right" onClick="{{ showAllCourses }}" hint-size="112px,40px">전체 보기</x-import>
+            </div>
+          </sc-if>
+        </section>
+      </sc-if>
+
+      <sc-if value="{{ noCourses }}" hint-placeholder-val="{{ false }}">
+        <div data-screen-label="강의실 비어 있음" style="padding:72px 24px;background:#FFFFFF;border:1px solid #E3E7ED;border-radius:12px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center">
+          <div style="width:320px;max-width:100%"><x-import component-from-global-scope="Sangsang.GridHub" icon="book" tone="neutral" width="{{ 320 }}" height="{{ 128 }}" size="{{ 48 }}" lit="{{ 3 }}" seed="{{ 5 }}" hint-size="100%,128px"></x-import></div>
+          <h3 style="margin:8px 0 0;font-size:18px;line-height:27px;font-weight:600">아직 듣고 있는 과정이 없어요</h3>
+          <p style="margin:0;color:#4A5260;text-wrap:pretty">교육 과정에서 듣고 싶은 과정을 찾아 신청해 보세요. 관리자가 배정한 과정은 여기에 바로 나타나요.</p>
+          <a href="교육 과정.dc.html" style="margin-top:12px;display:flex;align-items:center;gap:6px;height:40px;padding:0 18px;border-radius:8px;background:#1C59FE;color:#FFFFFF;font-size:15px;font-weight:600;text-decoration:none" style-hover="background:#1A47D1;color:#FFFFFF">교육 과정 보기</a>
+        </div>
+      </sc-if>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isApply }}" hint-placeholder-val="{{ false }}">
+    <section data-screen-label="신청 내역" style="display:flex;flex-direction:column;gap:16px">
+      <span style="font-size:15px;color:#4A5260">총 <b style="font-weight:700;color:#2A2A2A">{{ applyCount }}</b>건</span>
+      <div style="border-top:2px solid #2A2A2A">
+        <div aria-hidden="true" style="display:grid;grid-template-columns:72px minmax(0,1fr) 120px 112px 104px;align-items:center;height:52px;padding:0 4px;background-color:#EEF0F3;border-bottom:1px solid #D5DAE1;font-size:15px;font-weight:600;color:#2A2A2A">
+          <span style="text-align:center">번호</span><span style="padding-left:16px">과정명</span><span style="text-align:center">신청일</span><span style="text-align:center">상태</span><span style="text-align:center">관리</span>
+        </div>
+        <ul style="list-style:none;margin:0;padding:0">
+          <sc-for list="{{ applies }}" as="a" hint-placeholder-count="4">
+            <li style="display:grid;grid-template-columns:72px minmax(0,1fr) 120px 112px 104px;align-items:center;min-height:68px;padding:12px 4px;background:{{ a.bg }};border-bottom:1px solid #D5DAE1">
+              <span style="text-align:center;font-size:15px;color:#666E7A">{{ a.no }}</span>
+              <a href="과정 상세.dc.html" style="align-self:stretch;margin:-12px 0;padding:12px 16px;min-width:0;display:flex;flex-direction:column;justify-content:center;gap:4px;color:#2A2A2A;text-decoration:none" style-hover="color:#1A47D1">
+                <span style="display:flex;align-items:center;gap:8px;min-width:0">
+                  <x-import component-from-global-scope="Sangsang.TypeTag" type="{{ a.type }}" size="sm" hint-size="40px,20px"></x-import>
+                  <span style="min-width:0;font-size:17px;line-height:26px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ a.title }}</span>
+                </span>
+              </a>
+              <span style="text-align:center;font-size:15px;color:#4A5260">{{ a.date }}</span>
+              <span style="display:flex;justify-content:center"><x-import component-from-global-scope="Sangsang.StatusBadge" status="{{ a.status }}" size="sm" hint-size="64px,20px"></x-import></span>
+              <span style="display:flex;justify-content:center">
+                <sc-if value="{{ a.pending }}" hint-placeholder-val="{{ false }}">
+                  <x-import component-from-global-scope="Sangsang.Button" variant="outline" size="sm" onClick="{{ a.cancel }}" hint-size="80px,32px">신청 취소</x-import>
+                </sc-if>
+                <sc-if value="{{ a.rejected }}" hint-placeholder-val="{{ false }}">
+                  <x-import component-from-global-scope="Sangsang.Button" variant="outline" size="sm" onClick="{{ a.showReason }}" hint-size="80px,32px">사유 보기</x-import>
+                </sc-if>
+                <sc-if value="{{ a.noAction }}" hint-placeholder-val="{{ true }}"><span style="font-size:15px;color:#666E7A">–</span></sc-if>
+              </span>
+            </li>
+          </sc-for>
+        </ul>
+        <sc-if value="{{ applyEmpty }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:48px 24px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;border-bottom:1px solid #D5DAE1">
+            <div style="width:320px;max-width:100%"><x-import component-from-global-scope="Sangsang.GridHub" icon="book" tone="neutral" width="{{ 320 }}" height="{{ 128 }}" size="{{ 48 }}" lit="{{ 3 }}" seed="{{ 7 }}" hint-size="100%,128px"></x-import></div>
+            <h3 style="margin:8px 0 0;font-size:18px;line-height:27px;font-weight:600">신청한 과정이 없어요</h3>
+            <p style="margin:0;color:#4A5260">교육 과정에서 듣고 싶은 과정을 찾아 신청해 보세요.</p>
+          </div>
+        </sc-if>
+      </div>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{ isCert }}" hint-placeholder-val="{{ false }}">
+    <section data-screen-label="수료증 · 배지" style="display:flex;flex-direction:column;gap:24px">
+      <div role="tablist" aria-label="수료증 · 배지" style="display:flex;column-gap:32px;border-bottom:1px solid #E3E7ED;margin-top:-8px">
+        <sc-for list="{{ certTabs }}" as="t" hint-placeholder-count="2">
+          <sc-if value="{{ t.on }}" hint-placeholder-val="{{ false }}">
+            <button type="button" role="tab" aria-selected="true" onClick="{{ t.pick }}" style="height:56px;padding:0;margin-bottom:-1px;border:0;border-bottom:2px solid #2A2A2A;background:transparent;font:inherit;font-size:18px;font-weight:700;color:#2A2A2A;cursor:pointer">{{ t.label }}</button>
+          </sc-if>
+          <sc-if value="{{ t.off }}" hint-placeholder-val="{{ true }}">
+            <button type="button" role="tab" aria-selected="false" onClick="{{ t.pick }}" style="height:56px;padding:0;margin-bottom:-1px;border:0;border-bottom:2px solid transparent;background:transparent;font:inherit;font-size:18px;font-weight:500;color:#666E7A;cursor:pointer" style-hover="color:#2A2A2A">{{ t.label }}</button>
+          </sc-if>
+        </sc-for>
+      </div>
+
+      <sc-if value="{{ isCertList }}" hint-placeholder-val="{{ true }}">
+        <div data-screen-label="수료증 목록" style="display:flex;flex-direction:column;gap:16px">
+          <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 24px">
+            <span style="font-size:15px;color:#4A5260">총 <b style="font-weight:700;color:#2A2A2A">{{ docCount }}</b>건</span>
+            <span style="display:flex;align-items:center;gap:6px;font-size:14px;color:#4A5260"><x-import component-from-global-scope="Sangsang.Icon" name="info" size="{{ 16 }}" hint-size="16px,16px"></x-import>수료증은 과정별 진도율이 80% 이상일 때 발급돼요.</span>
+          </div>
+          <div style="border-top:2px solid #2A2A2A">
+            <div aria-hidden="true" style="display:grid;grid-template-columns:80px minmax(0,1fr) 184px 128px 136px 136px;align-items:center;height:52px;padding:0 4px;background-color:#EEF0F3;border-bottom:1px solid #D5DAE1;font-size:15px;font-weight:600;color:#2A2A2A">
+              <span style="text-align:center">구분</span><span style="padding-left:16px">과정명</span><span style="text-align:center">학습 기간</span><span style="text-align:center">진도율 / 기준</span><span style="text-align:center">학습기록</span><span style="text-align:center">수료증</span>
+            </div>
+            <ul style="list-style:none;margin:0;padding:0">
+              <sc-for list="{{ docs }}" as="c" hint-placeholder-count="10">
+                <li style="display:grid;grid-template-columns:80px minmax(0,1fr) 184px 128px 136px 136px;align-items:center;min-height:68px;padding:12px 4px;background:{{ c.bg }};border-bottom:1px solid #D5DAE1">
+                  <span style="display:flex;justify-content:center"><x-import component-from-global-scope="Sangsang.TypeTag" type="{{ c.type }}" size="sm" hint-size="40px,20px"></x-import></span>
+                  <span style="padding-left:16px;min-width:0;font-size:17px;line-height:26px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ c.title }}</span>
+                  <span style="text-align:center;font-size:15px;color:#4A5260">{{ c.period }}</span>
+                  <span style="text-align:center;font-size:15px;color:#4A5260"><b style="font-weight:700;color:{{ c.pctColor }}">{{ c.pctLabel }}</b> / 80%</span>
+                  <span style="display:flex;justify-content:center"><span style="width:112px;display:flex"><x-import component-from-global-scope="Sangsang.Button" variant="outline" block="{{ true }}" onClick="{{ c.openConfirm }}" hint-size="112px,40px">학습기록 발급</x-import></span></span>
+                  <span style="display:flex;justify-content:center"><span style="width:112px;display:flex"><x-import component-from-global-scope="Sangsang.Button" variant="primary" block="{{ true }}" disabled="{{ c.locked }}" onClick="{{ c.openCert }}" hint-size="112px,40px">수료증 발급</x-import></span></span>
+                </li>
+              </sc-for>
+            </ul>
+          </div>
+          <div style="display:flex;justify-content:center;padding-top:16px"><x-import component-from-global-scope="Sangsang.Pagination" page="{{ docPage }}" total="{{ docPages }}" onChange="{{ onDocPage }}" hint-size="240px,40px"></x-import></div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isBadgeList }}" hint-placeholder-val="{{ false }}">
+        <div data-screen-label="배지 목록" style="display:flex;flex-direction:column;gap:16px">
+          <span style="font-size:15px;color:#4A5260">과정 수료 배지 <b style="font-weight:700;color:#2A2A2A">{{ certCount }}</b>개</span>
+          <ul style="list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:20px">
+            <sc-for list="{{ certs }}" as="c" hint-placeholder-count="5">
+              <li style="padding:28px 20px 24px;background:#FFFFFF;border:1px solid #E3E7ED;border-radius:12px;display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center">
+                <span style="width:88px;height:88px;border-radius:9999px;background:#EAF0FF;display:flex;align-items:center;justify-content:center">
+                  <span style="width:68px;height:68px;border-radius:9999px;background:{{ c.badgeBg }};color:#FFFFFF;display:flex;align-items:center;justify-content:center"><x-import component-from-global-scope="Sangsang.Icon" name="award" size="{{ 30 }}" hint-size="30px,30px"></x-import></span>
+                </span>
+                <x-import component-from-global-scope="Sangsang.TypeTag" type="{{ c.type }}" size="sm" hint-size="40px,20px"></x-import>
+                <h3 style="margin:0;font-size:16px;line-height:24px;font-weight:600;text-wrap:pretty">{{ c.title }}</h3>
+                <span style="font-size:13px;line-height:20px;color:#666E7A">{{ c.done }} 발급</span>
+              </li>
+            </sc-for>
+          </ul>
+        </div>
+      </sc-if>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{ extList }}" hint-placeholder-val="{{ false }}">
+    <section data-screen-label="외부교육 · 자격 목록" style="display:flex;flex-direction:column;gap:16px">
+      <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 24px">
+        <span style="font-size:15px;color:#4A5260">총 <b style="font-weight:700;color:#2A2A2A">{{ extCount }}</b>건</span>
+        <x-import component-from-global-scope="Sangsang.Button" variant="primary" icon="plus" onClick="{{ goExtNew }}" hint-size="112px,40px">등록하기</x-import>
+      </div>
+      <div style="border-top:2px solid #2A2A2A">
+        <div aria-hidden="true" style="display:grid;grid-template-columns:72px 112px minmax(0,1fr) 120px 112px;align-items:center;height:52px;padding:0 4px;background-color:#EEF0F3;border-bottom:1px solid #D5DAE1;font-size:15px;font-weight:600;color:#2A2A2A">
+          <span style="text-align:center">번호</span><span style="padding-left:16px">구분</span><span style="padding-left:16px">교육 · 자격명</span><span style="text-align:center">등록일</span><span style="text-align:center">상태</span>
+        </div>
+        <ul style="list-style:none;margin:0;padding:0">
+          <sc-for list="{{ exts }}" as="e" hint-placeholder-count="6">
+            <li style="border-bottom:1px solid #D5DAE1">
+              <button type="button" onClick="{{ e.open }}" style="width:100%;display:grid;grid-template-columns:72px 112px minmax(0,1fr) 120px 112px;align-items:center;min-height:68px;padding:10px 4px;border:0;background:{{ e.bg }};font:inherit;color:#2A2A2A;text-align:left;cursor:pointer" style-hover="color:#1A47D1">
+                <span style="text-align:center;font-size:15px;color:#666E7A">{{ e.id }}</span>
+                <span style="padding-left:16px;font-size:15px;color:#4A5260">{{ e.kindLabel }}</span>
+                <span style="padding-left:16px;min-width:0;display:flex;flex-direction:column;gap:2px">
+                  <span style="font-size:17px;line-height:26px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ e.name }}</span>
+                  <span style="font-size:14px;line-height:20px;color:#666E7A;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ e.org }}</span>
+                </span>
+                <span style="text-align:center;font-size:15px;color:#4A5260">{{ e.date }}</span>
+                <span style="display:flex;justify-content:center"><x-import component-from-global-scope="Sangsang.StatusBadge" status="{{ e.status }}" size="sm" hint-size="64px,20px"></x-import></span>
+              </button>
+            </li>
+          </sc-for>
+        </ul>
+      </div>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{ extDetail }}" hint-placeholder-val="{{ false }}">
+    <section data-screen-label="외부교육 · 자격 상세" style="display:flex;flex-direction:column;gap:24px">
+      <sc-if value="{{ ce.rejected }}" hint-placeholder-val="{{ false }}">
+        <x-import component-from-global-scope="Sangsang.Banner" tone="danger" title="반려됐어요. 사유를 확인하고 다시 신청해 주세요." hint-size="100%,96px"><span style="display:block">{{ ce.reason }}</span><span style="display:block;margin-top:4px;font-size:13px;color:#666E7A">미코스쿨 운영팀 · {{ ce.rejDate }}</span></x-import>
+      </sc-if>
+      <article style="background:#FFFFFF;border:1px solid #E3E7ED;border-radius:12px;overflow:hidden">
+        <header style="padding:28px 32px 24px;border-bottom:1px solid #E3E7ED;display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;align-items:center;gap:8px">
+            <x-import component-from-global-scope="Sangsang.StatusBadge" status="{{ ce.status }}" size="sm" hint-size="64px,20px"></x-import>
+            <span style="font-size:14px;color:#666E7A">{{ ce.kindLabel }}</span>
+          </div>
+          <h2 style="margin:0;font-size:24px;line-height:34px;font-weight:700;text-wrap:pretty">{{ ce.name }}</h2>
+          <div style="display:flex;flex-wrap:wrap;gap:4px 20px;font-size:14px;color:#666E7A">
+            <span>신청 <b style="font-weight:500;color:#4A5260">김미코</b></span>
+            <span>등록일 <b style="font-weight:400;color:#4A5260">{{ ce.date }}</b></span>
+          </div>
+        </header>
+        <dl style="margin:0;padding:12px 32px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,360px),1fr));column-gap:48px">
+          <sc-for list="{{ ce.rows }}" as="r" hint-placeholder-count="5">
+            <div style="display:grid;grid-template-columns:120px minmax(0,1fr);gap:16px;padding:14px 0;border-bottom:1px solid #EEF0F3;font-size:15px;line-height:24px">
+              <dt style="color:#666E7A">{{ r.label }}</dt>
+              <dd style="margin:0;font-weight:500">{{ r.value }}</dd>
+            </div>
+          </sc-for>
+        </dl>
+        <div style="padding:20px 32px 32px;display:flex;flex-direction:column;gap:12px">
+          <sc-for list="{{ ce.fileGroups }}" as="g" hint-placeholder-count="1">
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <h3 style="margin:0;font-size:15px;line-height:24px;font-weight:600">{{ g.label }}</h3>
+              <sc-if value="{{ g.has }}" hint-placeholder-val="{{ true }}">
+                <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px">
+                  <sc-for list="{{ g.list }}" as="f" hint-placeholder-count="1">
+                    <li style="display:flex;align-items:center;gap:12px;padding:12px 16px;border:1px solid #E3E7ED;border-radius:8px;font-size:15px">
+                      <span style="color:#666E7A;display:flex"><x-import component-from-global-scope="Sangsang.Icon" name="file" size="{{ 18 }}" hint-size="18px,18px"></x-import></span>
+                      <span style="flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ f.name }}</span>
+                      <span style="font-size:14px;color:#666E7A">{{ f.size }}</span>
+                    </li>
+                  </sc-for>
+                </ul>
+              </sc-if>
+              <sc-if value="{{ g.none }}" hint-placeholder-val="{{ false }}"><span style="font-size:15px;color:#666E7A">올린 파일이 없어요</span></sc-if>
+            </div>
+          </sc-for>
+          <sc-if value="{{ ce.pending }}" hint-placeholder-val="{{ false }}">
+            <p style="margin:8px 0 0;padding:20px 24px;border-radius:12px;background:#F4F6F9;font-size:15px;line-height:24px;color:#4A5260">운영팀이 확인하고 있어요. 결과가 나오면 메일로 알려 드려요.</p>
+          </sc-if>
+          <sc-if value="{{ ce.approved }}" hint-placeholder-val="{{ false }}">
+            <p style="margin:8px 0 0;padding:20px 24px;border-radius:12px;background:#F4F6F9;font-size:15px;line-height:24px;color:#4A5260">{{ ce.apDate }}에 승인돼서 나의 기록에 반영됐어요.</p>
+          </sc-if>
+        </div>
+      </article>
+      <div style="display:flex;justify-content:center;gap:8px">
+        <x-import component-from-global-scope="Sangsang.Button" variant="outline" onClick="{{ backToExt }}" hint-size="96px,40px">목록으로</x-import>
+        <sc-if value="{{ ce.rejected }}" hint-placeholder-val="{{ false }}">
+          <x-import component-from-global-scope="Sangsang.Button" variant="primary" icon="edit" onClick="{{ goResubmit }}" hint-size="112px,40px">다시 신청</x-import>
+        </sc-if>
+        <sc-if value="{{ ce.approved }}" hint-placeholder-val="{{ false }}">
+          <x-import component-from-global-scope="Sangsang.Button" variant="danger" onClick="{{ askDelExt }}" hint-size="88px,40px">삭제</x-import>
+        </sc-if>
+      </div>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{ extForm }}" hint-placeholder-val="{{ false }}">
+    <section data-screen-label="외부교육 · 자격 등록" style="display:flex;flex-direction:column;gap:24px">
+      <sc-if value="{{ fm.isResubmit }}" hint-placeholder-val="{{ false }}">
+        <x-import component-from-global-scope="Sangsang.Banner" tone="danger" title="반려된 신청을 고쳐서 다시 보내요" hint-size="100%,72px">반려 사유 · {{ fm.reason }}</x-import>
+      </sc-if>
+      <div style="background:#FFFFFF;border:1px solid #E3E7ED;border-radius:12px;padding:32px;display:flex;flex-direction:column;gap:24px">
+        <div style="display:flex;flex-direction:column;gap:4px">
+          <h2 style="margin:0;font-size:20px;line-height:30px;font-weight:700">{{ fm.heading }}</h2>
+          <p style="margin:0;font-size:14px;color:#4A5260">승인 요청을 보내면 운영팀이 확인한 뒤 반영해요. 다 쓰지 못했으면 임시 저장해 두세요.</p>
+        </div>
+        <div style="border-top:2px solid #2A2A2A">
+          <div style="display:grid;grid-template-columns:168px minmax(0,1fr);border-bottom:1px solid #E3E7ED">
+            <span style="display:flex;align-items:center;padding:12px 20px;background:#F8F9FA;font-size:15px;line-height:24px;font-weight:600">구분<span aria-hidden="true" style="color:#D52B33;margin-left:2px">*</span></span>
+            <div style="padding:12px 20px;display:flex;align-items:center"><x-import component-from-global-scope="Sangsang.RadioGroup" aria-label="구분" name="ext-kind" direction="row" options="{{ kindOpts }}" value="{{ fm.kind }}" onChange="{{ onKind }}" hint-size="320px,24px"></x-import></div>
+          </div>
+          <sc-for list="{{ fm.fields }}" as="x" hint-placeholder-count="5">
+            <div style="display:grid;grid-template-columns:168px minmax(0,1fr);border-bottom:1px solid #E3E7ED">
+              <span style="display:flex;align-items:center;padding:12px 20px;background:#F8F9FA;font-size:15px;line-height:24px;font-weight:600">{{ x.label }}<sc-if value="{{ x.req }}" hint-placeholder-val="{{ false }}"><span aria-hidden="true" style="color:#D52B33;margin-left:2px">*</span></sc-if></span>
+              <div style="padding:10px 20px;max-width:520px"><x-import component-from-global-scope="Sangsang.TextField" aria-label="{{ x.label }}" required="{{ x.req }}" type="{{ x.type }}" inputMode="{{ x.inputMode }}" list="{{ x.dl }}" placeholder="{{ x.ph }}" helper="{{ x.helper }}" error="{{ x.error }}" value="{{ x.value }}" onChange="{{ x.onChange }}" hint-size="100%,40px"></x-import><sc-if value="{{ x.showWarn }}" hint-placeholder-val="{{ false }}"><p style="margin:6px 0 0;display:flex;align-items:center;gap:4px;font-size:13px;line-height:20px;font-weight:500;color:#B45309"><x-import component-from-global-scope="Sangsang.Icon" name="alert" size="{{ 14 }}" hint-size="14px,14px"></x-import>{{ x.warn }}</p></sc-if></div>
+            </div>
+          </sc-for>
+          <sc-for list="{{ fm.uploads }}" as="u" hint-placeholder-count="1">
+            <div style="display:grid;grid-template-columns:168px minmax(0,1fr);border-bottom:1px solid #E3E7ED">
+              <span style="display:flex;align-items:center;padding:12px 20px;background:#F8F9FA;font-size:15px;line-height:24px;font-weight:600">{{ u.label }}<sc-if value="{{ u.req }}" hint-placeholder-val="{{ false }}"><span aria-hidden="true" style="color:#D52B33;margin-left:2px">*</span></sc-if></span>
+              <div style="padding:10px 20px;display:flex;flex-direction:column;gap:6px">
+                <div onDragOver="{{ u.onDragOver }}" onDragLeave="{{ u.onDragLeave }}" onDrop="{{ u.onDrop }}" style="display:flex;align-items:center;gap:8px;max-width:520px">
+                  <input type="file" multiple="{{ true }}" ref="{{ u.inputRef }}" onChange="{{ u.onInput }}" accept=".pdf,.jpg,.jpeg,.png" tabindex="-1" aria-hidden="true" style="display:none">
+                  <div style="flex:1;min-width:0;height:40px;box-sizing:border-box;padding:0 12px;border:1px {{ u.borderStyle }} {{ u.borderColor }};border-radius:8px;background:{{ u.bg }};display:flex;align-items:center;gap:6px;font-size:15px;color:{{ u.phColor }};transition:background-color .15s, border-color .15s">
+                    <span style="display:flex;flex-shrink:0"><x-import component-from-global-scope="Sangsang.Icon" name="upload" size="{{ 16 }}" hint-size="16px,16px"></x-import></span>
+                    <span style="min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ u.placeholder }}</span>
+                  </div>
+                  <x-import component-from-global-scope="Sangsang.Button" variant="outline" onClick="{{ u.pick }}" disabled="{{ u.full }}" hint-size="96px,40px">파일 선택</x-import>
+                </div>
+                <sc-if value="{{ u.has }}" hint-placeholder-val="{{ false }}">
+                  <ul style="list-style:none;margin:0;padding:0;max-width:520px;display:flex;flex-direction:column;gap:6px">
+                    <sc-for list="{{ u.list }}" as="f" hint-placeholder-count="1">
+                      <li style="height:40px;padding:0 8px 0 12px;border:1px solid #E3E7ED;border-radius:8px;background:#F8F9FA;display:flex;align-items:center;gap:8px;font-size:14px">
+                        <span style="display:flex;color:#666E7A;flex-shrink:0"><x-import component-from-global-scope="Sangsang.Icon" name="file" size="{{ 16 }}" hint-size="16px,16px"></x-import></span>
+                        <span style="flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ f.name }}</span>
+                        <span style="color:#666E7A;flex-shrink:0">{{ f.size }}</span>
+                        <button type="button" onClick="{{ f.remove }}" aria-label="{{ f.removeLabel }}" style="width:28px;height:28px;padding:0;border:0;background:transparent;color:#666E7A;display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="color:#2A2A2A"><x-import component-from-global-scope="Sangsang.Icon" name="x" size="{{ 16 }}" hint-size="16px,16px"></x-import></button>
+                      </li>
+                    </sc-for>
+                  </ul>
+                </sc-if>
+                <span style="font-size:13px;line-height:20px;color:{{ u.hintColor }}">{{ u.hint }}</span>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+        <datalist id="lang-opts"><sc-for list="{{ langOpts }}" as="o" hint-placeholder-count="0"><option value="{{ o.v }}"></option></sc-for></datalist>
+        <datalist id="cert-opts"><sc-for list="{{ certOpts }}" as="o" hint-placeholder-count="0"><option value="{{ o.v }}"></option></sc-for></datalist>
+      </div>
+      <div style="display:flex;justify-content:center;gap:8px">
+        <x-import component-from-global-scope="Sangsang.Button" variant="outline" size="lg" onClick="{{ cancelExt }}" hint-size="96px,48px">취소</x-import>
+        <x-import component-from-global-scope="Sangsang.Button" variant="secondary" size="lg" onClick="{{ saveDraft }}" hint-size="112px,48px">임시 저장</x-import>
+        <x-import component-from-global-scope="Sangsang.Button" variant="primary" size="lg" onClick="{{ submitExt }}" hint-size="120px,48px">승인 요청</x-import>
+      </div>
+    </section>
+  </sc-if>
+
+  </div>
+</main>
+
+<dc-import name="Footer" hint-size="100%,200px"></dc-import>
+
+<sc-if value="{{ reasonOpen }}" hint-placeholder-val="{{ false }}">
+  <x-import component-from-global-scope="Sangsang.Modal" title="반려 사유" onClose="{{ closeReason }}" footer="{{ reasonFooter }}" hint-size="480px,240px">
+    <div data-screen-label="반려 사유" style="display:flex;flex-direction:column;gap:16px">
+      <dl style="margin:0;display:grid;grid-template-columns:64px minmax(0,1fr);row-gap:6px;column-gap:16px;font-size:14px;line-height:22px">
+        <dt style="color:#666E7A">과정명</dt><dd style="margin:0;font-weight:600">{{ ra.title }}</dd>
+        <dt style="color:#666E7A">신청일</dt><dd style="margin:0">{{ ra.date }}</dd>
+      </dl>
+      <p style="margin:0;padding:16px 20px;border-radius:8px;background:#F4F6F9;font-size:15px;line-height:24px;color:#2A2A2A;text-wrap:pretty">{{ ra.reason }}</p>
+    </div>
+  </x-import>
+</sc-if>
+
+<sc-if value="{{ noteOpen }}" hint-placeholder-val="{{ false }}">
+  <x-import component-from-global-scope="Sangsang.Modal" title="쪽지" width="{{ 560 }}" onClose="{{ closeNote }}" footer="{{ noteFooter }}" hint-size="560px,360px">
+    <div data-screen-label="쪽지 상세" style="display:flex;flex-direction:column;gap:20px">
+      <div style="display:flex;flex-direction:column;gap:8px;padding-bottom:16px;border-bottom:1px solid #E3E7ED">
+        <h3 style="margin:0;font-size:18px;line-height:27px;font-weight:700;text-wrap:pretty">{{ cn.title }}</h3>
+        <div style="display:flex;flex-wrap:wrap;gap:4px 16px;font-size:14px;line-height:22px;color:#666E7A">
+          <span>보낸 사람 <b style="font-weight:500;color:#4A5260">{{ cn.from }}</b></span>
+          <span>받은 날짜 <b style="font-weight:400;color:#4A5260">{{ cn.time }}</b></span>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px;font-size:15px;line-height:26px;color:#2A2A2A">
+        <sc-for list="{{ cn.paras }}" as="p" hint-placeholder-count="2">
+          <p style="margin:0;text-wrap:pretty">{{ p.t }}</p>
+        </sc-for>
+      </div>
+      <sc-if value="{{ cn.hasInfo }}" hint-placeholder-val="{{ false }}">
+        <dl style="margin:0;padding:16px 20px;border-radius:8px;background:#F4F6F9;display:grid;grid-template-columns:80px minmax(0,1fr);row-gap:6px;column-gap:16px;font-size:14px;line-height:22px">
+          <sc-for list="{{ cn.info }}" as="r" hint-placeholder-count="2">
+            <dt style="color:#666E7A">{{ r.k }}</dt><dd style="margin:0;font-weight:500">{{ r.v }}</dd>
+          </sc-for>
+        </dl>
+      </sc-if>
+    </div>
+  </x-import>
+</sc-if>
+
+<sc-if value="{{ pwOpen }}" hint-placeholder-val="{{ false }}">
+  <x-import component-from-global-scope="Sangsang.Modal" title="비밀번호 확인" onClose="{{ closePw }}" footer="{{ pwFooter }}" hint-size="480px,280px">
+    <form data-screen-label="비밀번호 재인증" onSubmit="{{ submitPw }}" style="display:flex;flex-direction:column;gap:20px">
+      <p style="margin:0;font-size:14px;line-height:22px;color:#4A5260;text-wrap:pretty">정보를 안전하게 지키기 위해 비밀번호를 한 번 더 확인해요.</p>
+      <div style="display:flex;flex-direction:column;gap:6px">
+        <span style="font-size:14px;line-height:20px;color:#666E7A">아이디</span>
+        <span style="font-size:15px;line-height:24px;font-weight:600">mikim</span>
+      </div>
+      <x-import component-from-global-scope="Sangsang.TextField" label="비밀번호" type="password" autoComplete="current-password" autoFocus="{{ true }}" value="{{ pwVal }}" onChange="{{ onPw }}" error="{{ pwError }}" helper="로그인할 때 쓰는 비밀번호를 입력하세요" hint-size="100%,72px"></x-import>
+    </form>
+  </x-import>
+</sc-if>
+
+<sc-if value="{{ askOpen }}" hint-placeholder-val="{{ false }}">
+  <x-import component-from-global-scope="Sangsang.Modal" title="출결 문의" width="{{ 520 }}" onClose="{{ closeAsk }}" footer="{{ askFooter }}" hint-size="520px,360px">
+    <div data-screen-label="출결 문의" style="display:flex;flex-direction:column;gap:20px">
+      <dl style="margin:0;display:grid;grid-template-columns:64px minmax(0,1fr);row-gap:6px;column-gap:16px;font-size:14px;line-height:22px">
+        <dt style="color:#666E7A">과정</dt><dd style="margin:0;color:#2A2A2A;font-weight:600">{{ askRow.course }}</dd>
+        <dt style="color:#666E7A">교육일</dt><dd style="margin:0;color:#2A2A2A">{{ askRow.dateLabel }}</dd>
+        <dt style="color:#666E7A">출결</dt><dd style="margin:0;color:#2A2A2A">{{ askRow.st }}</dd>
+      </dl>
+      <label style="display:flex;flex-direction:column;gap:8px">
+        <span style="font-size:14px;font-weight:600;color:#2A2A2A">문의 내용</span>
+        <textarea value="{{ askMsg }}" onChange="{{ onAskMsg }}" rows="5" placeholder="실제 입실 시간이나 사유를 적어 주세요." style="width:100%;box-sizing:border-box;padding:12px;border:1px solid #C4CBD6;border-radius:8px;font:inherit;font-size:15px;line-height:24px;color:#2A2A2A;resize:vertical"></textarea>
+      </label>
+      <p style="margin:0;font-size:13px;line-height:20px;color:#666E7A">교육 담당자가 확인한 뒤 쪽지함으로 답변을 보내드려요.</p>
+    </div>
+  </x-import>
+</sc-if>
+
+<sc-if value="{{ delNotesOpen }}" hint-placeholder-val="{{ false }}">
+  <x-import component-from-global-scope="Sangsang.Modal" title="쪽지를 삭제할까요?" onClose="{{ closeDelNotes }}" footer="{{ delNotesFooter }}" hint-size="480px,200px">
+    <p style="margin:0;font-size:14px;line-height:22px;color:#4A5260;text-wrap:pretty">{{ delNotesMsg }}<br>삭제하면 되돌릴 수 없어요.</p>
+  </x-import>
+</sc-if>
+
+<sc-if value="{{ delOpen }}" hint-placeholder-val="{{ false }}">
+  <x-import component-from-global-scope="Sangsang.Modal" title="삭제할까요?" onClose="{{ closeDel }}" footer="{{ delFooter }}" hint-size="480px,200px">
+    <p style="margin:0;font-size:14px;line-height:22px;color:#4A5260;text-wrap:pretty">「{{ ce.name }}」 기록을 삭제해요.<br>삭제하면 되돌릴 수 없어요.</p>
+  </x-import>
+</sc-if>
+
+<sc-if value="{{ confirmOpen }}" hint-placeholder-val="{{ false }}">
+  <x-import component-from-global-scope="Sangsang.Modal" title="신청을 취소할까요?" onClose="{{ closeConfirm }}" footer="{{ confirmFooter }}" hint-size="480px,200px">
+    <p style="margin:0;font-size:14px;line-height:22px;color:#4A5260;text-wrap:pretty">「{{ confirmTitle }}」 신청을 취소해요. 다시 들으려면 과정 상세에서 새로 신청해야 해요.</p>
+  </x-import>
+</sc-if>
+
+<sc-if value="{{ certOpen }}" hint-placeholder-val="{{ false }}">
+  <x-import component-from-global-scope="Sangsang.Modal" title="{{ doc.modalTitle }}" width="{{ 760 }}" onClose="{{ closeCert }}" footer="{{ certFooter }}" hint-size="760px,600px">
+    <div ref="{{ certBox }}" style="position:relative;width:min(100%, calc((100vh - 240px) * 1.414));margin:0 auto;aspect-ratio:1.414/1;overflow:hidden">
+    <div data-screen-label="수료증 미리보기" style="position:absolute;left:0;top:0;width:680px;height:481px;box-sizing:border-box;transform-origin:0 0;transform:scale({{ certScale }});padding:10px;background:#FFFFFF;border:1px solid #C9D2E3;color:#2A2A2A">
+      <div style="height:100%;box-sizing:border-box;border:2px solid #002060;padding:24px 48px;display:flex;flex-direction:column;justify-content:space-between;align-items:center;text-align:center">
+        <div style="align-self:stretch;display:flex;justify-content:space-between;align-items:center;gap:16px">
+          <span style="font-size:12px;line-height:18px;color:#4A5260">제 {{ cur.certNo }} 호</span>
+          <img src="assets/logo.png" alt="미코스쿨 상상이상" style="height:24px;width:auto;display:block">
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:2px">
+          <span style="font-size:36px;line-height:48px;font-weight:800;letter-spacing:0.5em;margin-right:-0.5em;color:#002060">{{ doc.title }}</span>
+          <span style="font-size:12px;line-height:18px;font-weight:600;letter-spacing:0.24em;color:#4A5260">{{ doc.en }}</span>
+        </div>
+        <dl style="margin:0;display:grid;grid-template-columns:80px minmax(0,1fr);column-gap:20px;row-gap:6px;text-align:left;font-size:15px;line-height:24px;min-width:340px">
+          <dt style="color:#666E7A">성명</dt><dd style="margin:0;font-weight:700">김미코</dd>
+          <dt style="color:#666E7A">소속</dt><dd style="margin:0;font-weight:600">반도체사업부 · 책임</dd>
+          <dt style="color:#666E7A">과정명</dt><dd style="margin:0;font-weight:600">「{{ cur.title }}」</dd>
+          <dt style="color:#666E7A">교육 기간</dt><dd style="margin:0;font-weight:600">{{ cur.period }}</dd>
+          <dt style="color:#666E7A">이수 시간</dt><dd style="margin:0;font-weight:600">{{ cur.hours }}</dd>
+          <sc-if value="{{ doc.showPct }}" hint-placeholder-val="{{ false }}"><dt style="color:#666E7A">진도율</dt><dd style="margin:0;font-weight:600">{{ cur.pctLabel }}</dd></sc-if>
+        </dl>
+        <p style="margin:0;font-size:15px;line-height:26px;color:#2A2A2A;text-wrap:pretty">{{ doc.l1 }}<br>{{ doc.l2 }}</p>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+          <span style="font-size:14px;line-height:22px;color:#4A5260">{{ cur.doneLong }}</span>
+          <span style="font-size:18px;line-height:27px;font-weight:700;letter-spacing:0.04em">미코스쿨 상상이상 연수원장</span>
+        </div>
+      </div>
+    </div>
+    </div>
+  </x-import>
+</sc-if>
+
+<sc-if value="{{ toastOpen }}" hint-placeholder-val="{{ false }}">
+  <div role="status" style="position:fixed;left:50%;bottom:32px;transform:translateX(-50%);z-index:210">
+    <x-import component-from-global-scope="Sangsang.Toast" tone="success" hint-size="220px,48px">{{ toastMsg }}</x-import>
+  </div>
+</sc-if>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;emptyState&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;나의 강의실&quot;}}">
+const U = id => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=640&q=80`;
+const COURSES = [
+  { type: 'required', cat: '법정 · 안전', title: '2026 산업안전보건교육', period: '2026.10.01 – 12.31', hours: '6시간', status: 'in-progress', pct: 62, next: '4차시 · 위험성평가 실습', assigned: true, img: '1586528116311-ad8dd3c8310d', alt: '설비가 늘어선 생산 현장' },
+  { type: 'required', cat: '직무', title: '반도체 8대 공정 이해', period: '2026.10.01 – 12.31', hours: '8시간', status: 'in-progress', pct: 35, next: '3차시 · 포토 공정', assigned: true, img: '1576141546153-3e04370b5ff7', alt: '클린룸에서 공정 장비를 다루는 엔지니어' },
+  { type: 'elective', cat: '리더십', title: '신임 리더 코칭 스킬', period: '2026.10.01 – 12.31', hours: '4시간', status: 'in-progress', pct: 80, next: '8차시 · 피드백 대화 실습', img: '1606857521015-7f9fcf423740', alt: '모니터가 놓인 사무실 전경' },
+  { type: 'required', cat: '공통 역량', title: '2026 하반기 정보보안 교육', period: '2026.11.01 – 11.30', hours: '1시간 30분', status: 'not-started', pct: 0, assigned: true, img: '1518770660439-4636190af475', alt: '회로 기판 확대 사진' },
+  { type: 'required', cat: '법정 · 안전', title: '직장 내 괴롭힘 예방교육', period: '2026.11.01 – 12.15', hours: '1시간', status: 'not-started', pct: 0, assigned: true, img: '1512758017271-d7b84c2113f1', alt: '포스트잇 메모가 붙은 기획 보드' },
+  { type: 'required', cat: '공통 역량', title: '2026 상반기 정보보안 교육', period: '2026.05.01 – 05.31', hours: '1시간 30분', status: 'completed', pct: 100, done: '2026.05.22', assigned: true, img: '1524178232363-1fb2b075b655', alt: '프로젝터 화면 앞에서 강의를 듣는 사람들' },
+  { type: 'elective', cat: '공통 역량', title: '엑셀 데이터 정리 기초', period: '2026.07.01 – 08.31', hours: '3시간', status: 'completed', pct: 100, done: '2026.08.14', img: '1454165804606-c3d57bc86b40', alt: '책상 위에서 서류를 검토하는 사람' },
+  { type: 'elective', cat: '직무', title: '문제 해결 사고법', period: '2026.06.01 – 08.31', hours: '2시간', status: 'incomplete', pct: 45, img: '1434030216411-0b793f4b4173', alt: '노트에 필기하는 손' },
+  { type: 'required', cat: '법정 · 안전', title: '2026 직장 내 괴롭힘 예방교육', period: '2026.04.01 – 06.30', hours: '1시간', status: 'completed', pct: 100, done: '2026.04.18', assigned: true, img: '1524178232363-1fb2b075b655', alt: '프로젝터 화면 앞에서 강의를 듣는 사람들' },
+  { type: 'elective', cat: '직무', title: '공정 데이터 시각화 입문', period: '2026.03.01 – 04.30', hours: '4시간', status: 'completed', pct: 100, done: '2026.04.09', img: '1454165804606-c3d57bc86b40', alt: '책상 위에서 서류를 검토하는 사람' },
+  { type: 'required', cat: '공통 역량', title: '2026 신년 비전 공유', period: '2026.01.05 – 02.28', hours: '1시간', status: 'completed', pct: 100, done: '2026.01.20', assigned: true, img: '1434030216411-0b793f4b4173', alt: '노트에 필기하는 손' },
+  { type: 'elective', cat: '리더십', title: '회의 퍼실리테이션 기초', period: '2026.02.01 – 03.31', hours: '2시간', status: 'incomplete', pct: 30, img: '1524178232363-1fb2b075b655', alt: '프로젝터 화면 앞에서 강의를 듣는 사람들' }
+].map(c => {
+  const note = c.status === 'in-progress' ? ['다음 차시', c.next]
+    : c.status === 'completed' ? ['수료일', c.done]
+    : c.status === 'incomplete' ? ['결과', '진도율 미달'] : null;
+  return {
+    ...c, img: U(c.img), bgImg: `url("${U(c.img)}")`, assigned: !!c.assigned, pctLabel: c.pct + '%',
+    hasNote: !!note, noteLabel: note ? note[0] : '', noteVal: note ? note[1] : '',
+    isStart: c.status === 'not-started', isContinue: c.status === 'in-progress',
+    isDone: c.status === 'completed', isFail: c.status === 'incomplete'
+  };
+});
+const CR_TABS = [['학습 중', 'in-progress'], ['수강 예정', 'not-started'], ['수료', 'completed']];
+const NAV = [
+  { label: '학습 관리', items: [
+    { id: 'classroom', label: '나의 강의실', desc: '듣고 있는 과정을 이어서 학습하고, 받은 쪽지를 확인해요.' },
+    { id: 'apply', label: '강의 신청 내역', desc: '신청한 강의의 승인 상태를 확인하고 신청을 취소할 수 있어요.' },
+    { label: '학습 캘린더' }, { label: 'AI 미션' }, { label: '추천 피드' }, { label: '라이브 세션' }
+  ] },
+  { label: '학습 기록', items: [
+    { id: 'history', label: '학습 이력', desc: '수강 · 이수한 과정의 이수시간, 점수, 수료 여부를 확인해요.' },
+    { id: 'attendance', label: '출석 관리', desc: '연수원 집합 교육의 과정별 입실 · 퇴실 기록과 출결 상태를 확인해요.' },
+    { id: 'cert', label: '수료증 · 배지', desc: '수료한 과정의 수료증을 내려받고 배지를 확인해요.' },
+    { id: 'external', label: '외부 자격증 관리', desc: '사외 교육 수료와 어학 · 자격증을 등록하고 승인 상태를 확인해요.' }
+  ] },
+  { label: '역량 분석', items: [{ label: '자가진단' }, { label: '학습 DNA' }, { label: '역량 Gap' }, { label: 'My Map' }, { label: '목표 · IDP' }, { label: '추천 전문가' }] }
+];
+const TABS = NAV.flatMap(g => g.items).filter(t => t.id);
+const TAB_IDS = TABS.map(t => t.id);
+const SCORES = { '2026 상반기 정보보안 교육': 92, '엑셀 데이터 정리 기초': 88, '2026 직장 내 괴롭힘 예방교육': 95, '공정 데이터 시각화 입문': 84, '2026 신년 비전 공유': 100, '문제 해결 사고법': 52, '회의 퍼실리테이션 기초': 40 };
+const toMin = h => { const m = h.match(/(\d+)시간/), n = h.match(/(\d+)분/); return (m ? +m[1] * 60 : 0) + (n ? +n[1] : 0); };
+const fmtMin = t => `${Math.floor(t / 60)}시간${t % 60 ? ' ' + (t % 60) + '분' : ''}`;
+const ATT_COURSES = [
+  { type: 'elective', title: '신임 리더 코칭 스킬', round: '2026년 3차', period: '2026.10.01 – 12.31', end: '2026.12.31', total: 24 },
+  { type: 'required', title: '2026 산업안전보건교육', round: '2026년 1차', period: '2026.10.01 – 12.31', end: '2026.12.31', total: 16 },
+  { type: 'required', title: '반도체 8대 공정 이해', round: '2026년 2차', period: '2026.10.01 – 12.31', end: '2026.12.31', total: 16 },
+  { type: 'elective', title: '엑셀 데이터 정리 기초', round: '2026년 1차', period: '2026.07.01 – 08.31', end: '2026.08.31', total: 8 },
+  { type: 'required', title: '2026 직장 내 괴롭힘 예방교육', round: '2026년 1차', period: '2026.04.01 – 06.30', end: '2026.06.30', total: 3 }
+];
+const ATTENDS = [
+  { date: '2026-11-06', course: '신임 리더 코칭 스킬', session: '집합 실습 2일차 · 본관 301호', in: '08:42', out: '17:35', st: '출석', h: 8 },
+  { date: '2026-11-05', course: '신임 리더 코칭 스킬', session: '집합 실습 1일차 · 본관 301호', in: '09:16', out: '17:32', st: '지각', h: 8 },
+  { date: '2026-10-23', course: '2026 산업안전보건교육', session: '현장 실습 · 안전체험관', in: '08:38', out: '15:10', st: '조퇴', h: 8 },
+  { date: '2026-10-22', course: '2026 산업안전보건교육', session: '집합 교육 · 대강당', in: '08:40', out: '17:41', st: '출석', h: 8 },
+  { date: '2026-10-16', course: '반도체 8대 공정 이해', session: '클린룸 실습 · 실습동 B1', in: '08:47', out: '17:30', st: '출석', h: 8 },
+  { date: '2026-10-15', course: '반도체 8대 공정 이해', session: '공정 이론 · 본관 205호', in: '', out: '', st: '결석', h: 8 },
+  { date: '2026-08-12', course: '엑셀 데이터 정리 기초', session: '실습 · 전산실 2', in: '08:51', out: '17:33', st: '출석', h: 8 },
+  { date: '2026-04-15', course: '2026 직장 내 괴롭힘 예방교육', session: '집합 교육 · 대강당', in: '08:44', out: '12:05', st: '출석', h: 3 }
+];
+const ATT_GOT = { '출석': h => h, '지각': h => h - 1, '조퇴': h => Math.max(0, h - 2), '결석': () => 0 };
+const ATT_TONE = { '출석': 'success', '지각': 'warning', '조퇴': 'info', '결석': 'danger' };
+const ATT_INK = { '출석': '#1F7A4D', '지각': '#9A5B00', '조퇴': '#1A47D1', '결석': '#B0202A' };
+const WD = ['일', '월', '화', '수', '목', '금', '토'];
+
+const APPLIES = [
+  { id: 5, type: 'elective', title: '데이터 기반 품질 분석', date: '2026.11.03', status: 'pending' },
+  { id: 4, type: 'elective', title: '신임 리더를 위한 피드백 대화법', date: '2026.10.30', status: 'pending' },
+  { id: 3, type: 'elective', title: '신임 리더 코칭 스킬', date: '2026.09.24', status: 'approved' },
+  { id: 2, type: 'elective', title: '생산 데이터 대시보드 읽기', date: '2026.09.10', status: 'rejected', reason: '이번 차수는 생산기술팀 대상으로 운영돼요. 12월 차수에 다시 신청해 주세요.' },
+  { id: 1, type: 'elective', title: '엑셀 데이터 정리 기초', date: '2026.06.25', status: 'approved' }
+];
+
+const PASS = 80, TODAY = '2026.11.04';
+const longDate = s => { const [y, m, d] = s.split('.').map(Number); return `${y}년 ${m}월 ${d}일`; };
+const DOCS = [
+  ...COURSES.map(c => ({ type: c.type, title: c.title, period: c.period, hours: c.hours, pct: c.pct, done: c.done, status: c.status })),
+  { type: 'required', title: '2025 산업안전보건교육', period: '2025.10.01 – 12.31', done: '2025.12.18', hours: '6시간', pct: 100, status: 'completed' },
+  { type: 'required', title: '2025 직장 내 괴롭힘 예방교육', period: '2025.11.01 – 12.15', done: '2025.11.27', hours: '1시간', pct: 100, status: 'completed' },
+  { type: 'required', title: '2025 하반기 정보보안 교육', period: '2025.11.01 – 11.30', done: '2025.11.20', hours: '1시간 30분', pct: 100, status: 'completed' }
+].map((c, i) => {
+  const ok = c.pct >= PASS, issue = c.done || TODAY, [y, m, d] = issue.split('.');
+  return { ...c, id: i, ok, no: ok ? 0 : 1, pctLabel: c.pct + '%',
+    pctColor: ok ? '#1A47D1' : c.status === 'incomplete' ? '#B0202A' : '#4A5260',
+    certNo: `MS-${y}-${m}${d}-${String(140 + i * 37).padStart(4, '0')}`, issue };
+});
+const PER_PAGE = 10;
+const CERTS = [
+  { type: 'elective', title: '엑셀 데이터 정리 기초', period: '2026.07.01 – 08.31', done: '2026.08.14', hours: '3시간', certNo: 'MS-2026-0814-0217' },
+  { type: 'required', title: '2026 상반기 정보보안 교육', period: '2026.05.01 – 05.31', done: '2026.05.22', hours: '1시간 30분', certNo: 'MS-2026-0522-0142' },
+  { type: 'required', title: '2025 산업안전보건교육', period: '2025.10.01 – 12.31', done: '2025.12.18', hours: '6시간', certNo: 'MS-2025-1218-0388' },
+  { type: 'required', title: '2025 직장 내 괴롭힘 예방교육', period: '2025.11.01 – 12.15', done: '2025.11.27', hours: '1시간', certNo: 'MS-2025-1127-0301' },
+  { type: 'required', title: '2025 하반기 정보보안 교육', period: '2025.11.01 – 11.30', done: '2025.11.20', hours: '1시간 30분', certNo: 'MS-2025-1120-0296' }
+].map((c, i, a) => {
+  const [y, m, d] = c.done.split('.').map(Number);
+  return { ...c, id: i, no: a.length - i, doneLong: `${y}년 ${m}월 ${d}일`, badgeBg: c.type === 'elective' ? '#1C59FE' : '#002060' };
+});
+
+const NOTES = [
+  { id: 1, title: '「신임 리더 코칭 스킬」 수강 신청이 승인됐어요', date: '2026.11.03', time: '2026.11.03 14:20', unread: true,
+    paras: ['신청하신 과정이 승인됐어요. 나의 강의실에서 바로 학습을 시작할 수 있어요.'],
+    info: [['과정명', '신임 리더 코칭 스킬'], ['학습 기간', '2026.09.01 – 11.30'], ['승인자', '박지훈 팀장']],
+    action: { label: '강의실로 가기', tab: 'classroom' } },
+  { id: 2, title: '외부교육 · 자격 「산업안전기사」 등록이 반려됐어요', date: '2026.09.24', time: '2026.09.24 10:05', unread: true,
+    paras: ['등록하신 자격증이 반려됐어요. 아래 사유를 확인하고 다시 신청해 주세요.'],
+    info: [['자격증명', '산업안전기사'], ['반려 사유', '자격증 사본의 성명과 자격증 번호가 가려져 있어요.']],
+    action: { label: '등록 내역 보기', tab: 'external', extId: 4 } },
+  { id: 3, title: '「엑셀 데이터 정리 기초」 수료증이 발급됐어요', date: '2026.08.14', time: '2026.08.14 18:00', unread: false,
+    paras: ['과정을 수료해서 수료증이 발급됐어요. 수료증 · 배지에서 내려받을 수 있어요.'],
+    info: [['과정명', '엑셀 데이터 정리 기초'], ['수료일', '2026.08.14']],
+    action: { label: '수료증 보기', tab: 'cert' } },
+  { id: 4, title: '외부교육 · 자격 「반도체 공정 장비 세미나 2026」 등록이 승인됐어요', date: '2026.07.16', time: '2026.07.16 11:30', unread: false,
+    paras: ['등록하신 외부교육이 승인돼서 나의 기록에 반영됐어요.'],
+    info: [['교육명', '반도체 공정 장비 세미나 2026'], ['이수 시간', '14시간']],
+    action: { label: '등록 내역 보기', tab: 'external', extId: 3 } },
+  { id: 5, title: '「문제 해결 사고법」 과정이 미이수로 종료됐어요', date: '2026.09.01', time: '2026.09.01 09:00', unread: false,
+    paras: ['학습 기간이 끝나 과정이 종료됐어요. 진도율 미달로 미이수 처리됐어요.', '다음 차수가 열리면 다시 신청할 수 있어요.'],
+    info: [['과정명', '문제 해결 사고법'], ['진도율', '45% / 80%']],
+    action: { label: '강의실로 가기', tab: 'classroom' } },
+  { id: 6, title: '「반도체 8대 공정 이해」 과정이 배정됐어요', date: '2026.10.01', time: '2026.10.01 09:00', unread: false,
+    paras: ['소속 팀 필수 교육으로 과정이 배정됐어요. 나의 강의실에서 바로 학습할 수 있어요.'],
+    info: [['과정명', '반도체 8대 공정 이해'], ['학습 기간', '2026.10.01 – 12.31']],
+    action: { label: '강의실로 가기', tab: 'classroom' }, from: '반도체사업부' },
+  { id: 7, title: '「2026 상반기 정보보안 교육」 수료증이 발급됐어요', date: '2026.05.22', time: '2026.05.22 17:40', unread: false,
+    paras: ['과정을 수료해서 수료증이 발급됐어요. 수료증 · 배지에서 내려받을 수 있어요.'],
+    info: [['과정명', '2026 상반기 정보보안 교육'], ['수료일', '2026.05.22']],
+    action: { label: '수료증 보기', tab: 'cert' } }
+].map(n => ({ from: '미코스쿨 운영팀', ...n })).sort((a, b) => b.time.localeCompare(a.time));
+const KINDS = { edu: '외부교육', lang: '어학', cert: '자격증' };
+const HELP_EXP = '유효기간이 있는 항목만 입력하세요';
+const FMT = 'PDF, JPG, PNG · 최대 10MB';
+const MAX_FILES = 5;
+const allFiles = files => Object.values(files || {}).flat().slice(0, MAX_FILES);
+const FIELDS = {
+  edu: [
+    { k: 'name', label: '교육명', req: true },
+    { k: 'org', label: '기관명' },
+    { k: 'hours', label: '이수 시간', ph: '시간', num: true },
+    { k: 'start', label: '시작일', type: 'date' },
+    { k: 'done', label: '완료일', req: true, type: 'date' },
+    { k: 'expire', label: '유효기간 만료일', type: 'date', warn: HELP_EXP }
+  ],
+  lang: [
+    { k: 'name', label: '어학명', req: true, ph: '시험명이나 언어를 입력한 뒤 목록에서 고르세요', helper: '찾는 시험이 없으면 1:1 문의로 알려 주세요', dl: 'lang-opts' },
+    { k: 'score', label: '점수', oneOf: true },
+    { k: 'grade', label: '등급', warn: '점수나 등급 중 하나를 입력하세요', oneOf: true },
+    { k: 'done', label: '취득일', req: true, type: 'date' },
+    { k: 'expire', label: '유효기간 만료일', type: 'date', warn: HELP_EXP }
+  ],
+  cert: [
+    { k: 'name', label: '자격증명', req: true, ph: '자격증명을 입력한 뒤 목록에서 고르세요', helper: '찾는 자격증이 없으면 1:1 문의로 알려 주세요', dl: 'cert-opts' },
+    { k: 'certNo', label: '자격증 번호' },
+    { k: 'org', label: '기관명' },
+    { k: 'done', label: '취득일', req: true, type: 'date' },
+    { k: 'expire', label: '유효기간 만료일', type: 'date', warn: HELP_EXP }
+  ]
+};
+const UPLOADS = {
+  edu: [
+    { k: 'proof', label: '수료 증빙파일', req: true, hint: '수료증 · 이수 확인서 · 결과보고서 등' }
+  ],
+  lang: [{ k: 'proof', label: '어학 성적 증빙파일', req: true, hint: '시험 성적표나 성적 확인서' }],
+  cert: [{ k: 'proof', label: '자격증 증빙파일', req: true, hint: '자격증 사본이나 자격 취득 확인서' }]
+};
+const dot = v => v ? v.replace(/-/g, '.') : '';
+const EXTS = [
+  { id: 6, kind: 'edu', status: 'draft', date: '2026.11.02', f: { name: 'AWS 클라우드 실무 과정', org: '패스트캠퍼스', hours: '', start: '2026-10-13', done: '2026-10-17', expire: '' }, files: {} },
+  { id: 5, kind: 'lang', status: 'pending', date: '2026.10.28', f: { name: 'TOEIC Speaking', score: '150', grade: 'IM3', done: '2026-10-11', expire: '2028-10-10' }, files: { proof: [{ name: 'TOEIC_Speaking_성적표.pdf', size: '412KB' }] } },
+  { id: 4, kind: 'cert', status: 'rejected', date: '2026.09.22', rejDate: '2026.09.24', reason: '자격증 사본의 성명과 자격증 번호가 가려져 있어요. 전체가 보이는 사본으로 다시 올려 주세요.', f: { name: '산업안전기사', certNo: '26201030417K', org: '한국산업인력공단', done: '2026-09-10', expire: '' }, files: { proof: [{ name: '산업안전기사_자격증.jpg', size: '1.2MB' }] } },
+  { id: 3, kind: 'edu', status: 'approved', date: '2026.07.14', apDate: '2026.07.16', f: { name: '반도체 공정 장비 세미나 2026', org: 'SEMI Korea', hours: '14', start: '2026-07-08', done: '2026-07-09', expire: '' }, files: { proof: [{ name: 'SEMI_세미나_수료증.pdf', size: '286KB' }], report: [{ name: '세미나_결과보고서.pdf', size: '1.8MB' }] } },
+  { id: 2, kind: 'lang', status: 'approved', date: '2026.03.28', apDate: '2026.03.30', f: { name: 'OPIc 영어', score: '', grade: 'IH', done: '2026-03-21', expire: '2028-03-20' }, files: { proof: [{ name: 'OPIc_성적표.pdf', size: '358KB' }] } },
+  { id: 1, kind: 'cert', status: 'approved', date: '2025.12.05', apDate: '2025.12.08', f: { name: '품질경영기사', certNo: '25201120388Q', org: '한국산업인력공단', done: '2025-11-27', expire: '' }, files: { proof: [{ name: '품질경영기사_자격증.pdf', size: '540KB' }] } }
+];
+const exp = f => f.expire ? `${dot(f.expire)}까지` : '없음';
+const extRows = e => {
+  const f = e.f, d = v => v || '–';
+  if (e.kind === 'edu') return [['기관명', d(f.org)], ['이수 시간', f.hours ? f.hours + '시간' : '–'], ['교육 기간', f.start ? `${dot(f.start)} – ${dot(f.done)}` : dot(f.done)], ['유효기간', exp(f)]];
+  if (e.kind === 'lang') return [['점수', d(f.score)], ['등급', d(f.grade)], ['취득일', dot(f.done)], ['유효기간', exp(f)]];
+  return [['자격증 번호', d(f.certNo)], ['기관명', d(f.org)], ['취득일', dot(f.done)], ['유효기간', exp(f)]];
+};
+const extSub = e => e.kind === 'lang' ? [e.f.grade && '등급 ' + e.f.grade, e.f.score && e.f.score + '점'].filter(Boolean).join(' · ') : (e.f.org || '');
+const LANG_OPTS = ['TOEIC', 'TOEIC Speaking', 'TOEFL iBT', 'IELTS', 'OPIc 영어', 'OPIc 일본어', 'OPIc 중국어', 'JLPT', 'JPT', 'HSK', 'TSC', 'FLEX 베트남어'];
+const CERT_OPTS = ['산업안전기사', '산업안전산업기사', '품질경영기사', '전기기사', '반도체설계기사', '정보처리기사', '위험물산업기사', '화공기사', '일반기계기사', '가스기사', '6시그마 BB', '6시그마 GB'];
+
+class Component extends DCLogic {
+  state = { tab: 'classroom', filter: null, applies: APPLIES, certTab: 'cert', certId: null, exts: EXTS, extView: 'list', extId: null, form: null, tried: false };
+  goExt(view, extra) { this.setState({ extView: view, ...extra }); window.scrollTo(0, 0); }
+  openForm(e, resubmit) {
+    this.goExt('form', { tried: false, form: e
+      ? { id: e.id, kind: e.kind, f: { ...e.f }, files: { proof: allFiles(e.files) }, resubmit: !!resubmit, reason: e.reason || '' }
+      : { id: null, kind: 'edu', f: {}, files: {}, resubmit: false, reason: '' } });
+  }
+  saveExt(status) {
+    const fm = this.state.form;
+    if (status === 'pending') {
+      const fs = FIELDS[fm.kind], v = k => (fm.f[k] || '').trim();
+      const bad = fs.some(x => (x.req && !v(x.k)) || (x.num && v(x.k) && !/^\d+$/.test(v(x.k))))
+        || (fs.some(x => x.oneOf) && !fs.filter(x => x.oneOf).some(x => v(x.k)));
+      if (bad) { this.setState({ tried: true }); return; }
+    } else if (!(fm.f.name || '').trim()) { this.setState({ tried: true }); return; }
+    this.setState(s => {
+      const id = fm.id ?? Math.max(0, ...s.exts.map(x => x.id)) + 1;
+      const item = { id, kind: fm.kind, status, date: '2026.11.04', f: fm.f, files: fm.files };
+      const exts = fm.id != null ? s.exts.map(x => x.id === id ? item : x) : [item, ...s.exts];
+      return { exts };
+    });
+    this.goExt('list', { form: null });
+    this.showToast(status === 'pending' ? '승인 요청을 보냈어요' : '임시 저장했어요');
+  }
+  certBox = el => {
+    if (this.ro) { this.ro.disconnect(); this.ro = null; }
+    if (!el) return;
+    this.ro = new ResizeObserver(([e]) => {
+      const s = Math.round((e.contentRect.width / 680) * 1000) / 1000;
+      if (s && s !== this.state.certScale) this.setState({ certScale: s });
+    });
+    this.ro.observe(el);
+  };
+  extVals(tab) {
+    const s = this.state, on = tab === 'external';
+    const ceRaw = s.exts.find(x => x.id === s.extId);
+    const fm = s.form;
+    const B = window.Sangsang && window.Sangsang.Button;
+    return {
+      extList: on && s.extView === 'list', extDetail: on && s.extView === 'detail' && !!ceRaw, extForm: on && s.extView === 'form' && !!fm,
+      extCount: s.exts.length,
+      exts: s.exts.map((e, i) => ({ id: e.id, status: e.status, date: e.date, name: e.f.name || '(제목 없음)', org: extSub(e), kindLabel: KINDS[e.kind], bg: i % 2 ? '#F8F9FA' : '#FFFFFF',
+        open: () => e.status === 'draft' ? this.openForm(e) : this.goExt('detail', { extId: e.id }) })),
+      goExtNew: () => this.openForm(null),
+      backToExt: () => this.goExt('list'),
+      ce: ceRaw ? { ...ceRaw, name: ceRaw.f.name, kindLabel: KINDS[ceRaw.kind], rejected: ceRaw.status === 'rejected', pending: ceRaw.status === 'pending', approved: ceRaw.status === 'approved',
+        rows: extRows(ceRaw).map(([label, value]) => ({ label, value })),
+        fileGroups: UPLOADS[ceRaw.kind].map(u => { const list = allFiles(ceRaw.files); return { label: u.label, list, has: list.length > 0, none: list.length === 0 }; }) } : { rows: [], fileGroups: [] },
+      langOpts: LANG_OPTS.map(v => ({ v })), certOpts: CERT_OPTS.map(v => ({ v })),
+      goResubmit: () => this.openForm(ceRaw, true),
+      askDelExt: () => this.setState({ delOpen: true }),
+      delOpen: !!s.delOpen && !!ceRaw,
+      closeDel: () => this.setState({ delOpen: false }),
+      delFooter: B && s.delOpen && ceRaw ? [
+        React.createElement(B, { key: 'c', variant: 'outline', onClick: () => this.setState({ delOpen: false }) }, '닫기'),
+        React.createElement(B, { key: 'd', variant: 'danger', onClick: () => {
+          this.setState(st => ({ exts: st.exts.filter(x => x.id !== ceRaw.id), delOpen: false }));
+          this.goExt('list', { extId: null });
+          this.showToast('삭제했어요');
+        } }, '삭제')
+      ] : null,
+      resubmitBtn: B && ceRaw ? React.createElement(B, { variant: 'outline', size: 'sm', onClick: () => this.openForm(ceRaw, true) }, '다시 신청') : null,
+      kindOpts: Object.entries(KINDS).map(([value, label]) => ({ value, label })),
+      onKind: v => this.setState(st => ({ form: { ...st.form, kind: v }, tried: false })),
+      fm: fm ? {
+        kind: fm.kind, isResubmit: fm.resubmit, reason: fm.reason,
+        heading: fm.resubmit ? '다시 신청하기' : fm.id != null ? '임시 저장한 신청' : '외부교육 · 자격 등록',
+        uploads: UPLOADS[fm.kind].map(u => {
+          const list = fm.files[u.k] || [];
+          const setFiles = v => this.setState(st => ({ form: { ...st.form, files: { ...st.form.files, [u.k]: v } } }));
+          const over = this.state.dragKey === u.k;
+          const fmt = n => n >= 1048576 ? (n / 1048576).toFixed(1) + 'MB' : Math.max(1, Math.round(n / 1024)) + 'KB';
+          const take = fl => {
+            const arr = Array.from(fl || []); if (!arr.length) return;
+            const okType = f => /\.(pdf|jpe?g|png)$/i.test(f.name), okSize = f => f.size <= 10 * 1048576;
+            const bad = arr.find(f => !okType(f)) ? 'PDF, JPG, PNG 파일만 올릴 수 있어요.' : arr.find(f => !okSize(f)) ? '10MB 이하 파일만 올릴 수 있어요.' : '';
+            const ok = arr.filter(f => okType(f) && okSize(f)).map(f => ({ name: f.name, size: fmt(f.size) }));
+            setFiles([...list, ...ok].slice(0, MAX_FILES));
+            this.setState({ fileErr: bad || (list.length + ok.length > MAX_FILES ? `첨부 파일은 ${MAX_FILES}개까지 올릴 수 있어요.` : '') });
+          };
+          const full = list.length >= MAX_FILES, err = this.state.fileErr || '';
+          this.fileRefs = this.fileRefs || {};
+          const ref = this.fileRefs[u.k] = this.fileRefs[u.k] || React.createRef();
+          return { label: u.label, req: !!u.req, has: list.length > 0, full,
+            hint: err || `${u.hint} · ${FMT} · ${MAX_FILES}개까지 (${list.length}/${MAX_FILES})`, hintColor: err ? '#C62F33' : '#666E7A',
+            list: list.map((f, i) => ({ ...f, removeLabel: f.name + ' 삭제', remove: () => { setFiles(list.filter((_, j) => j !== i)); this.setState({ fileErr: '' }); } })),
+            inputRef: ref,
+            pick: () => ref.current && ref.current.click(),
+            onInput: e => { take(e.target.files); e.target.value = ''; },
+            onDragOver: e => { e.preventDefault(); if (!over && !full) this.setState({ dragKey: u.k }); },
+            onDragLeave: e => { if (!e.currentTarget.contains(e.relatedTarget)) this.setState({ dragKey: null }); },
+            onDrop: e => { e.preventDefault(); this.setState({ dragKey: null }); if (!full) take(e.dataTransfer.files); },
+            borderStyle: over ? 'dashed' : 'solid', borderColor: over ? '#1C59FE' : '#D5DAE1', bg: over ? '#EAF0FF' : full ? '#F4F6F9' : '#FFFFFF',
+            phColor: over ? '#1A47D1' : '#8A929E',
+            placeholder: over ? '여기에 놓으세요' : full ? `${MAX_FILES}개를 모두 올렸어요` : '파일을 끌어다 놓으세요' };
+        }),
+        fields: FIELDS[fm.kind].map(x => {
+          const v = fm.f[x.k] || '';
+          const noneOf = x.oneOf && !FIELDS[fm.kind].filter(y => y.oneOf).some(y => (fm.f[y.k] || '').trim());
+          const error = !s.tried ? '' : x.req && !v.trim() ? `${x.label}을 입력하세요.`.replace(/([가-힣])을/, (m, c) => (c.charCodeAt(0) - 0xAC00) % 28 ? m : c + '를') : x.num && v && !/^\d+$/.test(v) ? '숫자만 입력하세요. 예) 16' : noneOf ? '점수나 등급 중 하나를 입력하세요.' : '';
+          return { label: x.label, req: !!x.req, type: x.type || 'text', ph: x.ph || '', helper: x.helper || '', dl: x.dl || '', error, value: v,
+            inputMode: x.num ? 'numeric' : undefined, warn: x.warn || '', showWarn: !!x.warn && !error,
+            onChange: ev => { const val = x.num ? ev.target.value.replace(/\D/g, '') : ev.target.value; this.setState(st => ({ form: { ...st.form, f: { ...st.form.f, [x.k]: val } } })); } };
+        })
+      } : { fields: [], uploads: [] },
+      cancelExt: () => this.goExt(fm && fm.resubmit ? 'detail' : 'list', { form: null }),
+      saveDraft: () => this.saveExt('draft'),
+      submitExt: () => this.saveExt('pending')
+    };
+  }
+  showToast(msg) {
+    this.setState({ toast: msg });
+    clearTimeout(this.t); this.t = setTimeout(() => this.setState({ toast: null }), 4000);
+  }
+  componentDidMount() {
+    this.onHash = () => { const h = location.hash.slice(1); if (TAB_IDS.includes(h)) this.setState({ tab: h, notesView: false }); else if (h === 'notes') this.setState({ tab: 'classroom', notesView: true }); };
+    this.onHash();
+    window.addEventListener('hashchange', this.onHash);
+    this.onKey = e => { if (e.key === 'Escape') this.setState({ confirmId: null, certId: null, delOpen: false, noteId: null, delNoteIds: null, pwOpen: false, reasonId: null }); };
+    window.addEventListener('keydown', this.onKey);
+  }
+  componentWillUnmount() { window.removeEventListener('hashchange', this.onHash); window.removeEventListener('keydown', this.onKey); clearTimeout(this.t); if (this.ro) this.ro.disconnect(); }
+  doCancel() {
+    const id = this.state.confirmId;
+    this.setState(s => ({ applies: s.applies.filter(x => x.id !== id), confirmId: null }));
+    this.showToast('신청을 취소했어요');
+  }
+  renderVals() {
+    const { tab } = this.state;
+    const st = 'in-progress';
+    const empty = !!this.props.emptyState;
+    const items = empty ? [] : COURSES.filter(c => c.status === st);
+    const cur = TABS.find(t => t.id === tab) || TABS[0];
+    const notesOn = tab === 'classroom' && !!this.state.notesView;
+    const coursesOn = false;
+    const attIdx = tab === 'attendance' ? this.state.attCourse : null;
+    const attOn = attIdx != null && !!ATT_COURSES[attIdx];
+    const subOn = notesOn || attOn;
+    const subLabel = notesOn ? '쪽지함' : attOn ? ATT_COURSES[attIdx].title : '';
+    const openSub = k => { history.replaceState(null, '', k === 'notes' ? '#notes' : '#' + k); this.setState({ tab: k === 'notes' ? 'classroom' : k, notesView: k === 'notes', coursesView: false, attCourse: null }); window.scrollTo(0, 0); };
+    const histList = [...COURSES].sort((a, b) => (b.period.split(' – ')[0]).localeCompare(a.period.split(' – ')[0]));
+    const doneMin = COURSES.filter(c => c.status === 'completed').reduce((s, c) => s + toMin(c.hours), 0);
+    const attCount = k => ATTENDS.filter(a => a.st === k).length;
+    const endOf = p => { const [s, e] = p.split(' – '); return e.split('.').length === 3 ? e : s.slice(0, 5) + e; };
+    const pctOf = c => c.status === 'not-started' ? '측정 불가' : c.pct ? c.pct + '%' : '–';
+    const ongoingList = COURSES.filter(c => endOf(c.period) >= TODAY);
+    const endedList = COURSES.filter(c => endOf(c.period) < TODAY).sort((a, b) => endOf(b.period).localeCompare(endOf(a.period)));
+    const csTab = this.state.csTab || 'ongoing';
+    const crumbRaw = subOn ? [['나의 학습', 'classroom'], [cur.label, cur.id], [subLabel, null]] : [['나의 학습', 'classroom'], [cur.label, null]];
+    return {
+      crumbs: crumbRaw.map(c => c[0]),
+      crumbItems: crumbRaw.map(([label, id], i, a) => {
+        const last = i === a.length - 1;
+        return { label, link: !last, current: last, href: '#' + (id || ''),
+          go: e => { e.preventDefault(); if (id) openSub(id); } };
+      }),
+      isNotes: notesOn, isCourses: coursesOn,
+      csOngoing: csTab === 'ongoing', csEnded: csTab === 'ended',
+      csTabs: [['ongoing', '수강 중인 과정'], ['ended', '종료된 과정']].map(([id, label]) => ({ label, on: csTab === id, off: csTab !== id, pick: () => this.setState({ csTab: id }) })),
+      ongoingCount: ongoingList.length, endedCount: endedList.length,
+      ongoing: ongoingList.map((c, i) => ({ ...c, bg: i % 2 ? '#F8F9FA' : '#FFFFFF', pctText: pctOf(c), pctInk: c.status === 'not-started' ? '#666E7A' : '#2A2A2A',
+        doneText: c.done || '–', enter: () => { window.location.href = '과정 상세.dc.html'; } })),
+      ended: endedList.map((c, i) => ({ ...c, bg: i % 2 ? '#F8F9FA' : '#FFFFFF', pctText: c.pct ? c.pct + '%' : '–',
+        hasResult: c.status === 'completed' || c.status === 'incomplete', noResult: !(c.status === 'completed' || c.status === 'incomplete') })),
+      navGroups: NAV.map(g => {
+        const openSet = this.state.openGroups ?? [NAV.find(x => x.items.some(t => t.id === tab))?.label || NAV[0].label];
+        const open = openSet.includes(g.label);
+        return { label: g.label, expanded: open ? 'true' : 'false', rot: open ? '180deg' : '0deg', rows: open ? '1fr' : '0fr', vis: open ? 'visible' : 'hidden',
+          toggle: () => this.setState({ openGroups: open ? openSet.filter(l => l !== g.label) : [...openSet, g.label] }),
+          items: g.items.map(t => {
+        if (!t.id) return { label: t.label, soon: true, on: false, off: false, hasSubs: false, subs: [], pick: () => this.showToast('아직 준비중입니다.') };
+        const on = t.id === tab && (!subOn || attOn);
+        return { label: t.label, soon: false, on, off: !on,
+          hasSubs: t.id === 'classroom' && tab === 'classroom',
+          subs: t.id === 'classroom' ? [{ label: '쪽지함', on: notesOn, off: !notesOn, pick: () => openSub('notes') }] : [],
+          pick: () => { history.replaceState(null, '', '#' + t.id); this.setState({ tab: t.id, extView: 'list', form: null, notesView: false, coursesView: false, attCourse: null }); window.scrollTo(0, 0); } };
+      }) }; }),
+      isClassroom: tab === 'classroom' && !notesOn,
+      isHistory: tab === 'history',
+      histCount: histList.length, histDone: COURSES.filter(c => c.status === 'completed').length, histHours: fmtMin(doneMin),
+      ...(() => {
+        const ht = this.state.histTab || 'ongoing';
+        const rows = histList.filter(c => ht === 'ongoing' ? endOf(c.period) >= TODAY : endOf(c.period) < TODAY);
+        return { histTabs: [['ongoing', '수강 중'], ['ended', '종료된 과정']].map(([id, label]) => ({ label, on: ht === id, off: ht !== id, pick: () => this.setState({ histTab: id }) })),
+          histRows: rows, histEmpty: rows.length === 0, histEmptyMsg: ht === 'ongoing' ? '수강 중인 과정이 없어요.' : '종료된 과정이 없어요.' };
+      })(),
+      hist: histList.filter(c => (this.state.histTab || 'ongoing') === 'ongoing' ? endOf(c.period) >= TODAY : endOf(c.period) < TODAY).map((c, i) => {
+        const sc = SCORES[c.title], done = c.status === 'completed';
+        const isOn = (this.state.histTab || 'ongoing') === 'ongoing';
+        return { ...c, link: isOn, noLink: !isOn, bg: i % 2 ? '#F8F9FA' : '#FFFFFF', hText: done ? c.hours : '–', hInk: done ? '#2A2A2A' : '#666E7A',
+          sText: sc != null ? sc + '점' : '–', sInk: sc == null ? '#666E7A' : sc >= 60 ? '#2A2A2A' : '#B0202A', sWeight: sc != null ? 600 : 400 };
+      }),
+      isAttend: tab === 'attendance',
+      ...(() => {
+        const todayStr = '2026.11.11';
+        const make = (c, i) => {
+          const rows = ATTENDS.filter(a => a.course === c.title);
+          const got = rows.reduce((s, a) => s + ATT_GOT[a.st](a.h), 0);
+          const live = c.end >= todayStr;
+          return { ...c, bg: i % 2 ? '#F8F9FA' : '#FFFFFF', got, prog: live ? '교육 중' : '종료', progTone: live ? 'info' : 'neutral',
+            counts: ['출석', '지각', '조퇴', '결석'].map(k => { const n = rows.filter(a => a.st === k).length; return { text: `${k} ${n}`, tone: n ? ATT_TONE[k] : 'neutral' }; }),
+            open: () => { this.setState({ attCourse: i }); window.scrollTo(0, 0); },
+            openBtn: e => { e.stopPropagation(); this.setState({ attCourse: i }); window.scrollTo(0, 0); },
+            openLabel: `${c.title} 출결 상세 보기` };
+        };
+        const list = ATT_COURSES.map(make);
+        return { attList: !attOn, attDetail: attOn, attCourses: list, ac: attOn ? list[attIdx] : { counts: [] },
+          attBack: () => { this.setState({ attCourse: null }); window.scrollTo(0, 0); } };
+      })(),
+      ...(() => {
+        const a = this.state.attAsk ? ATTENDS.find(x => x.date + x.course === this.state.attAsk) : null;
+        const B = window.Sangsang && window.Sangsang.Button;
+        const close = () => this.setState({ attAsk: null });
+        const send = () => {
+          if (!(this.state.askMsg || '').trim()) { this.showToast('문의 내용을 적어 주세요.'); return; }
+          this.setState(s => ({ attAsk: null, attAsked: [...(s.attAsked || []), s.attAsk] }));
+          this.showToast('문의를 보냈어요. 답변은 쪽지함으로 알려드려요.');
+        };
+        const d = a ? new Date(a.date + 'T00:00:00') : null;
+        return {
+          askOpen: !!a, closeAsk: close, askMsg: this.state.askMsg || '',
+          onAskMsg: e => this.setState({ askMsg: e.target.value }),
+          askRow: a ? { ...a, got: ATT_GOT[a.st](a.h), dateLabel: `${a.date.replace(/-/g, '.')} (${WD[d.getDay()]})` } : {},
+          askFooter: B && a ? [
+            React.createElement(B, { key: 'c', variant: 'outline', onClick: close }, '닫기'),
+            React.createElement(B, { key: 's', variant: 'primary', onClick: send }, '문의 보내기')
+          ] : null
+        };
+      })(),
+      attSum: ['출석', '지각', '조퇴', '결석'].map(k => ({ label: k, n: attCount(k), ink: ATT_INK[k] })),
+      attends: ATTENDS.filter(a => attOn && a.course === ATT_COURSES[attIdx].title).map((a, i) => {
+        const d = new Date(a.date + 'T00:00:00');
+        const g = ATT_GOT[a.st](a.h);
+        const key = a.date + a.course, askable = a.st !== '출석', asked = (this.state.attAsked || []).includes(key);
+        return { ...a, bg: i % 2 ? '#F8F9FA' : '#FFFFFF', got: g, gotInk: g < a.h ? '#B0202A' : '#2A2A2A',
+          canAsk: askable && !asked, asked: askable && asked, noAsk: !askable, askLabel: `${a.date.replace(/-/g, '.')} 출결 문의하기`,
+          ask: () => this.setState({ attAsk: key, askMsg: '' }), dateLabel: `${a.date.replace(/-/g, '.')} (${WD[d.getDay()]})`, tone: ATT_TONE[a.st],
+          inTime: a.in || '–', outTime: a.out || '–', inInk: a.st === '지각' ? '#9A5B00' : a.in ? '#2A2A2A' : '#666E7A', outInk: a.st === '조퇴' ? '#1A47D1' : a.out ? '#2A2A2A' : '#666E7A' };
+      }),
+      ...this.extVals(tab), isApply: tab === 'apply',
+      applyCount: this.state.applies.length, applyEmpty: this.state.applies.length === 0,
+      applies: this.state.applies.map((a, i) => ({
+        ...a, no: a.id, bg: i % 2 ? '#F8F9FA' : '#FFFFFF',
+        rejected: a.status === 'rejected', pending: a.status === 'pending', noAction: a.status === 'approved',
+        showReason: () => this.setState({ reasonId: a.id }),
+        cancel: () => this.setState({ confirmId: a.id })
+      })),
+      reasonOpen: this.state.reasonId != null,
+      ra: this.state.applies.find(x => x.id === this.state.reasonId) || {},
+      closeReason: () => this.setState({ reasonId: null }),
+      reasonFooter: (window.Sangsang && this.state.reasonId != null) ? [
+        React.createElement(window.Sangsang.Button, { key: 'c', variant: 'primary', onClick: () => this.setState({ reasonId: null }) }, '확인')
+      ] : null,
+      confirmOpen: this.state.confirmId != null,
+      confirmTitle: (this.state.applies.find(x => x.id === this.state.confirmId) || {}).title || '',
+      closeConfirm: () => this.setState({ confirmId: null }),
+      confirmFooter: (window.Sangsang && this.state.confirmId != null) ? [
+        React.createElement(window.Sangsang.Button, { key: 'c', variant: 'outline', onClick: () => this.setState({ confirmId: null }) }, '닫기'),
+        React.createElement(window.Sangsang.Button, { key: 'd', variant: 'danger', onClick: () => this.doCancel() }, '신청 취소')
+      ] : null,
+      goCert: e => { e.preventDefault(); history.replaceState(null, '', '#cert'); this.setState({ tab: 'cert', certTab: 'cert' }); window.scrollTo(0, 0); },
+      ...(() => {
+        const read = this.state.readNotes || [], gone = this.state.goneNotes || [], sel = this.state.selNotes || [];
+        const list = NOTES.filter(n => !gone.includes(n.id)).map(n => ({ ...n, unread: n.unread && !read.includes(n.id) }));
+        const delIds = this.state.delNoteIds;
+        const removeNotes = ids => {
+          this.setState(s => ({ goneNotes: [...(s.goneNotes || []), ...ids], selNotes: (s.selNotes || []).filter(x => !ids.includes(x)), delNoteIds: null, noteId: null }));
+          this.showToast(ids.length > 1 ? `쪽지 ${ids.length}건을 삭제했어요` : '쪽지를 삭제했어요');
+        };
+        const c = NOTES.find(n => n.id === this.state.noteId);
+        const B = window.Sangsang && window.Sangsang.Button;
+        const go = a => {
+          history.replaceState(null, '', '#' + a.tab);
+          this.setState({ noteId: null, notesView: false, coursesView: false, tab: a.tab, certTab: 'cert', extView: a.extId ? 'detail' : 'list', extId: a.extId ?? null, form: null });
+          window.scrollTo(0, 0);
+        };
+        return {
+          ...(() => {
+            const rows = list.map((n, i) => ({ ...n, dot: n.unread ? '#1C59FE' : 'transparent', weight: n.unread ? 600 : 400,
+              bg: i % 2 ? '#F8F9FA' : '#FFFFFF', stLabel: n.unread ? '안 읽음' : '읽음', stColor: n.unread ? '#1A47D1' : '#666E7A',
+              sel: sel.includes(n.id), selLabel: n.title + ' 선택',
+              toggle: () => this.setState(s => { const c = s.selNotes || []; return { selNotes: c.includes(n.id) ? c.filter(x => x !== n.id) : [...c, n.id] }; }),
+              open: e => { e && e.preventDefault && e.preventDefault(); this.setState(s => ({ noteId: n.id, readNotes: [...(s.readNotes || []), n.id] })); } }));
+            const unread = rows.filter(n => n.unread).length;
+            const selCount = rows.filter(n => n.sel).length;
+            return { notes: rows, notesPreview: rows.slice(0, 3), noteCount: rows.length, unreadCount: unread, noUnread: unread === 0,
+              noSel: selCount === 0, allSel: rows.length > 0 && selCount === rows.length,
+              toggleAllNotes: () => this.setState({ selNotes: selCount === rows.length ? [] : rows.map(n => n.id) }),
+              askDelNotes: () => this.setState({ delNoteIds: rows.filter(n => n.sel).map(n => n.id) }),
+              delNotesOpen: !!(delIds && delIds.length),
+              delNotesMsg: delIds && delIds.length > 1 ? `선택한 쪽지 ${delIds.length}건을 삭제해요.` : `「${(NOTES.find(n => delIds && n.id === delIds[0]) || {}).title || ''}」 쪽지를 삭제해요.`,
+              closeDelNotes: () => this.setState({ delNoteIds: null }),
+              delNotesFooter: B && delIds && delIds.length ? [
+                React.createElement(B, { key: 'c', variant: 'outline', onClick: () => this.setState({ delNoteIds: null }) }, '닫기'),
+                React.createElement(B, { key: 'd', variant: 'danger', onClick: () => removeNotes(delIds) }, '삭제')
+              ] : null,
+              readAll: () => this.setState({ readNotes: NOTES.map(n => n.id) }) };
+          })(),
+          ...(() => {
+            const open = !!this.state.pwOpen, v = this.state.pw || '', tries = this.state.pwTries || 0;
+            const check = e => {
+              if (e && e.preventDefault) e.preventDefault();
+              if (!v) { this.setState({ pwError: '비밀번호를 입력하세요.' }); return; }
+              if (v.length < 8) {
+                const n = tries + 1;
+                this.setState({ pwTries: n, pwError: `비밀번호가 맞지 않아요. 다시 입력하세요. (${n}/5회)` });
+                return;
+              }
+              this.setState({ pwOpen: false, pw: '', pwError: '', pwTries: 0 });
+              this.showToast('본인 확인을 마쳤어요');
+            };
+            return {
+              pwOpen: open, pwVal: v, pwError: this.state.pwError || '',
+              openPw: () => this.setState({ pwOpen: true, pw: '', pwError: '' }),
+              closePw: () => this.setState({ pwOpen: false, pw: '', pwError: '' }),
+              onPw: e => this.setState({ pw: e.target.value, pwError: '' }),
+              submitPw: check,
+              pwFooter: B && open ? [
+                React.createElement(B, { key: 'c', variant: 'outline', onClick: () => this.setState({ pwOpen: false, pw: '', pwError: '' }) }, '취소'),
+                React.createElement(B, { key: 'o', variant: 'primary', onClick: check }, '확인')
+              ] : null
+            };
+          })(),
+          openNotesAll: e => { e.preventDefault(); history.replaceState(null, '', '#notes'); this.setState({ tab: 'classroom', notesView: true, coursesView: false }); window.scrollTo(0, 0); },
+          backToClassroom: () => { history.replaceState(null, '', '#classroom'); this.setState({ notesView: false, coursesView: false }); window.scrollTo(0, 0); },
+          noteOpen: !!c,
+          cn: c ? { ...c, paras: c.paras.map(t => ({ t })), info: c.info.map(([k, v]) => ({ k, v })), hasInfo: c.info.length > 0 } : { paras: [], info: [] },
+          closeNote: () => this.setState({ noteId: null }),
+          noteFooter: B && c ? [
+            React.createElement(B, { key: 'x', variant: 'ghost', style: { marginRight: 'auto', color: '#B0202A' }, onClick: () => this.setState({ delNoteIds: [c.id], noteId: null }) }, '삭제'),
+            React.createElement(B, { key: 'c', variant: 'outline', onClick: () => this.setState({ noteId: null }) }, '닫기'),
+            React.createElement(B, { key: 'g', variant: 'primary', onClick: () => go(c.action) }, c.action.label)
+          ] : null
+        };
+      })(),
+      toastOpen: !!this.state.toast, toastMsg: this.state.toast || '',
+      isCert: tab === 'cert', isCertList: this.state.certTab === 'cert', isBadgeList: this.state.certTab === 'badge',
+      certTabs: [['cert', '수료증'], ['badge', '배지']].map(([id, label]) => ({ label, on: this.state.certTab === id, off: this.state.certTab !== id, pick: () => this.setState({ certTab: id }) })),
+      certCount: CERTS.length,
+      certs: CERTS.map((c, i) => ({ ...c, bg: i % 2 ? '#F8F9FA' : '#FFFFFF' })),
+      docCount: DOCS.length, docPages: Math.ceil(DOCS.length / PER_PAGE), docPage: this.state.docPage || 1,
+      onDocPage: p => this.setState({ docPage: p }),
+      docs: DOCS.slice(((this.state.docPage || 1) - 1) * PER_PAGE, (this.state.docPage || 1) * PER_PAGE).map((c, i) => ({ ...c, bg: i % 2 ? '#F8F9FA' : '#FFFFFF', locked: !c.ok,
+        openConfirm: () => this.setState({ certId: c.id, docType: 'confirm' }),
+        openCert: () => c.ok && this.setState({ certId: c.id, docType: 'cert' }) })),
+      certOpen: this.state.certId != null, certBox: this.certBox, certScale: this.state.certScale || 1,
+      ...(() => {
+        const c = DOCS.find(x => x.id === this.state.certId) || DOCS[0], isConf = this.state.docType === 'confirm';
+        return {
+          cur: { ...c, doneLong: isConf ? longDate(TODAY) : longDate(c.issue), certNo: isConf ? c.certNo.replace('MS-', 'MC-') : c.certNo },
+          doc: isConf
+            ? { modalTitle: '학습기록 미리보기', title: '학습기록', en: 'LEARNING RECORD', l1: '위 사람은 미코스쿨 상상이상에서 운영한 위 과정을', l2: c.ok ? '수강하였음을 확인합니다.' : '수강하고 있음을 확인합니다.', showPct: true }
+            : { modalTitle: '수료증 미리보기', title: '수료증', en: 'CERTIFICATE OF COMPLETION', l1: '위 사람은 미코스쿨 상상이상에서 운영한 위 과정을', l2: '성실히 이수하였기에 이 증서를 드립니다.', showPct: false }
+        };
+      })(),
+      closeCert: () => this.setState({ certId: null }),
+      certFooter: (window.Sangsang && this.state.certId != null) ? [
+        React.createElement(window.Sangsang.Button, { key: 'p', variant: 'outline', onClick: () => this.showToast('인쇄 화면을 열었어요') }, '인쇄'),
+        React.createElement(window.Sangsang.Button, { key: 'j', variant: 'outline', onClick: () => this.showToast('JPG 파일을 저장했어요') }, 'JPG 저장'),
+        React.createElement(window.Sangsang.Button, { key: 'f', variant: 'primary', onClick: () => this.showToast('PDF 파일을 저장했어요') }, 'PDF 저장')
+      ] : null,
+      tabLabel: notesOn ? subLabel : cur.label,
+      tabDesc: notesOn ? '수강 승인, 등록 결과, 수료 소식을 받아 볼 수 있어요.' : attOn ? '교육일별 입실 · 퇴실 기록과 출결 상태를 확인해요.' : cur.desc,
+      hasCourses: !empty, noCourses: empty,
+      count: items.length, items: items.slice(0, 5),
+      hasMore: !empty,
+      showAllCourses: () => openSub('history')
+    };
+  }
+}
+</script>
+</body>
+</html>

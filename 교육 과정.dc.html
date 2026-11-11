@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="ds/tokens.css">
+<link rel="stylesheet" href="ds/bundle.css">
+<script src="ds/bundle.js"></script>
+<style>
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; background: #F4F6F9; }
+body { font-family: "Pretendard Variable", Pretendard, -apple-system, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif; color: #2A2A2A; font-size: 14px; line-height: 22px; -webkit-font-smoothing: antialiased; word-break: keep-all; }
+a { color: #1A47D1; }
+a:hover { color: #1438A6; }
+</style>
+</helmet>
+<dc-import name="GNB" active="교육 과정" hint-size="100%,72px" style="position:relative;z-index:50"></dc-import>
+
+<main data-screen-label="과정 목록" style="max-width:1348px;margin:0 auto;padding:24px 24px 80px;display:flex;flex-direction:column;gap:32px">
+  <div style="display:flex;flex-direction:column;gap:12px">
+    <x-import component-from-global-scope="Sangsang.Breadcrumb" items="{{ crumbs }}" hint-size="200px,22px"></x-import>
+    <div style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px 32px">
+      <div style="display:flex;flex-direction:column;gap:6px">
+        <h1 style="margin: 0; font-size: 36px; line-height: 44px; font-weight: 700">교육 과정</h1>
+        
+      </div>
+      <div style="width:100%;max-width:400px">
+        <x-import component-from-global-scope="Sangsang.SearchBar" label="과정 검색" placeholder="과정명, 키워드로 검색" value="{{ q }}" onChange="{{ onQuery }}" onSearch="{{ onSearch }}" hint-size="100%,48px"></x-import>
+      </div>
+    </div>
+  </div>
+
+  <section style="display:flex;flex-direction:column;gap:20px">
+    <div role="tablist" aria-label="과정 구분" style="display:flex;gap:32px;border-bottom:1px solid #E3E7ED">
+      <sc-for list="{{ tabItems }}" as="t" hint-placeholder-count="3">
+        <sc-if value="{{ t.on }}" hint-placeholder-val="{{ false }}">
+          <button type="button" role="tab" aria-selected="true" style="height:56px;padding:0;margin-bottom:-1px;border:0;border-bottom:2px solid #2A2A2A;background:transparent;font:inherit;font-size:18px;font-weight:700;color:#2A2A2A;cursor:pointer">{{ t.label }}</button>
+        </sc-if>
+        <sc-if value="{{ t.off }}" hint-placeholder-val="{{ true }}">
+          <button type="button" role="tab" aria-selected="false" onClick="{{ t.pick }}" style="height:56px;padding:0;margin-bottom:-1px;border:0;border-bottom:2px solid transparent;background:transparent;font:inherit;font-size:18px;font-weight:500;color:#666E7A;cursor:pointer" style-hover="color:#2A2A2A">{{ t.label }}</button>
+        </sc-if>
+      </sc-for>
+    </div>
+
+    <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 24px">
+      <div role="group" aria-label="분야" style="display:flex;flex-wrap:wrap;gap:8px">
+        <sc-for list="{{ cats }}" as="c" hint-placeholder-count="5">
+          <x-import component-from-global-scope="Sangsang.Tag" selected="{{ c.on }}" onClick="{{ c.pick }}" hint-size="64px,32px">{{ c.label }}</x-import>
+        </sc-for>
+      </div>
+      <div style="display:flex;align-items:center;gap:16px">
+        <span style="font-size:15px;color:#4A5260">총 <b style="font-weight:700;color:#2A2A2A">{{ count }}</b>개 과정</span>
+        <div role="group" aria-label="보기 방식" style="display:flex;padding:3px;border-radius:8px;background:#E9ECF1">
+          <sc-if value="{{ isCard }}" hint-placeholder-val="{{ true }}">
+            <button type="button" aria-label="카드형" title="카드형" aria-pressed="true" style="width:36px;height:32px;display:flex;align-items:center;justify-content:center;border:0;border-radius:6px;background:#FFFFFF;box-shadow:0 1px 2px rgba(16,24,40,0.08);color:#1C59FE;cursor:pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5" rx="1.2"></rect><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.2"></rect><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.2"></rect><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.2"></rect></svg></button>
+            <button type="button" aria-label="목록형" title="목록형" aria-pressed="false" onClick="{{ setList }}" style="width:36px;height:32px;display:flex;align-items:center;justify-content:center;border:0;border-radius:6px;background:transparent;color:#666E7A;cursor:pointer" style-hover="color:#2A2A2A"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><path d="M9 6.5h11M9 12h11M9 17.5h11M4.5 6.5h.01M4.5 12h.01M4.5 17.5h.01"></path></svg></button>
+          </sc-if>
+          <sc-if value="{{ isList }}" hint-placeholder-val="{{ false }}">
+            <button type="button" aria-label="카드형" title="카드형" aria-pressed="false" onClick="{{ setCard }}" style="width:36px;height:32px;display:flex;align-items:center;justify-content:center;border:0;border-radius:6px;background:transparent;color:#666E7A;cursor:pointer" style-hover="color:#2A2A2A"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5" rx="1.2"></rect><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.2"></rect><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.2"></rect><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.2"></rect></svg></button>
+            <button type="button" aria-label="목록형" title="목록형" aria-pressed="true" style="width:36px;height:32px;display:flex;align-items:center;justify-content:center;border:0;border-radius:6px;background:#FFFFFF;box-shadow:0 1px 2px rgba(16,24,40,0.08);color:#1C59FE;cursor:pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><path d="M9 6.5h11M9 12h11M9 17.5h11M4.5 6.5h.01M4.5 12h.01M4.5 17.5h.01"></path></svg></button>
+          </sc-if>
+        </div>
+      </div>
+    </div>
+
+    <sc-if value="{{ showCards }}" hint-placeholder-val="{{ true }}">
+      <div data-screen-label="카드형" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:20px">
+        <sc-for list="{{ items }}" as="c" hint-placeholder-count="8">
+          <x-import component-from-global-scope="Sangsang.CourseCard" href="과정 상세.dc.html" type="{{ c.type }}" status="{{ c.status }}" title="{{ c.title }}" period="{{ c.period }}" hours="{{ c.hours }}" progress="{{ c.progress }}" thumbnail="{{ c.img }}" thumbnail-alt="{{ c.alt }}" hint-size="100%,340px"></x-import>
+        </sc-for>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ showRows }}" hint-placeholder-val="{{ false }}">
+      <ul data-screen-label="목록형" style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px">
+        <sc-for list="{{ items }}" as="c" hint-placeholder-count="6">
+          <li>
+            <a href="과정 상세.dc.html" style="display:grid;grid-template-columns:clamp(140px,26%,240px) minmax(0,1fr) 176px;min-height:160px;background:#FFFFFF;border:1px solid #E3E7ED;border-radius:12px;overflow:hidden;color:#2A2A2A;text-decoration:none;transition:border-color .15s, box-shadow .15s" style-hover="border-color:#D5DAE1;box-shadow:0 1px 2px rgba(16,24,40,0.06);color:#2A2A2A">
+              <div style="position:relative;background:#EAF0FF"><div role="img" aria-label="{{ c.alt }}" style="position:absolute;inset:0;background:#EAF0FF center/cover no-repeat;background-image:{{ c.bgImg }}"></div></div>
+              <div style="min-width:0;padding:20px 24px;display:flex;flex-direction:column;justify-content:center;gap:6px">
+                <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+                  <x-import component-from-global-scope="Sangsang.TypeTag" type="{{ c.type }}" size="sm" hint-size="40px,20px"></x-import>
+                  <sc-if value="{{ c.hasStatus }}" hint-placeholder-val="{{ false }}"><x-import component-from-global-scope="Sangsang.StatusBadge" status="{{ c.status }}" size="sm" hint-size="56px,20px"></x-import></sc-if>
+                  <span style="font-size:13px;color:#666E7A">{{ c.cat }}</span>
+                </div>
+                <h3 style="margin:2px 0 0;font-size:18px;line-height:27px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ c.title }}</h3>
+                <div style="display:flex;gap:16px;font-size:14px;line-height:22px;color:#666E7A;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">
+                  <span>학습 기간 <span style="color:#2A2A2A;font-weight:600">{{ c.period }}</span></span>
+                  <span>학습 시간 <span style="color:#2A2A2A;font-weight:600">{{ c.hours }}</span></span>
+                </div>
+                <span style="min-height:22px;font-size:14px;line-height:22px;color:#4A5260;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ c.summary }}</span>
+              </div>
+              <div style="padding:20px 24px 20px 0;display:flex;flex-direction:column;justify-content:center;gap:12px">
+                <sc-if value="{{ c.hasProgress }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex;flex-direction:column;gap:6px">
+                    <div style="display:flex;justify-content:space-between;align-items:baseline;font-size:13px;color:#666E7A"><span>진도율</span><span style="font-size:16px;font-weight:700;color:#2A2A2A">{{ c.pct }}</span></div>
+                    <div style="height:6px;border-radius:9999px;background:#EEF0F3;overflow:hidden"><div style="width:{{ c.pct }};height:100%;border-radius:9999px;background:#1C59FE"></div></div>
+                  </div>
+                </sc-if>
+                <span style="height:40px;display:flex;align-items:center;justify-content:center;gap:4px;border:1px solid #D5DAE1;border-radius:8px;background:#FFFFFF;font-size:15px;font-weight:600;color:#2A2A2A">자세히 보기<x-import component-from-global-scope="Sangsang.Icon" name="chevron-right" size="{{ 16 }}" hint-size="16px,16px"></x-import></span>
+              </div>
+            </a>
+          </li>
+        </sc-for>
+      </ul>
+    </sc-if>
+
+    <sc-if value="{{ isEmpty }}" hint-placeholder-val="{{ false }}">
+      <div style="padding:72px 24px;background:#FFFFFF;border:1px solid #E3E7ED;border-radius:12px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center">
+        <span style="width:48px;height:48px;border-radius:9999px;background:#F4F6F9;color:#666E7A;display:flex;align-items:center;justify-content:center"><x-import component-from-global-scope="Sangsang.Icon" name="search" size="{{ 22 }}" hint-size="22px,22px"></x-import></span>
+        <h3 style="margin:8px 0 0;font-size:18px;line-height:27px;font-weight:600">찾는 과정이 없어요</h3>
+        <p style="margin:0;color:#4A5260">다른 검색어를 넣거나 분야를 바꿔 보세요.</p>
+        <div style="margin-top:8px"><x-import component-from-global-scope="Sangsang.Button" variant="outline" size="sm" onClick="{{ reset }}" hint-size="96px,32px">조건 초기화</x-import></div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ hasItems }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex;justify-content:center;padding-top:16px">
+        <x-import component-from-global-scope="Sangsang.Pagination" total="{{ 3 }}" hint-size="280px,40px"></x-import>
+      </div>
+    </sc-if>
+  </section>
+</main>
+
+<dc-import name="Footer" hint-size="100%,200px"></dc-import>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;defaultView&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;카드형&quot;,&quot;목록형&quot;],&quot;default&quot;:&quot;카드형&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+const U = (id, w) => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${w || 840}&q=80`;
+const COURSES = [
+  { type: 'required', cat: '공통 역량', title: '2026 하반기 정보보안 교육', summary: '개인정보와 기술 자산을 지키는 보안 수칙과 사고 대응 절차를 익혀요.', period: '2026.11.01 – 11.30', hours: '1시간 30분', img: '1518770660439-4636190af475', alt: '회로 기판 확대 사진' },
+  { type: 'required', cat: '법정 · 안전', title: '직장 내 괴롭힘 예방교육', summary: '법이 정한 괴롭힘의 기준과 신고·조치 절차를 사례로 알아봐요.', period: '2026.11.01 – 12.15', hours: '1시간', img: '1512758017271-d7b84c2113f1', alt: '포스트잇 메모가 붙은 기획 보드' },
+  { type: 'required', cat: '법정 · 안전', title: '2026 산업안전보건교육', summary: '현장 위험성평가와 보호구 착용 기준, 비상 대응 요령을 다뤄요.', period: '2026.10.01 – 12.31', hours: '6시간', img: '1586528116311-ad8dd3c8310d', alt: '설비가 늘어선 생산 현장', status: 'in-progress', progress: 62 },
+  { type: 'required', cat: '직무', title: '반도체 8대 공정 이해', summary: '웨이퍼 제조부터 패키징까지 8대 공정의 흐름과 핵심 장비를 익혀요.', period: '2026.10.01 – 12.31', hours: '8시간', img: '1576141546153-3e04370b5ff7', alt: '클린룸에서 공정 장비를 다루는 엔지니어', status: 'in-progress', progress: 35 },
+  { type: 'required', cat: '직무', title: '품질경영시스템(ISO 9001) 기초', summary: 'ISO 9001 요구사항과 내부 심사 준비 방법을 단계별로 알아봐요.', period: '2026.10.15 – 12.31', hours: '4시간', img: '1563986768609-322da13575f3', alt: '노트북과 휴대폰으로 작업하는 손' },
+  { type: 'elective', cat: '직무', title: '반도체 장비 유지보수 실무', summary: '식각·증착 장비의 예방 정비와 고장 원인 분석을 실무 사례로 배워요.', period: '2026.11.10 – 12.31', hours: '6시간', img: '1640955785023-1854685dae05', alt: '핀셋으로 회로 기판에 칩을 올리는 손' },
+  { type: 'elective', cat: '직무', title: '데이터 기반 품질 분석', summary: '공정 데이터로 불량 원인을 찾고 개선 효과를 검증하는 방법을 익혀요.', period: '2026.11.15 – 12.31', hours: '3시간', img: '1531403009284-440f080d1e12', alt: '화이트보드에 자료를 붙이는 손', status: 'pending' },
+  { type: 'elective', cat: '리더십', title: '신임 리더를 위한 피드백 대화법', summary: '구성원의 성장을 돕는 피드백 구조와 어려운 대화 준비법을 연습해요.', period: '2026.12.01 – 12.31', hours: '2시간 30분', img: '1507925921958-8a62f3d1a50d', alt: '생각을 적어 붙인 메모지' },
+  { type: 'elective', cat: '리더십', title: '신임 리더 코칭 스킬', summary: '질문과 경청으로 구성원 스스로 답을 찾게 하는 코칭 대화를 배워요.', period: '2026.10.01 – 12.31', hours: '4시간', img: '1606857521015-7f9fcf423740', alt: '모니터가 놓인 사무실 전경', status: 'in-progress', progress: 80 },
+  { type: 'elective', cat: '공통 역량', title: 'ESG 경영과 탄소중립 기초', summary: 'ESG 공시 흐름과 우리 사업장의 탄소 감축 과제를 쉽게 정리해요.', period: '2026.11.20 – 12.31', hours: '1시간 30분', img: '1434030216411-0b793f4b4173', alt: '노트에 필기하는 손' },
+  { type: 'elective', cat: '공통 역량', title: '한 장으로 끝내는 보고서 작성', summary: '핵심을 먼저 말하는 보고서 구조와 표·그래프 정리법을 익혀요.', period: '2026.11.01 – 12.31', hours: '2시간', img: '1454165804606-c3d57bc86b40', alt: '책상 위에서 서류를 검토하는 사람' },
+  { type: 'elective', cat: '직무', title: '생산 데이터 대시보드 읽기', summary: '설비 가동률·수율 지표를 읽고 이상 신호를 빠르게 찾는 법을 배워요.', period: '2026.11.10 – 12.31', hours: '2시간', img: '1551288049-bebda4e38f71', alt: '노트북 화면의 데이터 대시보드' }
+].map(c => ({ ...c, img: U(c.img), bgImg: `url("${U(c.img)}")`, hasStatus: !!c.status, hasProgress: c.progress != null, pct: (c.progress || 0) + '%' }));
+const CATS = ['전체', '직무', '리더십', '공통 역량', '법정 · 안전'];
+const TABS = [{ id: 'all', label: '전체 과정' }, { id: 'required', label: '필수 교육' }, { id: 'elective', label: '선택 교육' }];
+const isReq = c => c.type === 'required';
+
+class Component extends DCLogic {
+  state = { tab: 'all', cat: '전체', q: '', view: null };
+  renderVals() {
+    const { tab, cat, q } = this.state;
+    const view = this.state.view ?? (this.props.defaultView === '목록형' ? 'list' : 'card');
+    const kw = q.trim();
+    const byTab = c => tab === 'all' || (tab === 'required' ? isReq(c) : !isReq(c));
+    const items = COURSES.filter(c => byTab(c) && (cat === '전체' || c.cat === cat) && (!kw || (c.title + c.summary).includes(kw)));
+    const has = items.length > 0;
+    return {
+      crumbs: ['교육 과정', TABS.find(t => t.id === tab).label],
+      tabItems: TABS.map(t => ({ label: t.label, on: t.id === tab, off: t.id !== tab, pick: () => this.setState({ tab: t.id }) })),
+      tab, setTab: id => this.setState({ tab: id }),
+      cats: CATS.map(l => ({ label: l, on: l === cat, pick: () => this.setState({ cat: l }) })),
+      q, onQuery: e => this.setState({ q: e.target.value }), onSearch: v => this.setState({ q: v }),
+      count: items.length, items,
+      isCard: view === 'card', isList: view === 'list',
+      setCard: () => this.setState({ view: 'card' }), setList: () => this.setState({ view: 'list' }),
+      showCards: has && view === 'card', showRows: has && view === 'list',
+      hasItems: has, isEmpty: !has,
+      reset: () => this.setState({ tab: 'all', cat: '전체', q: '' })
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="ds/tokens.css">
+<link rel="stylesheet" href="ds/bundle.css">
+<script src="ds/bundle.js"></script>
+<script src="./image-slot.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<style>
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; background: #F4F6F9; }
+body { font-family: "Pretendard Variable", Pretendard, -apple-system, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif; color: #2A2A2A; font-size: 14px; line-height: 22px; -webkit-font-smoothing: antialiased; word-break: keep-all; }
+a { color: #1A47D1; }
+a:hover { color: #1438A6; }
+</style>
+</helmet>
+<dc-import name="GNB" active="연수원 소개" about-version="{{ gnbVer }}" hint-size="100%,72px" style="position:relative;z-index:50"></dc-import>
+
+<main data-screen-label="연수원 안내" style="max-width:1348px;margin:0 auto;padding:32px 24px 80px;display:grid;grid-template-columns:232px minmax(0,1fr);align-items:start;gap:48px">
+  <aside style="position:sticky;top:calc(var(--gnb-offset, 0px) + 24px);transition:top .25s ease;display:flex;flex-direction:column;gap:20px">
+    <h1 style="margin:0;font-size:28px;line-height:38px;font-weight:700">{{ title }}</h1>
+    <nav aria-label="{{ title }} 메뉴">
+      <ul style="list-style:none;margin:0;padding:0;border-top:2px solid #2A2A2A">
+        <sc-for list="{{ tabItems }}" as="t" hint-placeholder-count="4">
+          <li style="border-bottom:1px solid #E3E7ED">
+            <sc-if value="{{ t.on }}" hint-placeholder-val="{{ false }}">
+              <button type="button" aria-current="page" onClick="{{ t.pick }}" style="width:100%;display:flex;align-items:center;justify-content:space-between;gap:8px;height:56px;padding:0 4px;border:0;background:transparent;font:inherit;font-size:17px;font-weight:700;color:#1C59FE;text-align:left;cursor:pointer">{{ t.label }}<x-import component-from-global-scope="Sangsang.Icon" name="chevron-right" size="{{ 18 }}" hint-size="18px,18px"></x-import></button>
+              <sc-if value="{{ t.hasSubs }}" hint-placeholder-val="{{ true }}">
+                <ul style="list-style:none;margin:-4px 0 0;padding:0 0 12px;display:flex;flex-direction:column">
+                  <sc-for list="{{ t.subs }}" as="u" hint-placeholder-count="3">
+                    <li><button type="button" onClick="{{ u.go }}" style="width:100%;display:flex;align-items:center;gap:8px;height:40px;padding:0 4px 0 16px;border:0;background:transparent;font:inherit;font-size:15px;font-weight:500;color:#4A5260;text-align:left;cursor:pointer" style-hover="color:#1C59FE"><span aria-hidden="true" style="width:4px;height:4px;border-radius:9999px;background:currentColor"></span>{{ u.label }}</button></li>
+                  </sc-for>
+                </ul>
+              </sc-if>
+            </sc-if>
+            <sc-if value="{{ t.off }}" hint-placeholder-val="{{ true }}">
+              <button type="button" onClick="{{ t.pick }}" style="width:100%;display:flex;align-items:center;height:56px;padding:0 4px;border:0;background:transparent;font:inherit;font-size:17px;font-weight:600;color:#2A2A2A;text-align:left;cursor:pointer" style-hover="color:#1C59FE">{{ t.label }}</button>
+            </sc-if>
+          </li>
+        </sc-for>
+      </ul>
+    </nav>
+  </aside>
+
+  <div style="min-width:0;display:flex;flex-direction:column;gap:32px">
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <x-import component-from-global-scope="Sangsang.Breadcrumb" items="{{ crumbs }}" hint-size="200px,22px"></x-import>
+      <h2 style="margin:0;font-size:28px;line-height:38px;font-weight:700">{{ tabLabel }}</h2>
+    </div>
+
+    <sc-if value="{{ isWay }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex;flex-direction:column;gap:80px">
+        <section id="sec-way" data-screen-label="미코 WAY" style="display:flex;flex-direction:column;gap:28px;scroll-margin-top:24px">
+          <h3 style="margin:0;padding-bottom:14px;border-bottom:2px solid #2A2A2A;font-size:22px;line-height:32px;font-weight:700">미코 WAY</h3>
+          <sc-if value="{{ v1 }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;gap:14px;max-width:880px">
+              <span style="font-size:15px;line-height:22px;font-weight:700;letter-spacing:0.04em;color:#1C59FE">Global Thermal Management Innovator</span>
+              <p style="margin:0;font-size:28px;line-height:40px;font-weight:700;text-wrap:pretty">첨단 소재 부품 산업의 새로운 미래, ㈜미코</p>
+              <p style="margin:0;font-size:16px;line-height:28px;color:#4A5260;text-wrap:pretty">㈜미코는 창립 이래 지속적인 연구개발과 고객 가치 창조 경영을 통해 첨단 세라믹 소재 부품 산업의 발전에 이바지하고 있습니다.</p>
+              <p style="margin:0;font-size:16px;line-height:28px;color:#4A5260;text-wrap:pretty">고부가가치 제품인 첨단 세라믹 소재 원천 기술을 확보하고 관련 부품 개발에 성공하여, 고가의 반도체 · 디스플레이 제조 장비용 부품들의 국산화에 이바지하였습니다. 이후 세계 시장에도 진출하여 해외 유수의 기업들과 경쟁하며 그 기술력을 인정받고 있습니다.</p>
+            </div>
+            <ul style="list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:16px">
+              <sc-for list="{{ ways }}" as="w" hint-placeholder-count="4">
+                <li style="padding:24px;background:{{ w.bg }};border:1px solid {{ w.border }};border-radius:12px;display:flex;flex-direction:column;gap:12px;min-height:188px">
+                  <span style="width:64px;height:64px;border-radius:9999px;background:#FFFFFF;display:flex;align-items:center;justify-content:center"><span aria-hidden="true" style="width:56px;height:56px;background:center/contain no-repeat;background-image:{{ w.iconBg }}"></span></span>
+                  <div style="display:flex;align-items:baseline;gap:8px">
+                    <span style="font-size:17px;line-height:26px;font-weight:700;color:{{ w.ink }}">{{ w.ko }}</span>
+                    <span style="font-size:13px;line-height:20px;font-weight:600;letter-spacing:0.04em;color:{{ w.sub }}">{{ w.en }}</span>
+                  </div>
+                  <p style="margin:auto 0 0;font-size:20px;line-height:30px;font-weight:700;color:{{ w.ink }};text-wrap:pretty">{{ w.value }}</p>
+                </li>
+              </sc-for>
+            </ul>
+          </sc-if>
+          <sc-if value="{{ v2 }}" hint-placeholder-val="{{ true }}">
+            <div style="padding:64px 56px 56px;border-radius:8px;background-color:#002060;background-image:linear-gradient(90deg,rgba(0,22,70,0.94) 0%,rgba(0,22,70,0.82) 45%,rgba(0,22,70,0.25) 100%),url(assets/way_hero.jpg);background-size:cover;background-position:center;display:flex;flex-direction:column;gap:28px">
+              <div style="display:flex;align-items:center;gap:12px">
+                <span aria-hidden="true" style="width:32px;height:2px;background:#5C8BFF"></span>
+                <span style="font-size:15px;line-height:22px;font-weight:700;letter-spacing:0.08em;color:#B9CCFF">GLOBAL THERMAL MANAGEMENT INNOVATOR</span>
+              </div>
+              <p style="margin:0;max-width:760px;font-size:40px;line-height:54px;font-weight:700;letter-spacing:-0.01em;color:#FFFFFF;text-wrap:balance">첨단&nbsp; 소재 부품 산업의 <br>새로운 미래, ㈜ 미코</p>
+              <p style="margin:0;max-width:760px;padding-top:24px;border-top:1px solid rgba(255,255,255,0.2);font-size:16px;line-height:28px;color:#DCE6FF;text-wrap:pretty">㈜미코는 창립 이래 지속적인 연구개발과 고객 가치 창조 경영으로 첨단 세라믹 소재 원천 기술을 확보하고, 반도체 · 디스플레이 제조 장비용 핵심 부품의 국산화와 세계 시장 진출을 이끌어 왔습니다.</p>
+            </div>
+            <div ref="{{ quadRef }}" style="position:relative;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px">
+              <sc-for list="{{ wayQuad }}" as="w" hint-placeholder-count="4">
+                <div style="min-height:300px;padding:44px {{ w.padR }} 44px {{ w.padL }};background:{{ w.bg }};border:1px solid #E3E7ED;border-radius:12px;display:flex;flex-direction:column;justify-content:space-between;align-items:{{ w.align }};gap:40px;text-align:{{ w.ta }}">
+                  <div style="display:flex;align-items:center;gap:24px;flex-direction:{{ w.dir }}">
+                    <span aria-hidden="true" style="width:80px;height:80px;flex-shrink:0;background:center/contain no-repeat;background-image:{{ w.iconBg }}"></span>
+                    <h4 style="margin:0;font-size:28px;line-height:38px;font-weight:700;color:#2A2A2A">{{ w.ko }}</h4>
+                  </div>
+                  <div style="display:flex;flex-direction:column;gap:8px">
+                    <span style="font-size:18px;line-height:27px;font-weight:700;color:#2A2A2A">{{ w.en }}</span>
+                    <p style="margin:0;font-size:16px;line-height:26px;color:#4A5260;text-wrap:pretty">{{ w.value }}</p>
+                  </div>
+                </div>
+              </sc-for>
+              <sc-if value="{{ quadWide }}" hint-placeholder-val="{{ true }}">
+                <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:300px;height:300px;border-radius:9999px;background:#FFFFFF;border:1px solid #E3E7ED;box-shadow:0 8px 24px rgba(16,24,40,0.06);display:flex;align-items:center;justify-content:center">
+                  <img src="assets/mico_logo.webp" alt="MiCo" style="width:196px;height:auto;display:block">
+                </div>
+              </sc-if>
+            </div>
+          </sc-if>
+        </section>
+
+        <section id="sec-history" data-screen-label="연혁" style="display:flex;flex-direction:column;gap:24px;scroll-margin-top:24px">
+          <sc-if value="{{ v1 }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:24px;border-bottom:2px solid #2A2A2A">
+              <h3 style="margin:0;padding-bottom:14px;font-size:22px;line-height:32px;font-weight:700">연혁</h3>
+              <div role="tablist" aria-label="연혁 구분" style="display:flex;column-gap:32px">
+                <sc-for list="{{ histTabs }}" as="t" hint-placeholder-count="2">
+                  <sc-if value="{{ t.on }}" hint-placeholder-val="{{ false }}">
+                    <button type="button" role="tab" aria-selected="true" onClick="{{ t.pick }}" style="height:56px;padding:0;margin-bottom:-2px;border:0;border-bottom:2px solid #1C59FE;background:transparent;font:inherit;font-size:18px;font-weight:700;color:#2A2A2A;cursor:pointer">{{ t.label }}</button>
+                  </sc-if>
+                  <sc-if value="{{ t.off }}" hint-placeholder-val="{{ true }}">
+                    <button type="button" role="tab" aria-selected="false" onClick="{{ t.pick }}" style="height:56px;padding:0;margin-bottom:-2px;border:0;border-bottom:2px solid transparent;background:transparent;font:inherit;font-size:18px;font-weight:500;color:#666E7A;cursor:pointer" style-hover="color:#2A2A2A">{{ t.label }}</button>
+                  </sc-if>
+                </sc-for>
+              </div>
+            </div>
+            <div role="group" aria-label="연대" style="display:flex;flex-wrap:wrap;gap:8px">
+              <sc-for list="{{ eras }}" as="e" hint-placeholder-count="4">
+                <x-import component-from-global-scope="Sangsang.Tag" selected="{{ e.on }}" onClick="{{ e.pick }}" hint-size="96px,32px">{{ e.label }}</x-import>
+              </sc-for>
+            </div>
+          </sc-if>
+          <sc-if value="{{ hlA }}" hint-placeholder-val="{{ true }}">
+            <div data-screen-label="연혁 A" style="display:flex;flex-direction:column;gap:8px">
+              <h3 style="margin:0;font-size:22px;line-height:32px;font-weight:700">연혁</h3>
+              <p style="margin:0;font-size:16px;line-height:24px;color:#4A5260">1996년 설립 이후 미코가 걸어온 길이에요.</p>
+            </div>
+            <div role="tablist" aria-label="연혁 구분" style="position:sticky;top:var(--gnb-offset, 0px);transition:top .25s ease;z-index:5;background:#F4F6F9;display:flex;column-gap:32px;border-bottom:1px solid #E3E7ED">
+              <sc-for list="{{ histTabs }}" as="t" hint-placeholder-count="2">
+                <sc-if value="{{ t.on }}" hint-placeholder-val="{{ false }}">
+                  <button type="button" role="tab" aria-selected="true" onClick="{{ t.pick }}" style="height:56px;padding:0;margin-bottom:-1px;border:0;border-bottom:2px solid #2A2A2A;background:transparent;font:inherit;font-size:18px;font-weight:700;color:#2A2A2A;cursor:pointer">{{ t.label }}</button>
+                </sc-if>
+                <sc-if value="{{ t.off }}" hint-placeholder-val="{{ true }}">
+                  <button type="button" role="tab" aria-selected="false" onClick="{{ t.pick }}" style="height:56px;padding:0;margin-bottom:-1px;border:0;border-bottom:2px solid transparent;background:transparent;font:inherit;font-size:18px;font-weight:500;color:#666E7A;cursor:pointer" style-hover="color:#2A2A2A">{{ t.label }}</button>
+                </sc-if>
+              </sc-for>
+            </div>
+            <ol style="list-style:none;margin:-24px 0 0;padding:0">
+              <sc-for list="{{ timeline }}" as="y" hint-placeholder-count="6">
+                <li style="display:grid;grid-template-columns:160px minmax(0,1fr);align-items:baseline;gap:24px;padding:28px 8px;border-bottom:1px solid #E3E7ED">
+                  <span style="font-size:32px;line-height:40px;font-weight:700;letter-spacing:-0.01em;color:{{ y.yInk }}">{{ y.year }}</span>
+                  <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px">
+                    <sc-for list="{{ y.items }}" as="it" hint-placeholder-count="1">
+                      <li style="display:grid;grid-template-columns:14px minmax(0,1fr);align-items:baseline;gap:10px;font-size:17px;line-height:28px;color:#2A2A2A;text-wrap:pretty"><span aria-hidden="true" style="width:14px;height:2px;background:#002060;transform:translateY(-5px)"></span>{{ it }}</li>
+                    </sc-for>
+                  </ul>
+                </li>
+              </sc-for>
+            </ol>
+          </sc-if>
+
+          <sc-if value="{{ hlB }}" hint-placeholder-val="{{ false }}">
+            <div data-screen-label="연혁 B" style="display:grid;grid-template-columns:minmax(200px,260px) minmax(0,1fr);gap:48px;align-items:start">
+              <div style="position:sticky;top:calc(var(--gnb-offset, 0px) + 24px);transition:top .25s ease;display:flex;flex-direction:column;gap:20px;padding:32px 28px;background:#002060;border-radius:8px">
+                <div style="display:flex;flex-direction:column;gap:8px">
+                  <span style="font-size:13px;line-height:20px;font-weight:700;letter-spacing:0.12em;color:#B9CCFF">HISTORY</span>
+                  <h3 style="margin:0;font-size:26px;line-height:36px;font-weight:700;color:#FFFFFF">연혁</h3>
+                  <p style="margin:0;font-size:15px;line-height:24px;color:#DCE6FF;text-wrap:pretty">1996년 설립 이후 미코가 걸어온 길이에요.</p>
+                </div>
+                <div role="tablist" aria-label="연혁 구분" aria-orientation="vertical" style="display:flex;flex-direction:column;gap:8px">
+                  <sc-for list="{{ histTabs }}" as="t" hint-placeholder-count="2">
+                    <sc-if value="{{ t.on }}" hint-placeholder-val="{{ false }}">
+                      <button type="button" role="tab" aria-selected="true" onClick="{{ t.pick }}" style="height:52px;padding:0 18px;border:0;border-radius:8px;background:#FFFFFF;font:inherit;font-size:16px;font-weight:700;color:#002060;display:flex;align-items:center;justify-content:space-between;cursor:pointer">{{ t.label }}<x-import component-from-global-scope="Sangsang.Icon" name="chevron-right" size="{{ 18 }}" hint-size="18px,18px"></x-import></button>
+                    </sc-if>
+                    <sc-if value="{{ t.off }}" hint-placeholder-val="{{ true }}">
+                      <button type="button" role="tab" aria-selected="false" onClick="{{ t.pick }}" style="height:52px;padding:0 18px;border:1px solid rgba(255,255,255,0.28);border-radius:8px;background:transparent;font:inherit;font-size:16px;font-weight:600;color:#FFFFFF;display:flex;align-items:center;cursor:pointer;text-align:left" style-hover="background:rgba(255,255,255,0.08)">{{ t.label }}</button>
+                    </sc-if>
+                  </sc-for>
+                </div>
+              </div>
+              <div style="min-width:0;display:flex;flex-direction:column;gap:40px">
+                <sc-for list="{{ decades }}" as="d" hint-placeholder-count="2">
+                  <div style="display:flex;flex-direction:column;gap:4px">
+                    <span style="font-size:44px;line-height:52px;font-weight:800;letter-spacing:-0.02em;color:#1C59FE">{{ d.label }}</span>
+                    <ol style="list-style:none;margin:0;padding:0;border-top:2px solid #002060">
+                      <sc-for list="{{ d.years }}" as="y" hint-placeholder-count="3">
+                        <li style="display:grid;grid-template-columns:88px minmax(0,1fr);align-items:baseline;gap:20px;padding:18px 4px;border-bottom:1px solid #E3E7ED">
+                          <span style="font-size:20px;line-height:28px;font-weight:700;color:#002060">{{ y.year }}</span>
+                          <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px">
+                            <sc-for list="{{ y.items }}" as="it" hint-placeholder-count="1">
+                              <li style="font-size:16px;line-height:26px;color:#2A2A2A;text-wrap:pretty">{{ it }}</li>
+                            </sc-for>
+                          </ul>
+                        </li>
+                      </sc-for>
+                    </ol>
+                  </div>
+                </sc-for>
+                <div style="display:flex;justify-content:center">
+                  <x-import component-from-global-scope="Sangsang.Button" variant="outline" iconRight="{{ moreIcon }}" onClick="{{ toggleMore }}" hint-size="160px,40px">{{ moreLabel }}</x-import>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ hlC }}" hint-placeholder-val="{{ false }}">
+            <div data-screen-label="연혁 C" style="display:flex;flex-direction:column;align-items:center;gap:20px;text-align:center">
+              <div style="display:flex;flex-direction:column;gap:8px">
+                <h3 style="margin:0;font-size:28px;line-height:38px;font-weight:700">연혁</h3>
+                <p style="margin:0;font-size:16px;line-height:24px;color:#4A5260">1996년 설립 이후 미코가 걸어온 길이에요.</p>
+              </div>
+              <div role="tablist" aria-label="연혁 구분" style="display:inline-flex;gap:4px;padding:4px;background:#E3E7ED;border-radius:9999px">
+                <sc-for list="{{ histTabs }}" as="t" hint-placeholder-count="2">
+                  <sc-if value="{{ t.on }}" hint-placeholder-val="{{ false }}">
+                    <button type="button" role="tab" aria-selected="true" onClick="{{ t.pick }}" style="height:44px;min-width:120px;padding:0 24px;border:0;border-radius:9999px;background:#002060;font:inherit;font-size:16px;font-weight:700;color:#FFFFFF;cursor:pointer">{{ t.label }}</button>
+                  </sc-if>
+                  <sc-if value="{{ t.off }}" hint-placeholder-val="{{ true }}">
+                    <button type="button" role="tab" aria-selected="false" onClick="{{ t.pick }}" style="height:44px;min-width:120px;padding:0 24px;border:0;border-radius:9999px;background:transparent;font:inherit;font-size:16px;font-weight:600;color:#4A5260;cursor:pointer" style-hover="color:#2A2A2A">{{ t.label }}</button>
+                  </sc-if>
+                </sc-for>
+              </div>
+            </div>
+            <ol style="list-style:none;margin:0;padding:16px 0 0;position:relative">
+              <span aria-hidden="true" style="position:absolute;left:50%;top:24px;bottom:8px;width:2px;margin-left:-1px;background:#C9D8FF"></span>
+              <sc-for list="{{ timeline }}" as="y" hint-placeholder-count="6">
+                <li style="position:relative;display:grid;grid-template-columns:minmax(0,1fr) 56px minmax(0,1fr);align-items:start;padding:12px 0">
+                  <div style="min-width:0;display:flex;flex-direction:column;align-items:flex-end;gap:8px;text-align:right">
+                    <sc-if value="{{ y.left }}" hint-placeholder-val="{{ true }}">
+                      <span style="font-size:28px;line-height:36px;font-weight:700;color:{{ y.yInk }}">{{ y.year }}</span>
+                      <sc-for list="{{ y.items }}" as="it" hint-placeholder-count="1">
+                        <span style="max-width:420px;padding:12px 18px;background:#FFFFFF;border:1px solid #E3E7ED;border-radius:10px;font-size:16px;line-height:26px;color:#2A2A2A;text-wrap:pretty">{{ it }}</span>
+                      </sc-for>
+                    </sc-if>
+                  </div>
+                  <span aria-hidden="true" style="justify-self:center;margin-top:12px;width:14px;height:14px;border-radius:9999px;background:#FFFFFF;border:3px solid {{ y.yInk }}"></span>
+                  <div style="min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:8px">
+                    <sc-if value="{{ y.right }}" hint-placeholder-val="{{ false }}">
+                      <span style="font-size:28px;line-height:36px;font-weight:700;color:{{ y.yInk }}">{{ y.year }}</span>
+                      <sc-for list="{{ y.items }}" as="it" hint-placeholder-count="1">
+                        <span style="max-width:420px;padding:12px 18px;background:#FFFFFF;border:1px solid #E3E7ED;border-radius:10px;font-size:16px;line-height:26px;color:#2A2A2A;text-wrap:pretty">{{ it }}</span>
+                      </sc-for>
+                    </sc-if>
+                  </div>
+                </li>
+              </sc-for>
+            </ol>
+          </sc-if>
+          <sc-if value="{{ v1 }}" hint-placeholder-val="{{ false }}">
+          <ol style="list-style:none;margin:0;padding:0;position:relative">
+            <span aria-hidden="true" style="position:absolute;left:111px;top:8px;bottom:8px;width:2px;background:#E3E7ED"></span>
+            <sc-for list="{{ timeline }}" as="y" hint-placeholder-count="6">
+              <li style="position:relative;display:grid;grid-template-columns:88px 48px minmax(0,1fr);align-items:start;padding:14px 0">
+                <span style="font-size:22px;line-height:28px;font-weight:700;color:#002060;text-align:right">{{ y.year }}</span>
+                <span aria-hidden="true" style="justify-self:center;margin-top:8px;width:12px;height:12px;border-radius:9999px;background:{{ y.dot }};box-shadow:0 0 0 4px #F4F6F9"></span>
+                <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px">
+                  <sc-for list="{{ y.items }}" as="it" hint-placeholder-count="1">
+                    <li style="padding:12px 18px;background:#FFFFFF;border:1px solid #E3E7ED;border-radius:10px;font-size:16px;line-height:26px;color:#2A2A2A;text-wrap:pretty">{{ it }}</li>
+                  </sc-for>
+                </ul>
+              </li>
+            </sc-for>
+          </ol>
+          </sc-if>
+          <sc-if value="{{ moreOuter }}" hint-placeholder-val="{{ true }}">
+            <div style="display:flex;justify-content:center">
+              <x-import component-from-global-scope="Sangsang.Button" variant="outline" iconRight="{{ moreIcon }}" onClick="{{ toggleMore }}" hint-size="160px,40px">{{ moreLabel }}</x-import>
+            </div>
+          </sc-if>
+        </section>
+
+        <section id="sec-talent" data-screen-label="인재상" style="display:flex;flex-direction:column;gap:28px;scroll-margin-top:24px">
+          <h3 style="margin:0;padding-bottom:14px;border-bottom:2px solid #2A2A2A;font-size:22px;line-height:32px;font-weight:700">인재상</h3>
+          <p style="margin:0;font-size:28px;line-height:40px;font-weight:700"><span style="color:#1C59FE">미코는</span> 사람을 소중히 여기는 기업입니다.</p>
+          <ul style="list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:16px">
+            <sc-for list="{{ talents }}" as="t" hint-placeholder-count="4">
+              <li style="background:#FFFFFF;border:1px solid #E3E7ED;border-radius:12px;padding:28px 24px;display:flex;flex-direction:column;gap:20px">
+                <div aria-hidden="true" style="height:132px;background:center/contain no-repeat;background-image:{{ t.illustBg }}"></div>
+                <div style="display:flex;flex-direction:column;gap:8px">
+                  <span style="font-size:19px;line-height:28px;font-weight:700"><span style="color:#1C59FE">{{ t.k1 }}</span> {{ t.k2 }}</span>
+                  <p style="margin:0;font-size:15px;line-height:24px;color:#4A5260;text-wrap:pretty">{{ t.desc }}</p>
+                </div>
+              </li>
+            </sc-for>
+          </ul>
+          <div style="display:grid;grid-template-columns:200px minmax(0,1fr);gap:24px;margin-top:36px">
+            <h4 style="margin:0;font-size:18px;line-height:27px;font-weight:700">인사방향</h4>
+            <sc-if value="{{ dirA }}" hint-placeholder-val="{{ true }}">
+              <div data-screen-label="인사방향 A" style="grid-column:1 / -1;position:relative;border-radius:16px;background:#002060;padding:44px clamp(24px,4vw,56px) 40px;overflow:hidden">
+                <div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-bottom:28px">
+                  <span style="font-size:13px;line-height:20px;font-weight:700;letter-spacing:0.12em;color:#8FAEFF">입사</span>
+                  <span style="font-size:15px;line-height:22px;font-weight:500;color:#B9CCFF">한 사람의 커리어 전체를 함께합니다</span>
+                  <span style="font-size:13px;line-height:20px;font-weight:700;letter-spacing:0.12em;color:#8FAEFF">평생</span>
+                </div>
+                <div aria-hidden="true" style="position:relative;height:16px;margin-bottom:32px">
+                  <span style="position:absolute;left:8px;right:8px;top:7px;height:2px;background:linear-gradient(90deg,#4F7BFF 0%,#B9CCFF 100%)"></span>
+                  <span style="position:absolute;left:0;top:0;width:16px;height:16px;border-radius:9999px;background:#4F7BFF;box-shadow:0 0 0 6px rgba(79,123,255,0.2)"></span>
+                  <span style="position:absolute;left:calc(50% - 5px);top:3px;width:10px;height:10px;border-radius:9999px;background:#002060;border:2px solid #8FAEFF"></span>
+                  <span style="position:absolute;right:0;top:0;width:16px;height:16px;border-radius:9999px;background:#FFFFFF;box-shadow:0 0 0 6px rgba(255,255,255,0.14)"></span>
+                </div>
+                <ul style="list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:24px 48px">
+                  <li style="display:flex;flex-direction:column;gap:10px">
+                    <span style="font-size:clamp(30px,3.6vw,44px);line-height:1.2;font-weight:700;color:#FFFFFF">청춘 바쳐</span>
+                    <span style="font-size:18px;line-height:28px;color:#DCE6FF">일할 가치가 있는 회사</span>
+                  </li>
+                  <li style="display:flex;flex-direction:column;align-items:flex-end;gap:10px;text-align:right">
+                    <span style="font-size:clamp(30px,3.6vw,44px);line-height:1.2;font-weight:700;color:#FFFFFF">평생 같이</span>
+                    <span style="font-size:18px;line-height:28px;color:#DCE6FF">일할 수 있는 회사</span>
+                  </li>
+                </ul>
+              </div>
+            </sc-if>
+            <sc-if value="{{ dirB }}" hint-placeholder-val="{{ false }}">
+              <div data-screen-label="인사방향 B" style="grid-column:1 / -1;padding:8px 0 4px;display:flex;flex-direction:column;gap:28px">
+                <div style="display:flex;flex-direction:column;gap:4px">
+                  <p style="margin:0;font-size:clamp(28px,3.2vw,40px);line-height:1.5;font-weight:700;color:#2A2A2A;text-wrap:balance"><span style="color:#1C59FE;background:linear-gradient(transparent 78%,rgba(28,89,254,0.22) 78%)">청춘 바쳐</span> 일할 가치가 있고,</p>
+                  <p style="margin:0;font-size:clamp(28px,3.2vw,40px);line-height:1.5;font-weight:700;color:#2A2A2A;text-wrap:balance"><span style="color:#1C59FE;background:linear-gradient(transparent 78%,rgba(28,89,254,0.22) 78%)">평생 같이</span> 일할 수 있는 회사.</p>
+                </div>
+                <dl style="margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));border-top:1px solid #D5DAE1">
+                  <div style="padding:20px 32px 4px 0;display:flex;flex-direction:column;gap:6px">
+                    <dt style="font-size:17px;line-height:26px;font-weight:700;color:#2A2A2A">청춘 바쳐</dt>
+                    <dd style="margin:0;font-size:16px;line-height:26px;color:#4A5260">젊은 열정을 쏟을 만한 일과 성장의 기회</dd>
+                  </div>
+                  <div style="padding:20px 0 4px 32px;border-left:1px solid #E3E7ED;display:flex;flex-direction:column;gap:6px">
+                    <dt style="font-size:17px;line-height:26px;font-weight:700;color:#2A2A2A">평생 같이</dt>
+                    <dd style="margin:0;font-size:16px;line-height:26px;color:#4A5260">오래 함께할 수 있는 안정과 신뢰</dd>
+                  </div>
+                </dl>
+              </div>
+            </sc-if>
+            <sc-if value="{{ dirC }}" hint-placeholder-val="{{ false }}">
+              <div data-screen-label="인사방향 C" style="grid-column:1 / -1;position:relative;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-radius:16px;overflow:hidden">
+                <div style="padding:40px clamp(24px,3.5vw,48px);background:#EEF3FF;display:flex;flex-direction:column;gap:8px">
+                  <span style="font-size:13px;line-height:20px;font-weight:700;letter-spacing:0.12em;color:#1A47D1">지금</span>
+                  <span style="font-size:clamp(28px,3.2vw,40px);line-height:1.25;font-weight:700;color:#002060">청춘 바쳐</span>
+                  <span style="font-size:17px;line-height:26px;color:#2A2A2A">일할 가치가 있는 회사</span>
+                </div>
+                <div style="padding:40px clamp(24px,3.5vw,48px);background:#002060;display:flex;flex-direction:column;align-items:flex-end;gap:8px;text-align:right">
+                  <span style="font-size:13px;line-height:20px;font-weight:700;letter-spacing:0.12em;color:#8FAEFF">앞으로</span>
+                  <span style="font-size:clamp(28px,3.2vw,40px);line-height:1.25;font-weight:700;color:#FFFFFF">평생 같이</span>
+                  <span style="font-size:17px;line-height:26px;color:#DCE6FF">일할 수 있는 회사</span>
+                </div>
+                <span aria-hidden="true" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:72px;height:72px;border-radius:9999px;background:#FFFFFF;box-shadow:0 0 0 8px rgba(255,255,255,0.35);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:700;color:#1C59FE">+</span>
+              </div>
+            </sc-if>
+          </div>
+          <div style="display:grid;grid-template-columns:200px minmax(0,1fr);gap:24px;margin-top:36px">
+            <h4 style="margin:0;font-size:18px;line-height:27px;font-weight:700">인사원칙</h4>
+            <sc-if value="{{ ruleA }}" hint-placeholder-val="{{ true }}">
+              <ol data-screen-label="인사원칙 A" style="list-style:none;margin:0;padding:12px 0 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:16px;align-items:end">
+                <sc-for list="{{ hrRules }}" as="r" hint-placeholder-count="3">
+                  <li style="margin-top:{{ r.rise }};padding:24px 24px 28px;background:#FFFFFF;border:1px solid #E3E7ED;border-top:3px solid #1C59FE;border-radius:0 0 12px 12px;display:flex;flex-direction:column;gap:12px">
+                    <div style="display:flex;align-items:baseline;gap:8px">
+                      <span style="font-size:13px;line-height:20px;font-weight:700;letter-spacing:0.06em;color:#4A5260">STEP</span>
+                      <span style="font-size:32px;line-height:40px;font-weight:700;color:#1C59FE;font-variant-numeric:tabular-nums">{{ r.num }}</span>
+                    </div>
+                    <span style="font-size:20px;line-height:30px;font-weight:700;color:#2A2A2A">{{ r.lead }} <span style="color:#1C59FE">{{ r.kw }}</span></span>
+                    <p style="margin:0;font-size:15px;line-height:25px;color:#4A5260;text-wrap:pretty">{{ r.desc }}</p>
+                  </li>
+                </sc-for>
+              </ol>
+            </sc-if>
+            <sc-if value="{{ ruleB }}" hint-placeholder-val="{{ false }}">
+              <ol data-screen-label="인사원칙 B" style="list-style:none;margin:0;padding:12px 0 0;display:flex;flex-wrap:wrap;gap:36px">
+                <sc-for list="{{ hrRules }}" as="r" hint-placeholder-count="3">
+                  <li style="position:relative;flex:1 1 220px;padding:32px 24px 28px;background:#FFFFFF;border:1px solid #E3E7ED;border-radius:12px;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center">
+                    <span aria-hidden="true" style="width:64px;height:64px;border-radius:9999px;background:#EEF3FF;color:#1C59FE;display:flex;align-items:center;justify-content:center"><x-import component-from-global-scope="Sangsang.Icon" name="{{ r.icon }}" size="{{ 30 }}" hint-size="30px,30px"></x-import></span>
+                    <div style="display:flex;flex-direction:column;gap:2px">
+                      <span style="font-size:16px;line-height:24px;font-weight:600;color:#4A5260">{{ r.lead }}</span>
+                      <span style="font-size:30px;line-height:40px;font-weight:700;color:#1C59FE">{{ r.kw }}</span>
+                    </div>
+                    <p style="margin:0;padding-top:14px;border-top:1px solid #EEF0F3;font-size:15px;line-height:25px;color:#4A5260;text-wrap:pretty">{{ r.desc }}</p>
+                    <sc-if value="{{ r.notLast }}" hint-placeholder-val="{{ false }}">
+                      <span aria-hidden="true" style="position:absolute;right:-30px;top:64px;width:24px;height:24px;color:#8A919C;display:flex;align-items:center;justify-content:center"><x-import component-from-global-scope="Sangsang.Icon" name="chevron-right" size="{{ 24 }}" hint-size="24px,24px"></x-import></span>
+                    </sc-if>
+                  </li>
+                </sc-for>
+              </ol>
+            </sc-if>
+            <sc-if value="{{ ruleD }}" hint-placeholder-val="{{ false }}">
+              <ol data-screen-label="인사원칙 D" style="grid-column:1 / -1;list-style:none;margin:0;padding:12px 0 0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:32px">
+                <sc-for list="{{ hrRules }}" as="r" hint-placeholder-count="3">
+                  <li style="position:relative;display:flex;flex-direction:column;align-items:center">
+                    <div style="position:relative;width:100%;max-width:210px;aspect-ratio:210/242">
+                      <svg aria-hidden="true" viewBox="0 0 210 242" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%;overflow:visible"><polygon points="105,5 205,62.5 205,179.5 105,237 5,179.5 5,62.5" fill="#FFFFFF" stroke="#002060" stroke-width="7" stroke-linejoin="miter" vector-effect="non-scaling-stroke"></polygon></svg>
+                      <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;text-align:center">
+                        <span style="font-size:clamp(12px,1.2vw,14px);line-height:20px;font-weight:700;color:#002060;margin-bottom:clamp(6px,1vw,14px)">Step {{ r.num }}</span>
+                        <span style="font-size:clamp(13px,1.4vw,17px);line-height:1.4;font-weight:500;color:#2A2A2A;white-space:nowrap">{{ r.lead }}</span>
+                        <span style="font-size:clamp(22px,2.6vw,32px);line-height:1.25;font-weight:700;color:#2A2A2A">{{ r.kw }}</span>
+                      </div>
+                    </div>
+                    <sc-if value="{{ r.notLast }}" hint-placeholder-val="{{ false }}">
+                      <span aria-hidden="true" style="position:absolute;right:-21px;top:calc(min(100%,210px) * 0.52);width:0;height:0;border-left:10px solid #2A2A2A;border-top:7px solid transparent;border-bottom:7px solid transparent"></span>
+                    </sc-if>
+                    <span aria-hidden="true" style="width:1px;height:56px;background:#D5DAE1"></span>
+                    <span aria-hidden="true" style="position:relative;z-index:1;width:32px;height:32px;margin-bottom:-16px;border-radius:9999px;background:#EEF0F3;display:flex;align-items:center;justify-content:center"><span style="width:12px;height:12px;border-radius:9999px;border:2.5px solid #8A919C;background:#FFFFFF"></span></span>
+                    <p style="flex:1;width:100%;margin:0;padding:40px clamp(14px,2vw,24px) 32px;background:#FFFFFF;border-radius:16px;box-shadow:0 2px 12px rgba(16,24,40,0.06);display:flex;align-items:center;justify-content:center;text-align:center;font-size:15px;line-height:26px;color:#4A5260;text-wrap:pretty">{{ r.desc }}</p>
+                  </li>
+                </sc-for>
+              </ol>
+            </sc-if>
+            <sc-if value="{{ ruleC }}" hint-placeholder-val="{{ false }}">
+              <ol data-screen-label="인사원칙 C" style="list-style:none;margin:12px 0 0;padding:0">
+                <sc-for list="{{ hrRules }}" as="r" hint-placeholder-count="3">
+                  <li style="display:grid;grid-template-columns:88px minmax(0,0.9fr) minmax(0,1.4fr);gap:24px;align-items:baseline;padding:28px 0;border-bottom:1px solid #D5DAE1">
+                    <span style="font-size:40px;line-height:44px;font-weight:700;color:#1C59FE;font-variant-numeric:tabular-nums"><span style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">STEP </span>{{ r.num }}</span>
+                    <span style="font-size:22px;line-height:32px;font-weight:700;color:#2A2A2A">{{ r.lead }} <span style="color:#1C59FE">{{ r.kw }}</span></span>
+                    <p style="margin:0;font-size:16px;line-height:27px;color:#4A5260;text-wrap:pretty">{{ r.desc }}</p>
+                  </li>
+                </sc-for>
+              </ol>
+            </sc-if>
+          </div>
+        </section>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isGreeting }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-direction:column;gap:80px">
+        <section id="sec-greeting" data-screen-label="연수원장 인사말" style="display:flex;flex-direction:column;gap:28px;scroll-margin-top:24px">
+          <h3 style="margin:0;padding-bottom:14px;border-bottom:2px solid #2A2A2A;font-size:22px;line-height:32px;font-weight:700">연수원장 인사말</h3>
+          <div style="display:grid;grid-template-columns:minmax(0,1fr) 252px;gap:48px;align-items:start">
+            <div style="display: flex; flex-direction: column; gap: 28px; max-width: 760px">
+              <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:12px">
+                <p style="margin: 0; font-size: 42px; line-height: 54px; font-weight: 700; text-wrap: pretty">배움의 공간을, 성장의 경험으로</p>
+                <p style="margin: 0; font-size: 20px; line-height: 28px; font-weight: 600; color: #4A5260"><span style="color:#1C59FE">미코인의 연결과 성장을 위해</span> 미코스쿨상상이상이 함께하겠습니다.</p>
+              </div>
+              <p style="margin: 8px 0 0; font-size: 20px; line-height: 28px; font-weight: 700">안녕하십니까. 미코스쿨상상이상 연수원장 박신윤입니다.</p>
+              <sc-for list="{{ greeting }}" as="p" hint-placeholder-count="5">
+                <p style="margin:0;font-size:17px;line-height:32px;color:#2A2A2A;text-wrap:pretty">{{ p }}</p>
+              </sc-for>
+              <p style="margin:0;font-size:17px;line-height:32px">감사합니다.</p>
+              <p style="margin:16px 0 0;align-self:flex-end;font-size:16px;line-height:24px;color:#4A5260">미코스쿨상상이상 연수원장 <b style="font-size:20px;font-weight:700;color:#2A2A2A;margin-left:6px">박신윤</b></p>
+            </div>
+            <div style="position:sticky;top:calc(var(--gnb-offset, 0px) + 24px);transition:top .25s ease;width:252px;padding:2px;background:#FFFFFF;border:1px solid #D5DAE1;display:flex;flex-direction:column">
+              <div style="height:270px">
+                <image-slot id="greeting-portrait" shape="rect" placeholder="연수원장 사진"></image-slot>
+              </div>
+              <div style="background:#002060;padding:20px 20px 22px;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center">
+                <span style="font-size:15px;line-height:22px;font-weight:500;color:#B9CCFF">미코스쿨상상이상 연수원장</span>
+                <span style="font-size:30px;line-height:38px;font-weight:700;color:#FFFFFF;letter-spacing:0.04em">박신윤</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="sec-center" data-screen-label="연수원 소개" style="display:flex;flex-direction:column;gap:24px;scroll-margin-top:24px">
+          <h3 style="margin:0;padding-bottom:14px;border-bottom:2px solid #2A2A2A;font-size:22px;line-height:32px;font-weight:700">연수원 소개</h3>
+          <div style="position:relative;width:100%;aspect-ratio:2.4/1">
+            <image-slot id="center-hero" shape="rounded" radius="12" placeholder="연수원 전경 사진" style="position:absolute;inset:0;width:100%;height:100%"></image-slot>
+          </div>
+          <sc-if value="{{ v1 }}" hint-placeholder-val="{{ false }}">
+            <dl style="margin:0;border-top:1px solid #D5DAE1">
+              <sc-for list="{{ centerInfo }}" as="r" hint-placeholder-count="3">
+                <div style="display:grid;grid-template-columns:168px minmax(0,1fr);border-bottom:1px solid #D5DAE1">
+                  <dt style="padding:16px 20px;background:#EEF0F3;font-size:15px;line-height:24px;font-weight:600">{{ r.k }}</dt>
+                  <dd style="margin:0;padding:16px 20px;background:#FFFFFF;font-size:15px;line-height:24px">{{ r.v }}</dd>
+                </div>
+              </sc-for>
+            </dl>
+          </sc-if>
+          <sc-if value="{{ v2 }}" hint-placeholder-val="{{ true }}">
+            <p style="margin:0;font-size:24px;line-height:36px;font-weight:700;text-wrap:pretty">미코인이 머물고 연결되며 다시 성장하는 <span style="color:#1C59FE">배움의 허브</span></p>
+            <div data-screen-label="숫자 스트립" style="display:flex;flex-wrap:wrap;align-items:center;gap:16px 0;padding:28px 0;border-top:1px solid #D5DAE1;border-bottom:1px solid #D5DAE1">
+              <dl style="margin:0;flex:1 1 560px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr))">
+                <div style="padding:0 16px 0 0;display:flex;flex-direction:column;gap:6px">
+                  <dd style="margin:0;order:1;font-size:clamp(24px,2.6vw,36px);line-height:1.25;font-weight:700;color:#002060;white-space:nowrap;font-variant-numeric:tabular-nums">2026.01</dd>
+                  <dt style="order:2;font-size:15px;line-height:22px;font-weight:500;color:#4A5260">개소</dt>
+                </div>
+                <div style="padding:0 24px;border-left:1px solid #D5DAE1;display:flex;flex-direction:column;gap:6px">
+                  <dd style="margin:0;order:1;display:flex;align-items:baseline;gap:4px;font-size:clamp(24px,2.6vw,36px);line-height:1.25;font-weight:700;color:#002060;white-space:nowrap"><span style="font-size:16px;font-weight:600;color:#4A5260">약</span>100<span style="font-size:20px;font-weight:600;color:#2A2A2A">실</span></dd>
+                  <dt style="order:2;font-size:15px;line-height:22px;font-weight:500;color:#4A5260">객실</dt>
+                </div>
+                <div style="padding:0 24px;border-left:1px solid #D5DAE1;display:flex;flex-direction:column;gap:6px">
+                  <dd style="margin:0;order:1;display:flex;align-items:baseline;gap:4px;font-size:clamp(24px,2.6vw,36px);line-height:1.25;font-weight:700;color:#002060;white-space:nowrap"><span style="font-size:16px;font-weight:600;color:#4A5260">최대</span>250<span style="font-size:20px;font-weight:600;color:#2A2A2A">명</span></dd>
+                  <dt style="order:2;font-size:15px;line-height:22px;font-weight:500;color:#4A5260">수용</dt>
+                </div>
+                <div style="padding:0 24px;border-left:1px solid #D5DAE1;display:flex;flex-direction:column;gap:6px">
+                  <dd style="margin:0;order:1;display:flex;align-items:baseline;gap:4px;font-size:clamp(24px,2.6vw,36px);line-height:1.25;font-weight:700;color:#002060;white-space:nowrap"><span style="font-size:16px;font-weight:600;color:#4A5260">약</span>2만<span style="font-size:20px;font-weight:600;color:#2A2A2A">평</span></dd>
+                  <dt style="order:2;font-size:15px;line-height:22px;font-weight:500;color:#4A5260">부지</dt>
+                </div>
+              </dl>
+              <span style="flex:none;height:26px;padding:0 10px;border-radius:4px;background:#FFF4E0;display:inline-flex;align-items:center;font-size:13px;font-weight:700;color:#9A5B00">더미</span>
+            </div>
+
+            <div data-screen-label="연수원이 하는 일" style="display:flex;flex-direction:column;gap:20px;padding-top:24px">
+              <h4 style="margin:0;font-size:22px;line-height:32px;font-weight:700">연수원이 하는 일</h4>
+              <ul style="list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:20px">
+                <li style="position:relative;isolation:isolate;overflow:hidden;padding:28px;background:#FFFFFF;border:1px solid #E3E7ED;border-radius:12px;display:flex;flex-direction:column;gap:12px">
+                  <div aria-hidden="true" style="position:absolute;z-index:-1;top:0;right:0;width:240px;height:150px;pointer-events:none;-webkit-mask-image:linear-gradient(to bottom,#000 30%,transparent);mask-image:linear-gradient(to bottom,#000 30%,transparent)"><x-import component-from-global-scope="Sangsang.GridPattern" width="{{ 240 }}" height="{{ 150 }}" cell="{{ 30 }}" fade="left" lit="{{ 3 }}" seed="{{ 7 }}" hint-size="240px,150px"></x-import></div>
+                  <span style="margin-bottom:8px;font-size:48px;line-height:56px;font-weight:900;color:#1C59FE;font-variant-numeric:tabular-nums;letter-spacing:-0.01em">01</span>
+                  <h5 style="margin:0;font-size:20px;line-height:30px;font-weight:700">직무 전문성 강화</h5>
+                  <p style="margin:0;font-size:16px;line-height:26px;color:#4A5260;text-wrap:pretty">현업에 바로 쓰는 직무 교육을 운영해요.</p>
+                </li>
+                <li style="position:relative;isolation:isolate;overflow:hidden;padding:28px;background:#FFFFFF;border:1px solid #E3E7ED;border-radius:12px;display:flex;flex-direction:column;gap:12px">
+                  <div aria-hidden="true" style="position:absolute;z-index:-1;top:0;right:0;width:240px;height:150px;pointer-events:none;-webkit-mask-image:linear-gradient(to bottom,#000 30%,transparent);mask-image:linear-gradient(to bottom,#000 30%,transparent)"><x-import component-from-global-scope="Sangsang.GridPattern" width="{{ 240 }}" height="{{ 150 }}" cell="{{ 30 }}" fade="left" lit="{{ 3 }}" seed="{{ 19 }}" hint-size="240px,150px"></x-import></div>
+                  <span style="margin-bottom:8px;font-size:48px;line-height:56px;font-weight:900;color:#1C59FE;font-variant-numeric:tabular-nums;letter-spacing:-0.01em">02</span>
+                  <h5 style="margin:0;font-size:20px;line-height:30px;font-weight:700">기술 · 경험 공유</h5>
+                  <p style="margin:0;font-size:16px;line-height:26px;color:#4A5260;text-wrap:pretty">계열사의 기술과 현장 노하우를 서로 나눠요.</p>
+                </li>
+                <li style="position:relative;isolation:isolate;overflow:hidden;padding:28px;background:#FFFFFF;border:1px solid #E3E7ED;border-radius:12px;display:flex;flex-direction:column;gap:12px">
+                  <div aria-hidden="true" style="position:absolute;z-index:-1;top:0;right:0;width:240px;height:150px;pointer-events:none;-webkit-mask-image:linear-gradient(to bottom,#000 30%,transparent);mask-image:linear-gradient(to bottom,#000 30%,transparent)"><x-import component-from-global-scope="Sangsang.GridPattern" width="{{ 240 }}" height="{{ 150 }}" cell="{{ 30 }}" fade="left" lit="{{ 3 }}" seed="{{ 31 }}" hint-size="240px,150px"></x-import></div>
+                  <span style="margin-bottom:8px;font-size:48px;line-height:56px;font-weight:900;color:#1C59FE;font-variant-numeric:tabular-nums;letter-spacing:-0.01em">03</span>
+                  <h5 style="margin:0;font-size:20px;line-height:30px;font-weight:700">조직 간 협업</h5>
+                  <p style="margin:0;font-size:16px;line-height:26px;color:#4A5260;text-wrap:pretty">부서와 계열사를 넘어 함께 배우고 연결돼요.</p>
+                </li>
+              </ul>
+            </div>
+
+            <div data-screen-label="공간 이야기" style="display:flex;flex-direction:column;gap:20px;padding-top:24px">
+              <h4 style="margin:0;font-size:22px;line-height:32px;font-weight:700">공간 이야기</h4>
+              <div style="display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);grid-template-rows:240px 240px;gap:16px">
+                <figure style="margin:0;grid-row:span 2;position:relative;border-radius:12px;overflow:hidden;background:#D5DAE1">
+                  <div role="img" aria-label="붉은 벽돌 연수원 본관 외관" style="position:absolute;inset:0;background:#D5DAE1 url(assets/hero/campus-main.jpg?v=2) center/cover no-repeat"></div>
+                  <figcaption style="position:absolute;left:0;right:0;bottom:0;padding:64px 28px 26px;background:linear-gradient(180deg,rgba(0,16,48,0) 0%,rgba(0,16,48,0.82) 100%);pointer-events:none;z-index:2;display:flex;flex-direction:column;gap:4px">
+                    <span style="font-size:24px;line-height:34px;font-weight:700;color:#FFFFFF">1979 한국건축가협회상 수상 건축물</span>
+                    <span style="font-size:16px;line-height:24px;color:#FFFFFF">40년 넘게 연수원으로 쓰여온 공간</span>
+                  </figcaption>
+                </figure>
+                <figure style="margin:0;position:relative;border-radius:12px;overflow:hidden;background:#D5DAE1">
+                  <div role="img" aria-label="넓은 잔디마당과 낮은 건물이 있는 캠퍼스" style="position:absolute;inset:0;background:#D5DAE1 url(assets/space/campus-hd.jpg) center/cover no-repeat"></div>
+                  <figcaption style="position:absolute;left:0;right:0;bottom:0;padding:48px 24px 20px;background:linear-gradient(180deg,rgba(0,16,48,0) 0%,rgba(0,16,48,0.82) 100%);pointer-events:none;z-index:2;display:flex;flex-direction:column;gap:2px">
+                    <span style="font-size:20px;line-height:30px;font-weight:700;color:#FFFFFF">2만 평 캠퍼스</span>
+                    <span style="font-size:15px;line-height:22px;color:#FFFFFF">낮게 펼쳐진 건물과 넓은 잔디마당</span>
+                  </figcaption>
+                </figure>
+                <figure style="margin:0;position:relative;border-radius:12px;overflow:hidden;background:#D5DAE1">
+                  <div role="img" aria-label="파라솔과 테이블이 놓인 야외 테라스" style="position:absolute;inset:0;background:#D5DAE1 url(assets/space/terrace-hd.jpg) center/cover no-repeat"></div>
+                  <figcaption style="position:absolute;left:0;right:0;bottom:0;padding:48px 24px 20px;background:linear-gradient(180deg,rgba(0,16,48,0) 0%,rgba(0,16,48,0.82) 100%);pointer-events:none;z-index:2;display:flex;flex-direction:column;gap:2px">
+                    <span style="font-size:20px;line-height:30px;font-weight:700;color:#FFFFFF">몸도 쉬어가는 곳</span>
+                    <span style="font-size:15px;line-height:22px;color:#FFFFFF">운동장과 테니스장 등 옥외 공간</span>
+                  </figcaption>
+                </figure>
+              </div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ pageToastOpen }}" hint-placeholder-val="{{ false }}">
+            <div role="status" style="position:fixed;left:50%;bottom:32px;transform:translateX(-50%);z-index:210">
+              <x-import component-from-global-scope="Sangsang.Toast" tone="info" hint-size="200px,48px">아직 준비중입니다.</x-import>
+            </div>
+          </sc-if>
+        </section>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isFacility }}" hint-placeholder-val="{{ false }}">
+      <div data-screen-label="시설 안내" style="display:flex;flex-direction:column;gap:20px">
+          <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px">
+            <div role="group" aria-label="시설 구분" style="display:flex;flex-wrap:wrap;gap:8px">
+              <sc-for list="{{ facCats }}" as="c" hint-placeholder-count="3">
+                <x-import component-from-global-scope="Sangsang.Tag" selected="{{ c.on }}" onClick="{{ c.pick }}" hint-size="96px,36px">{{ c.label }}</x-import>
+              </sc-for>
+            </div>
+            <span style="height:22px;padding:0 8px;border-radius:4px;background:#FFF4E0;display:inline-flex;align-items:center;font-size:12px;font-weight:700;color:#9A5B00">더미 데이터</span>
+          </div>
+          <div role="tablist" aria-label="{{ facCatLabel }}" style="position:sticky;top:var(--gnb-offset, 0px);transition:top .25s ease;z-index:5;background:#F4F6F9;display:flex;flex-wrap:wrap;column-gap:32px;border-bottom:1px solid #E3E7ED">
+            <sc-for list="{{ facItems }}" as="t" hint-placeholder-count="6">
+              <sc-if value="{{ t.on }}" hint-placeholder-val="{{ false }}">
+                <button type="button" role="tab" aria-selected="true" onClick="{{ t.pick }}" style="height:56px;padding:0;margin-bottom:-1px;border:0;border-bottom:2px solid #2A2A2A;background:transparent;font:inherit;font-size:18px;font-weight:700;color:#2A2A2A;cursor:pointer;white-space:nowrap">{{ t.name }}</button>
+              </sc-if>
+              <sc-if value="{{ t.off }}" hint-placeholder-val="{{ true }}">
+                <button type="button" role="tab" aria-selected="false" onClick="{{ t.pick }}" style="height:56px;padding:0;margin-bottom:-1px;border:0;border-bottom:2px solid transparent;background:transparent;font:inherit;font-size:18px;font-weight:500;color:#666E7A;cursor:pointer;white-space:nowrap" style-hover="color:#2A2A2A">{{ t.name }}</button>
+              </sc-if>
+            </sc-for>
+          </div>
+
+          <div data-screen-label="시설 상세" style="display:grid;grid-template-columns:minmax(0,1.6fr) minmax(300px,1fr);gap:24px;align-items:start">
+            <div style="min-width:0;display:flex;flex-direction:column;gap:10px">
+              <div role="img" aria-label="{{ photoAlt }}" style="position:relative;aspect-ratio:1.618/1;border-radius:12px;background:#E3E7ED center/cover no-repeat;background-image:{{ photoBg }};overflow:hidden">
+                <sc-if value="{{ photoMulti }}" hint-placeholder-val="{{ true }}">
+                <button type="button" aria-label="이전 사진" onClick="{{ photoPrev }}" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);width:44px;height:44px;border:0;border-radius:9999px;background:rgba(255,255,255,0.92);color:#2A2A2A;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 1px 3px rgba(16,24,40,0.12)"><x-import component-from-global-scope="Sangsang.Icon" name="chevron-left" size="{{ 20 }}" hint-size="20px,20px"></x-import></button>
+                <button type="button" aria-label="다음 사진" onClick="{{ photoNext }}" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);width:44px;height:44px;border:0;border-radius:9999px;background:rgba(255,255,255,0.92);color:#2A2A2A;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 1px 3px rgba(16,24,40,0.12)"><x-import component-from-global-scope="Sangsang.Icon" name="chevron-right" size="{{ 20 }}" hint-size="20px,20px"></x-import></button>
+                </sc-if>
+                <span aria-live="polite" style="position:absolute;right:12px;bottom:12px;height:28px;padding:0 12px;border-radius:9999px;background:rgba(13,20,33,0.72);display:flex;align-items:center;font-size:13px;font-weight:600;color:#FFFFFF">{{ photoNo }} / {{ photoTotal }}</span>
+              </div>
+              <div role="group" aria-label="사진 선택" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px">
+                <sc-for list="{{ thumbs }}" as="p" hint-placeholder-count="4">
+                  <button type="button" aria-label="{{ p.label }}" aria-pressed="{{ p.pressed }}" onClick="{{ p.pick }}" style="width:100%;min-width:0;height:clamp(44px,7vw,96px);padding:0;border:2px solid {{ p.ring }};border-radius:8px;background:#E3E7ED center/cover no-repeat;background-image:{{ p.bg }};cursor:pointer;opacity:{{ p.op }}"></button>
+                </sc-for>
+              </div>
+            </div>
+            <div style="min-width:0;background:#FFFFFF;border:1px solid #E3E7ED;border-radius:12px;padding:24px;display:flex;flex-direction:column;gap:20px">
+              <div style="display:flex;flex-direction:column;gap:4px">
+                <span style="font-size:13px;line-height:20px;font-weight:600;color:#666E7A">{{ facCatLabel }}</span>
+                <h3 style="margin:0;font-size:24px;line-height:34px;font-weight:700">{{ fi.name }}</h3>
+              </div>
+              <dl style="margin:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-top:1px solid #E3E7ED">
+                <sc-for list="{{ fi.specs }}" as="r" hint-placeholder-count="4">
+                  <div style="padding:14px 0;border-bottom:1px solid #E3E7ED;display:flex;flex-direction:column;gap:2px">
+                    <dt style="font-size:13px;line-height:20px;color:#666E7A">{{ r.k }}</dt>
+                    <dd style="margin:0;font-size:17px;line-height:26px;font-weight:700;color:#2A2A2A">{{ r.v }}</dd>
+                  </div>
+                </sc-for>
+              </dl>
+              <div style="display:flex;flex-direction:column;gap:10px">
+                <h4 style="margin:0;font-size:15px;line-height:22px;font-weight:700">{{ fi.listLabel }}</h4>
+                <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px">
+                  <sc-for list="{{ fi.list }}" as="e" hint-placeholder-count="4">
+                    <li style="display:grid;grid-template-columns:8px minmax(0,1fr);align-items:baseline;gap:10px;font-size:15px;line-height:24px;color:#2A2A2A"><span aria-hidden="true" style="width:4px;height:4px;border-radius:9999px;background:#4A5260;transform:translateY(-3px)"></span>{{ e }}</li>
+                  </sc-for>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+        <section data-screen-label="비교표" style="margin-top:60px;display:flex;flex-direction:column;gap:14px">
+          <h3 style="margin:0;font-size:20px;line-height:30px;font-weight:700">{{ facCatLabel }} 비교</h3>
+          <div style="background:#FFFFFF;border:1px solid #E3E7ED;border-radius:12px;overflow-x:auto">
+            <table style="width:100%;min-width:720px;border-collapse:collapse;font-size:14px">
+              <caption style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">{{ facCatLabel }} 비교표</caption>
+              <thead>
+                <tr>
+                  <sc-for list="{{ cmpHead }}" as="h" hint-placeholder-count="5">
+                    <th scope="col" style="height:44px;padding:0 16px;background:#F4F6F9;color:#4A5260;font-size:13px;font-weight:600;text-align:{{ h.align }};border-bottom:1px solid #E3E7ED;white-space:nowrap">{{ h.label }}</th>
+                  </sc-for>
+                </tr>
+              </thead>
+              <tbody>
+                <sc-for list="{{ cmpRows }}" as="r" hint-placeholder-count="6">
+                  <tr style="background:{{ r.bg }}">
+                    <sc-for list="{{ r.cells }}" as="c" hint-placeholder-count="5">
+                      <td style="height:56px;padding:10px 16px;border-bottom:1px solid #E3E7ED;text-align:{{ c.align }};font-weight:{{ c.w }};color:{{ c.ink }};line-height:22px">{{ c.v }}</td>
+                    </sc-for>
+                  </tr>
+                </sc-for>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section data-screen-label="전체 시설표" style="margin-top:60px;display:flex;flex-direction:column;gap:14px">
+          <h3 style="margin:0;font-size:20px;line-height:30px;font-weight:700">전체 시설</h3>
+          <div style="background:#FFFFFF;border:1px solid #E3E7ED;border-radius:12px;overflow-x:auto">
+            <table style="width:100%;min-width:640px;border-collapse:collapse;font-size:14px">
+              <caption style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">연수원 전체 시설표</caption>
+              <thead>
+                <tr>
+                  <th scope="col" style="width:120px;height:44px;padding:0 16px;background:#F4F6F9;color:#4A5260;font-size:13px;font-weight:600;text-align:left;border-bottom:1px solid #E3E7ED">구분</th>
+                  <th scope="col" style="height:44px;padding:0 16px;background:#F4F6F9;color:#4A5260;font-size:13px;font-weight:600;text-align:left;border-bottom:1px solid #E3E7ED">시설</th>
+                  <th scope="col" style="height:44px;padding:0 16px;background:#F4F6F9;color:#4A5260;font-size:13px;font-weight:600;text-align:right;border-bottom:1px solid #E3E7ED">면적</th>
+                  <th scope="col" style="height:44px;padding:0 16px;background:#F4F6F9;color:#4A5260;font-size:13px;font-weight:600;text-align:right;border-bottom:1px solid #E3E7ED">공간 갯수</th>
+                  <th scope="col" style="height:44px;padding:0 16px;background:#F4F6F9;color:#4A5260;font-size:13px;font-weight:600;text-align:right;border-bottom:1px solid #E3E7ED">수용 인원</th>
+                </tr>
+              </thead>
+              <tbody>
+                <sc-for list="{{ allRows }}" as="r" hint-placeholder-count="15">
+                  <tr>
+                    <sc-if value="{{ r.first }}" hint-placeholder-val="{{ false }}">
+                      <th scope="rowgroup" rowSpan="{{ r.span }}" style="padding:0 16px;background:#F8F9FA;border-bottom:1px solid #D5DAE1;border-right:1px solid #E3E7ED;text-align:left;vertical-align:middle;font-size:14px;font-weight:700;color:#002060">{{ r.group }}</th>
+                    </sc-if>
+                    <td style="height:48px;padding:0 16px;border-bottom:{{ r.line }};font-weight:600">{{ r.name }}</td>
+                    <td style="padding:0 16px;border-bottom:{{ r.line }};text-align:right;font-variant-numeric:tabular-nums;color:{{ r.areaInk }}">{{ r.area }}</td>
+                    <td style="padding:0 16px;border-bottom:{{ r.line }};text-align:right;font-variant-numeric:tabular-nums">{{ r.qty }}</td>
+                    <td style="padding:0 16px;border-bottom:{{ r.line }};text-align:right;font-variant-numeric:tabular-nums;color:{{ r.capInk }}">{{ r.cap }}</td>
+                  </tr>
+                </sc-for>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isGuide }}" hint-placeholder-val="{{ false }}">
+      <div data-screen-label="이용 안내" style="display:flex;flex-direction:column;gap:80px">
+        <section id="sec-hours" data-screen-label="이용 시간" style="display:flex;flex-direction:column;gap:20px;scroll-margin-top:24px">
+          <div style="display:flex;align-items:center;gap:10px;padding-bottom:14px;border-bottom:2px solid #2A2A2A">
+            <h3 style="margin:0;font-size:22px;line-height:32px;font-weight:700">이용 시간</h3>
+            <span style="height:22px;padding:0 8px;border-radius:4px;background:#FFF4E0;display:inline-flex;align-items:center;font-size:12px;font-weight:700;color:#9A5B00">더미</span>
+          </div>
+          <dl style="margin:0;border-top:1px solid #D5DAE1">
+            <sc-for list="{{ hours }}" as="r" hint-placeholder-count="3">
+              <div style="display:grid;grid-template-columns:168px minmax(0,1fr);border-bottom:1px solid #D5DAE1">
+                <dt style="padding:16px 20px;background:#EEF0F3;font-size:15px;line-height:24px;font-weight:600">{{ r.k }}</dt>
+                <dd style="margin:0;padding:16px 20px;background:#FFFFFF;display:flex;flex-wrap:wrap;gap:4px 28px;font-size:15px;line-height:24px">
+                  <sc-for list="{{ r.v }}" as="x" hint-placeholder-count="2">
+                    <span><span style="color:#666E7A;margin-right:8px">{{ x.k }}</span><b style="font-weight:600">{{ x.t }}</b></span>
+                  </sc-for>
+                </dd>
+              </div>
+            </sc-for>
+          </dl>
+        </section>
+
+        <section id="sec-rules" data-screen-label="이용 수칙" style="display:flex;flex-direction:column;gap:20px;scroll-margin-top:24px">
+          <div style="display:flex;align-items:center;gap:10px;padding-bottom:14px;border-bottom:2px solid #2A2A2A">
+            <h3 style="margin:0;font-size:22px;line-height:32px;font-weight:700">이용 수칙</h3>
+            <span style="height:22px;padding:0 8px;border-radius:4px;background:#FFF4E0;display:inline-flex;align-items:center;font-size:12px;font-weight:700;color:#9A5B00">더미</span>
+          </div>
+          <ol style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;background:#FFFFFF;border:1px solid #E3E7ED;border-radius:12px">
+            <sc-for list="{{ rules }}" as="r" hint-placeholder-count="4">
+              <li style="display:grid;grid-template-columns:32px minmax(0,1fr);align-items:center;gap:12px;padding:16px 24px;border-top:{{ r.line }};font-size:16px;line-height:26px">
+                <span style="width:28px;height:28px;border-radius:9999px;background:#EAF0FF;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#1A47D1">{{ r.n }}</span>
+                <span style="text-wrap:pretty">{{ r.t }}</span>
+              </li>
+            </sc-for>
+          </ol>
+        </section>
+
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isMap }}" hint-placeholder-val="{{ false }}">
+      <div data-screen-label="오시는 길" style="display:flex;flex-direction:column;gap:80px">
+        <section id="sec-map" data-screen-label="오시는 길" style="display:flex;flex-direction:column;gap:20px;scroll-margin-top:24px">
+          <h3 style="margin:0;padding-bottom:14px;border-bottom:2px solid #2A2A2A;font-size:22px;line-height:32px;font-weight:700">위치 안내</h3>
+          <div style="position:relative;width:100%;aspect-ratio:2.4/1;min-height:320px;border-radius:12px;border:1px solid #E3E7ED;overflow:hidden;background:#E3E7ED">
+            <div ref="{{ mapRef }}" role="region" aria-label="미코스쿨상상이상 위치 지도. 끌어서 이동하고 +·− 버튼으로 확대·축소할 수 있어요." style="position:absolute;inset:0;z-index:0"></div>
+          </div>
+          <dl style="margin:0;border-top:1px solid #D5DAE1">
+            <div style="display:grid;grid-template-columns:168px minmax(0,1fr);border-bottom:1px solid #D5DAE1">
+              <dt style="padding:16px 20px;background:#EEF0F3;font-size:15px;line-height:24px;font-weight:600">주소</dt>
+              <dd style="margin:0;padding:16px 20px;background:#FFFFFF;font-size:16px;line-height:24px;font-weight:600">경기도 안성시 공도읍 하마정길 45</dd>
+            </div>
+          </dl>
+          <div style="display:flex;flex-direction:column;gap:12px;padding-top:12px">
+            <div style="display:flex;align-items:center;gap:10px">
+              <h4 style="margin:0;font-size:18px;line-height:27px;font-weight:700">교통 안내</h4>
+              <span style="height:22px;padding:0 8px;border-radius:4px;background:#FFF4E0;display:inline-flex;align-items:center;font-size:12px;font-weight:700;color:#9A5B00">더미</span>
+            </div>
+            <ul style="list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:16px">
+              <sc-for list="{{ routes }}" as="r" hint-placeholder-count="3">
+                <li style="padding:24px;background:#FFFFFF;border:1px solid #E3E7ED;border-radius:12px;display:flex;flex-direction:column;gap:10px">
+                  <div style="display:flex;align-items:center;gap:10px">
+                    <span aria-hidden="true" style="flex:none;width:40px;height:40px;border-radius:10px;background:#EAF0FF;display:flex;align-items:center;justify-content:center"><span style="width:24px;height:24px;background:#1C59FE;-webkit-mask:{{ r.mask }} center/contain no-repeat;mask:{{ r.mask }} center/contain no-repeat"></span></span>
+                    <span style="font-size:18px;line-height:27px;font-weight:700">{{ r.k }}</span>
+                  </div>
+                  <p style="margin:0;font-size:15px;line-height:24px;color:#4A5260;text-wrap:pretty">{{ r.d }}</p>
+                </li>
+              </sc-for>
+            </ul>
+          </div>
+        </section>
+
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isGuide }}" hint-placeholder-val="{{ false }}">
+      <div style="margin-top:80px;display:flex;flex-direction:column;gap:80px">
+        <section id="sec-contact" data-screen-label="문의처" style="display:flex;flex-direction:column;gap:20px;scroll-margin-top:24px">
+          <div style="display:flex;align-items:center;gap:10px;padding-bottom:14px;border-bottom:2px solid #2A2A2A">
+            <h3 style="margin:0;font-size:22px;line-height:32px;font-weight:700">문의처</h3>
+            <span style="height:22px;padding:0 8px;border-radius:4px;background:#FFF4E0;display:inline-flex;align-items:center;font-size:12px;font-weight:700;color:#9A5B00">더미</span>
+          </div>
+          <dl style="margin:0;border-top:1px solid #D5DAE1">
+            <sc-for list="{{ contact }}" as="r" hint-placeholder-count="4">
+              <div style="display:grid;grid-template-columns:168px minmax(0,1fr);border-bottom:1px solid #D5DAE1">
+                <dt style="padding:16px 20px;background:#EEF0F3;font-size:15px;line-height:24px;font-weight:600">{{ r.k }}</dt>
+                <dd style="margin:0;padding:16px 20px;background:#FFFFFF;font-size:15px;line-height:24px">{{ r.v }}</dd>
+              </div>
+            </sc-for>
+          </dl>
+        </section>
+      </div>
+    </sc-if>
+  </div>
+</main>
+
+<dc-import name="Footer" hint-size="100%,200px"></dc-import>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const U = id => `url(https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=800&q=80)`;
+const TABS_OLD = [
+  { id: 'way', label: '미코 WAY · 인재상', subs: [['미코 WAY', 'sec-way'], ['연혁', 'sec-history'], ['인재상', 'sec-talent']] },
+  { id: 'greeting', label: '인사말 · 연수원 소개', subs: [['연수원장 인사말', 'sec-greeting'], ['연수원 소개', 'sec-center']] }
+];
+const TABS_NEW = [
+  { id: 'way', label: '미코 Way', subs: [['미코 WAY', 'sec-way'], ['연혁', 'sec-history'], ['인재상', 'sec-talent']] },
+  { id: 'greeting', label: '연수원 소개', subs: [['인사말', 'sec-greeting'], ['연수원 소개', 'sec-center']] },
+  { id: 'facility', label: '시설 안내', subs: [] },
+  { id: 'guide', label: '이용 안내', subs: [['이용 시간', 'sec-hours'], ['이용 수칙', 'sec-rules'], ['문의처', 'sec-contact']] },
+  { id: 'map', label: '오시는 길', subs: [] }
+];
+const WAYS = [
+  { ko: '전략', en: 'Strategy', value: 'Value Creation', icon: 'assets/way_strategy.png' },
+  { ko: '비전', en: 'Vision', value: '매출 세계 Top 10 세라믹 소재 · 부품 기업', icon: 'assets/way_vision.png' },
+  { ko: '정체성', en: 'Identity', value: '핵심요소 기술의 융 · 복합을 바탕으로 고객의 미래가치를 창조하는 Global Engineering Company', icon: 'assets/way_identity.png' },
+  { ko: '미코정신', en: 'MiCo Spirit', value: '즐겁게 · 치열하게 · 깨끗하게 · 빠르게', navy: true, icon: 'assets/way_spirit.png' }
+];
+const HISTORY = [
+  ['2025', ['동탄 제3사업장(연구동) 준공']],
+  ['2024', ['청년 친화 강소기업 선정']],
+  ['2023', ['중견기업 전환', 'ACT(Advanced Carbon Technology) 사업 양수']],
+  ['2022', ['탄소중립 녹색 경영대상 정부 포상']],
+  ['2021', ['MiCo 동탄 사업장 이전', 'MiCo 회사분할(물적분할 : 미코파워 신설)']],
+  ['2020', ['청년친화강소기업 선정 / 가족 친화인증', 'MiCo 회사분할(물적분할 : 미코세라믹스 신설)']],
+  ['2019', ['SOFC 1MW 전주기 제조공장 완공']],
+  ['2018', ['SOFC 2kW 시스템 KGS AB934 인증 획득']],
+  ['2017', ['이노비즈(기술혁신 중소기업) 인증, 메인비즈(경영혁신형 중소기업) 인증 획득', 'KoMiCo Equipment Parts Shenzhen Co.,Ltd 설립']],
+  ['2016', ['10.5세대 LCD ESC 국내 최초 양산']],
+  ['2015', ['미코 엠에스피 청산', '녹색기술인증(산업통상자원부)']],
+  ['2014', ['MiCo C&C 계열사 분리']],
+  ['2013', ['MiCo 회사 분할(신설법인 KoMiCo 설립)', '사명 변경(주식회사 KoMiCo → 주식회사 MiCo)']],
+  ['2009', ['MiCo BioMed 계열사 추가']],
+  ['2006', ['MiCo SnP(구, MiCo TN) 계열사 추가']],
+  ['2004', ['MiCo C&C 설립']],
+  ['2003', ['부품 · 소재전문기업 인증']],
+  ['2002', ['ISO 인증 획득', '기업공개(코스닥 상장)']],
+  ['1999', ['MiCo 법인 전환']],
+  ['1998', ['안성 제1산업단지 입주', '동부하이텍(구, 아남반도체) 협력업체 등록']],
+  ['1997', ['MiCo 연구소 개설', 'LG Philips, 삼성전자 LCD사업부 협력업체 등록']],
+  ['1996', ['삼성전자, SK-Hynix 반도체(구, 현대전자 반도체사업부) 협력업체 등록', 'MiCo 사업개시(설립)']]
+];
+const AWARDS_RAW = [
+  ['2025', '제26회 사회복지의 날 안성시장상(단체)'], ['2024', '2024년 청년 친화 강소기업'],
+  ['2023', '탄소중립 녹색경영대상 국무총리 표창 2년 연속 수상'], ['2023', '일하기 좋은 뿌리기업'], ['2023', '2023년 가족친화인증'],
+  ['2022', '탄소중립 녹색경영대상 환경부장관상 표창 수상'],
+  ['2020', '행복한 중기경영대상 코스닥협회 특별상'], ['2020', '가족친화인증'], ['2020', '청년친화강소기업 선정'],
+  ['2019', '코스닥 라이징스타 선정(한국거래소)'], ['2018', '2018 한국IR대상 코스닥부문 IR우수기업 선정'],
+  ['2017', '인재육성형 중소기업(중소기업진흥공단)'], ['2017', '2018년 청년 친화강소기업 선정'], ['2017', '경기도 착한 기업상 수상'],
+  ['2016', '1천만불 수출탑 수상'], ['2016', '반도체의 날 유공자 포상 · 동탑산업훈장'],
+  ['2015', '500만불 수출탑 수상'], ['2015', '녹색인증 우수기업 산업통상자원부 장관 표창 수상'],
+  ['2012', '제2회 전자IT 특허경영대상 수상'], ['2011', '발명의 날 발명장려 유공단체상 수상(특허청장)'],
+  ['2008', '발명의 날 기념 대통령 표창 수상'], ['2006', '제33회 상공의 날 국무총리 표창 수상'],
+  ['2002', '벤처기업대상 수상(중기특위회)'], ['2000', '벤처기업 표창(중소기업청)']
+];
+const AWARDS = AWARDS_RAW.reduce((acc, [y, t]) => { const g = acc.find(a => a[0] === y); if (g) g[1].push(t); else acc.push([y, [t]]); return acc; }, []);
+const TALENTS = [
+  { k1: '즐겁게', k2: '소통', desc: '주도적, 관계지향적 시너지형 인재', desc2: '주도적이고 관계지향적인 시너지형 인재' },
+  { k1: '치열하게', k2: '몰입', desc: '조직인의 모습으로 핵심역량을 갖춘 인재', desc2: '조직인으로서 핵심역량을 갖춘 인재' },
+  { k1: '깨끗하게', k2: '나눔 · 봉사', desc: '바른 가치관을 가진 양심형 인재', desc2: '바른 가치관을 가진 양심형 인재' },
+  { k1: '빠르게', k2: '리더십', desc: '배우고 생각하는 유능한 비전형 인재', desc2: '배우고 생각하는 유능한 비전형 인재' }
+];
+const HR_DIRS = [{ k: '청춘 바쳐', v: '일할 가치가 있는 회사' }, { k: '평생 같이', v: '일할 수 있는 회사' }];
+const HR_RULES = [
+  { step: 'STEP 01', title: '능력 있는 자에게 업무', desc: '개인의 역량을 충분히 발휘하는 인재에게는 도전적인 업무 부여를 통해 성과창출에 기여할 수 있도록 한다.' },
+  { step: 'STEP 02', title: '성과 있는 자에게 보상', desc: '고성과창출을 통해 회사 발전에 기여한 구성원들에게는 합당한 보상을 하여 동기부여 될 수 있도록 한다.' },
+  { step: 'STEP 03', title: '인품 있는 자에게 직책', desc: '개인의 역량을 아낌없이 발휘할 뿐만 아니라 타 구성원에게 귀감이 되고 조직문화를 이끌어 갈 수 있는, 미코의 인재상에 부합하는 인품 있는 인재에게는 직책을 부여한다.' }
+];
+const GREETING = [
+  '미코스쿨상상이상은 단순히 교육을 듣는 공간이 아니라, 미코인이 언제든 머물고 연결되며 다시 성장의 에너지를 얻는 배움의 허브가 되고자 합니다. 미코그룹이 보유한 기술력과 구성원의 잠재력이 이곳에서 만나, 서로의 경험을 나누고 현장의 문제를 함께 해결하여 “상상이상”의 혁신을 만들어가길 바랍니다.',
+  '우리가 지향하는 교육의 출발점은 현장입니다. 교육은 현업에서 바로 적용되고, 문제 해결로 이어져야 합니다. 그래서 미코스쿨상상이상은 이론에 머무르지 않고 실습, 프로젝트, CoP, 워크숍을 통해 배우고 실행하고 공유하는 학습 문화를 만들어가겠습니다. 또한 모든 배움의 과정이 기록되고 축적되어, 개인의 성장뿐 아니라 그룹 전체의 지식자산으로 이어지도록 하겠습니다.',
+  '지금 우리는 AI와 디지털 전환이라는 큰 변화의 한가운데에 서 있습니다. 미코스쿨상상이상은 직무 역량, 디지털 역량, AI 역량을 함께 키우며, 구성원 각자가 자신의 업무 안에서 더 나은 답을 찾고 새로운 가능성을 실현하도록 돕겠습니다. AI는 사람을 대체하는 기술이 아니라, 더 나은 판단과 실행을 돕는 든든한 업무 파트너가 되어야 합니다.',
+  '무엇보다 저는 이곳이 다시 찾고 싶은 공간이 되기를 바랍니다. 심리적으로 안전하고, 자유롭게 질문하고, 서로의 지혜를 나눌 수 있는 공간. 이곳에서 얻는 작은 확신이 현업의 도전 앞에서 큰 용기가 되기를 바랍니다.',
+  '업무의 막막함 속에서 더 나은 해답이 필요할 때, 새로운 성장의 전환점이 필요할 때 언제든 미코스쿨상상이상으로 오세요. 저는 운영자가 아니라 여러분과 함께 길을 찾는 성장의 동반자로서 여러분 곁에서 함께하겠습니다.'
+];
+const CENTER_INFO = [
+  { k: '연수원명', v: '미코스쿨 상상이상' },
+  { k: '주소', v: '경기도 안성시 공도읍 하마정길 45 (마정리)' },
+  { k: '운영 시간', v: '평일 09:00 – 18:00' }
+];
+const CENTER_STATS = [['강의실', '13', '개'], ['객실', '60', '실'], ['최대 수용', '200', '명'], ['연면적', '○○', '㎡']];
+const AIMS = [
+  { t: '현장 중심 교육', d: '현업에 바로 적용하고 문제 해결로 이어지도록 실습 · 프로젝트 · 워크숍 중심으로 배워요.' },
+  { t: '함께 배우는 문화', d: 'CoP와 워크숍으로 서로의 경험을 나누고, 현장의 문제를 함께 풀어요.' },
+  { t: '쌓이는 학습 기록', d: '모든 배움을 기록하고 축적해 개인의 성장과 그룹의 지식자산으로 이어가요.' }
+];
+const FAC_CATS = [['edu', '교육 시설', '주요 장비'], ['stay', '숙박 시설', '비품'], ['amen', '편의 시설', '주요 시설 · 운영']];
+const FAC2 = {
+  edu: [
+    { name: '대강당', floor: '지하 1층', area: 360, cap: '160명', qty: '1실', list: ['프로젝터', '200인치 스크린', '음향 설비', '무선 마이크', '강의 녹화'], proj: 1, screen: '200인치', mic: 1, rec: 1 },
+    { name: '계단식 강의실', floor: '1층', area: 200, cap: '100명', qty: '1실', list: ['프로젝터', '150인치 스크린', '무선 마이크'], proj: 1, screen: '150인치', mic: 1, rec: 0 },
+    { name: '중강의실', floor: '2층', area: 150, cap: '60명', qty: '4실', list: ['프로젝터', '180인치 스크린', '무선 마이크'], proj: 1, screen: '180인치', mic: 1, rec: 0 },
+    { name: '소강의실', floor: '2층', area: 110, cap: '30명', qty: '3실', list: ['프로젝터', '전자칠판'], proj: 1, screen: '', mic: 0, rec: 0 },
+    { name: '분임토의실', floor: '3층', area: 34, cap: '10명', qty: '6실', list: ['화이트보드', 'TV 모니터'], proj: 0, screen: '', mic: 0, rec: 0 },
+    { name: '디지털 실습실', floor: '3층', area: 120, cap: '30명', qty: '1실', list: ['PC 30대', '실습용 소프트웨어'], proj: 0, screen: '', mic: 0, rec: 0 },
+    { name: '퍼포먼스룸', floor: '', area: 0, cap: '', qty: '1실', list: ['전면 거울', '촬영용 삼각대', '프로젝터'], proj: 1, screen: '', mic: 0, rec: 1 }
+  ],
+  stay: [
+    { name: '2인실', floor: '', area: 26, cap: '2명', qty: '80실', list: ['침대 2', '책상', '냉장고', '샤워부스', 'Wi-Fi'] },
+    { name: '1인실', floor: '', area: 20, cap: '1명', qty: '20실', list: ['침대', '책상', '냉장고', '샤워부스', 'Wi-Fi'] },
+    { name: '휴게실', floor: '층별 1곳', area: 0, cap: '', qty: '4곳', list: ['정수기', 'TV', '소파'] }
+  ],
+  amen: [
+    { name: '카페테리아', floor: '1층', area: 420, cap: '180석', qty: '1곳', list: ['조식 07:00 – 08:30', '중식 12:00 – 13:00', '석식 18:00 – 19:00'], hours: '조식 07:00 – 08:30 · 중식 12:00 – 13:00 · 석식 18:00 – 19:00' },
+    { name: '라운지', floor: '1층', area: 0, cap: '', qty: '1곳', list: ['커피 머신', '업무 공간'], hours: '' },
+    { name: '비즈니스센터', floor: '', area: 0, cap: '', qty: '1곳', list: ['회의 테이블', 'PC', '복합기'], hours: '' },
+    { name: '공유 사무실', floor: '', area: 0, cap: '', qty: '1곳', list: ['개인 좌석', '모니터', '전원 콘센트'], hours: '' },
+    { name: '피트니스센터', floor: '지하 1층', area: 0, cap: '', qty: '1곳', list: ['운영 06:00 – 22:00'], hours: '06:00 – 22:00' },
+    { name: '세탁실 · 매점', floor: '지하 1층', area: 0, cap: '', qty: '각 1곳', list: ['매점(편의점)', '세탁기 · 다리미'], hours: '' },
+    { name: '주차장', floor: '지하 · 지상', area: 0, cap: '', qty: '140대', list: ['지하 100대', '지상 40대'], hours: '' }
+  ]
+};
+const FAC_PHOTOS = {
+  '대강당': ['assets/facility/hall_1.jpg', 'assets/facility/hall_2.jpg', 'assets/facility/hall_3.jpg', 'assets/facility/hall_4.jpg'],
+  '계단식 강의실': ['assets/facility/tier_1.jpg', 'assets/facility/tier_2.jpg'],
+  '중강의실': ['assets/facility/mid_1.jpg', 'assets/facility/mid_2.jpg', 'assets/facility/mid_3.jpg', 'assets/facility/mid_4.jpg'],
+  '소강의실': ['assets/facility/small_1.jpg', 'assets/facility/small_2.jpg', 'assets/facility/small_3.jpg', 'assets/facility/small_4.jpg'],
+  '분임토의실': ['assets/facility/group_1.jpg', 'assets/facility/group_2.jpg', 'assets/facility/group_3.jpg', 'assets/facility/group_4.jpg'],
+  '퍼포먼스룸': ['assets/facility/perf_1.jpg', 'assets/facility/perf_2.jpg', 'assets/facility/perf_3.jpg'],
+  '디지털 실습실': ['1497215842964-222b430dc094', '1593642632559-0c6d3fc62b89'],
+  '2인실': ['assets/facility/twin_1.jpg', 'assets/facility/twin_2.jpg', 'assets/facility/twin_3.jpg', 'assets/facility/twin_4.jpg'],
+  '1인실': ['assets/facility/single_1.jpg', 'assets/facility/single_2.jpg', 'assets/facility/single_3.jpg'],
+  '휴게실': ['assets/facility/rest_1.jpg', 'assets/facility/rest_2.jpg', 'assets/facility/rest_3.jpg', 'assets/facility/rest_4.jpg'],
+  '카페테리아': ['assets/facility/cafe_1.jpg', 'assets/facility/cafe_2.jpg', 'assets/facility/cafe_3.jpg', 'assets/facility/cafe_4.jpg'],
+  '비즈니스센터': ['assets/facility/biz_1.jpg', 'assets/facility/biz_2.jpg', 'assets/facility/biz_3.jpg', 'assets/facility/biz_4.jpg'],
+  '공유 사무실': ['assets/facility/share_1.jpg', 'assets/facility/share_2.jpg', 'assets/facility/share_3.jpg', 'assets/facility/share_4.jpg'],
+  '라운지': ['assets/facility/lounge_1.jpg', 'assets/facility/lounge_2.jpg', 'assets/facility/lounge_3.jpg'],
+  '피트니스센터': ['assets/facility/gym_1.jpg', 'assets/facility/gym_2.jpg', 'assets/facility/gym_3.jpg'],
+  '세탁실 · 매점': ['assets/facility/store_1.jpg', 'assets/facility/store_2.jpg', 'assets/facility/laundry_1.jpg', 'assets/facility/laundry_2.jpg'],
+  '주차장': ['1506521781263-d8422e82f27a', '1470224114660-3f6686c562eb']
+};
+const FAC_STATS = [['교육 시설', '13', '실'], ['객실', '60', '실'], ['식당', '150', '석'], ['최대 수용', '200', '명']];
+const STAY_ITEMS = '침대 · 업무용 책상 · Wi-Fi · 냉장고 · 욕실 어메니티';
+const FAC_TABS = [['edu', '교육 시설'], ['stay', '숙박 시설'], ['amenity', '체육 · 편의'], ['dining', '식당']];
+const FAC = {
+  edu: [
+    { name: '대강당', count: '1실', img: '1540575467063-178a50c2df87', rows: [['수용 인원', '200명'], ['면적', '420㎡'], ['주요 비품', '빔프로젝터 · 무선 마이크 · 화상회의 장비']] },
+    { name: '중강의실', count: '2실', img: '1524178232363-1fb2b075b655', rows: [['수용 인원', '60명'], ['면적', '132㎡'], ['주요 비품', '빔프로젝터 · 전자칠판 · 무선 마이크']] },
+    { name: '소강의실', count: '4실', img: '1517048676732-d65bc937f952', rows: [['수용 인원', '30명'], ['면적', '66㎡'], ['주요 비품', '빔프로젝터 · 전자칠판']] },
+    { name: '분임토의실', count: '6실', img: '1431540015161-0bf868a2d407', rows: [['수용 인원', '10명'], ['면적', '25㎡'], ['주요 비품', '전자칠판 · 화상회의 장비']] }
+  ],
+  stay: [
+    { name: '1인실', count: '40실', img: '1631049307264-da0ec9d70304', rows: [['수용 인원', '1명'], ['면적', '20㎡'], ['입 · 퇴실', '체크인 16:00 · 체크아웃 09:00'], ['구비 품목', STAY_ITEMS]] },
+    { name: '2인실', count: '20실', img: '1566665797739-1674de7a421a', rows: [['수용 인원', '2명'], ['면적', '28㎡'], ['입 · 퇴실', '체크인 16:00 · 체크아웃 09:00'], ['구비 품목', STAY_ITEMS]] }
+  ],
+  amenity: [
+    { name: '체력단련실', count: '1곳', img: '1534438327276-14e5300c3a48', rows: [['이용 시간', '06:00 – 22:00'], ['면적', '150㎡'], ['주요 시설', '러닝머신 · 웨이트 기구 · 샤워실']] },
+    { name: '라운지 · 카페', count: '1곳', img: '1554118811-1e0d58224f24', rows: [['수용 인원', '40명'], ['주요 시설', '음료 · 휴게 좌석 · 도서']] },
+    { name: '산책로', count: '1.2km', img: '1441974231531-c6227db76b6e', rows: [['코스', '연수원 둘레 순환'], ['소요 시간', '약 20분']] }
+  ],
+  dining: [
+    { name: '식당', count: '1곳', img: '1555396273-367ea4eb4db5', rows: [['좌석', '150석'], ['운영', '조식 · 중식 · 석식']] }
+  ]
+};
+const HOURS = [
+  { k: '숙박', v: [['체크인', '16:00'], ['체크아웃', '09:00']] },
+  { k: '식당', v: [['조식', '07:00 – 08:30'], ['중식', '12:00 – 13:00'], ['석식', '18:00 – 19:00']] },
+  { k: '체력단련실', v: [['매일', '06:00 – 22:00']] }
+];
+const RULES = ['연수원 전 구역은 금연이에요.', '외부인은 사전에 출입 신청을 해야 들어올 수 있어요.', '시설이나 비품을 훼손하면 변상해야 해요.', '23시 이후에는 객실과 복도에서 정숙해 주세요.'];
+const MI = d => `url("data:image/svg+xml,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='${d}'/></svg>`)}")`;
+const ROUTE_ICONS = {
+  '자가용': 'M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z',
+  '대중교통': 'M4 16c0 .88.39 1.67 1 2.22V20c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h8v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1.78c.61-.55 1-1.34 1-2.22V6c0-3.5-3.58-4-8-4s-8 .5-8 4v10zm3.5 1c-.83 0-1.5-.67-1.5-1.5S6.67 14 7.5 14s1.5.67 1.5 1.5S8.33 17 7.5 17zm9 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm1.5-6H6V6h12v5z',
+  '셔틀버스': 'M17 5H3c-1.1 0-2 .89-2 2v9h2c0 1.65 1.34 3 3 3s3-1.35 3-3h5.5c0 1.65 1.34 3 3 3s3-1.35 3-3H23v-5l-6-6zM3 11V7h4v4H3zm3 6.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM13 11H9V7h4v4zm5 6.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM15 11V7h1l4 4h-5z'
+};
+const ROUTES = [
+  { k: '자가용', d: '경부고속도로 안성IC에서 공도 방면으로 약 10분이에요. 연수원 주차장을 이용할 수 있어요.' },
+  { k: '대중교통', d: '안성종합버스터미널에서 시내버스를 타고 마정리 정류장에서 내린 뒤 걸어서 5분이에요.' },
+  { k: '셔틀버스', d: '교육 시작일 아침 평택역 앞에서 08:00에 출발해요. 교육 신청 시 함께 신청해요.' }
+];
+const CONTACT = [{ k: '담당', v: '연수원 운영팀' }, { k: '전화', v: '031-000-0000' }, { k: '메일', v: 'academy@mico.example' }, { k: '운영 시간', v: '평일 09:00 – 18:00' }];
+const stat = list => list.map(([k, v, u], i) => ({ k, v, u, line: i ? '1px solid #EEF0F3' : '0' }));
+
+class Component extends DCLogic {
+  state = { tab: 'way', hist: 'history', fac: 'edu', more: false };
+  isV2() { return true; }
+  tabs() { return this.isV2() ? TABS_NEW : TABS_OLD; }
+  secTab() { return Object.fromEntries(this.tabs().flatMap(t => t.subs.map(([, id]) => [id, t.id]))); }
+  quadRef = React.createRef();
+  mapRef = el => {
+    if (this.map) { this.map.remove(); this.map = null; }
+    if (!el) return;
+    const init = () => {
+      if (!window.L) return setTimeout(init, 150);
+      if (!el.isConnected) return;
+      const pos = [37.0200, 127.2049];
+      const map = L.map(el, { scrollWheelZoom: false, minZoom: 8, maxZoom: 16 }).setView(pos, 13);
+      L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', { maxNativeZoom: 13, maxZoom: 16, attribution: 'Tiles &copy; Esri' }).addTo(map);
+      const pin = L.divIcon({ className: '', iconSize: [28, 38], iconAnchor: [14, 38], popupAnchor: [0, -36],
+        html: '<svg width="28" height="38" viewBox="0 0 28 38" aria-hidden="true"><path d="M14 0C6.3 0 0 6.2 0 13.9 0 24.3 14 38 14 38s14-13.7 14-24.1C28 6.2 21.7 0 14 0z" fill="#1C59FE"/><circle cx="14" cy="14" r="5.5" fill="#fff"/></svg>' });
+      L.marker(pos, { icon: pin, title: '미코스쿨상상이상', alt: '미코스쿨상상이상 위치' }).addTo(map)
+        .bindPopup('<b style="font-size:14px">미코스쿨상상이상</b><br>경기도 안성시 공도읍 하마정길 45').openPopup();
+      map.on('click focus', () => map.scrollWheelZoom.enable());
+      map.on('mouseout blur', () => map.scrollWheelZoom.disable());
+      this.map = map;
+    };
+    init();
+  };
+  componentDidUpdate() { this.watchQuad(); }
+  watchQuad() {
+    const el = this.quadRef.current;
+    if (el === this.quadEl) return;
+    if (this.ro) this.ro.disconnect();
+    this.quadEl = el;
+    if (!el) return;
+    this.ro = new ResizeObserver(([e]) => { const w = Math.round(e.contentRect.width); if (w !== this.state.quadW) this.setState({ quadW: w }); });
+    this.ro.observe(el);
+  }
+  componentDidMount() {
+    this.watchQuad();
+    this.onHash = () => {
+      const h = location.hash.slice(1);
+      if (this.tabs().some(t => t.id === h)) { this.setState({ tab: h }); window.scrollTo(0, 0); }
+      else if (this.secTab()[h]) this.goSec(h);
+    };
+    this.onHash();
+    window.addEventListener('hashchange', this.onHash);
+  }
+  componentWillUnmount() { window.removeEventListener('hashchange', this.onHash); if (this.ro) this.ro.disconnect(); if (this.map) this.map.remove(); }
+  goSec(id) {
+    const tab = this.secTab()[id];
+    const scroll = () => requestAnimationFrame(() => {
+      const el = document.getElementById(id);
+      if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 24, behavior: 'smooth' });
+    });
+    if (tab !== this.state.tab) this.setState({ tab }, scroll); else scroll();
+  }
+  facVals() {
+    const s = this.state, cat = FAC_CATS.find(c => c[0] === s.facCat) || FAC_CATS[0];
+    const items = FAC2[cat[0]], idx = Math.min(s.facIdx || 0, items.length - 1), it = items[idx];
+    const PH = FAC_PHOTOS[it.name] || [];
+    const P = Math.max(PH.length, 1), ph = Math.min(s.photo || 0, P - 1), dash = '–';
+    const UB = (id, w) => id.startsWith('assets/') ? `url(${id})` : `url(https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${w}&q=80)`;
+    const area = a => a ? a + '㎡' : dash;
+    const go = n => this.setState({ photo: (n + P) % P });
+    const cell = (v, align, w, ink) => ({ v: v || dash, align: align || 'left', w: w || 400, ink: v ? (ink || '#2A2A2A') : '#8A919C' });
+    const mark = v => cell(v ? '●' : '', 'center', 400, '#1A47D1');
+    const heads = {
+      edu: [['시설', 'left'], ['면적', 'right'], ['수용 인원', 'right'], ['공간 갯수', 'right'], ['프로젝터', 'center'], ['스크린', 'center'], ['마이크', 'center'], ['녹화', 'center']],
+      stay: [['시설', 'left'], ['면적', 'right'], ['수용 인원', 'right'], ['공간 갯수', 'right'], ['비품', 'left']],
+      amen: [['시설', 'left'], ['면적', 'right'], ['수용 인원', 'right'], ['운영 시간', 'left']]
+    };
+    const rowOf = f => cat[0] === 'edu'
+      ? [cell(f.name, 'left', 600), cell(f.area && area(f.area), 'right'), cell(f.cap, 'right'), cell(f.qty, 'right'), mark(f.proj), cell(f.screen, 'center'), mark(f.mic), mark(f.rec)]
+      : cat[0] === 'stay'
+      ? [cell(f.name, 'left', 600), cell(f.area && area(f.area), 'right'), cell(f.cap, 'right'), cell(f.qty, 'right'), cell(f.list.join(' · '))]
+      : [cell(f.name, 'left', 600), cell(f.area && area(f.area), 'right'), cell(f.cap, 'right'), cell(f.hours)];
+    const all = [];
+    FAC_CATS.forEach(([k, label]) => FAC2[k].forEach((f, i, arr) => all.push({ first: i === 0, span: arr.length, group: label, name: f.name,
+      area: area(f.area), areaInk: f.area ? '#2A2A2A' : '#8A919C', qty: f.qty, cap: f.cap || dash, capInk: f.cap ? '#2A2A2A' : '#8A919C',
+      line: i === arr.length - 1 ? '1px solid #D5DAE1' : '1px solid #EEF0F3' })));
+    return {
+      facCatLabel: cat[1],
+      facCats: FAC_CATS.map(([k, label]) => ({ label, on: k === cat[0], pick: () => this.setState({ facCat: k, facIdx: 0, photo: 0 }) })),
+      facItems: items.map((f, i) => ({ name: f.name, on: i === idx, off: i !== idx, pick: () => this.setState({ facIdx: i, photo: 0 }) })),
+      fi: { name: it.name, listLabel: cat[2], list: it.list,
+        specs: [['위치', it.floor], ['면적', it.area ? area(it.area) : ''], ['수용 인원', it.cap], ['공간 갯수', it.qty]].map(([k, v]) => ({ k, v: v || dash })) },
+      photoNo: ph + 1, photoTotal: P, photoPrev: () => go(ph - 1), photoNext: () => go(ph + 1),
+      photoMulti: PH.length > 1, photoBg: PH[ph] ? UB(PH[ph], 1200) : 'none', photoAlt: `${it.name} 사진 ${ph + 1}`,
+      thumbs: PH.map((id, i) => ({ label: `사진 ${i + 1}`, bg: UB(id, 320), pressed: i === ph ? 'true' : 'false', ring: i === ph ? '#002060' : 'transparent', op: i === ph ? 1 : 0.7, pick: () => go(i) })),
+      cmpHead: heads[cat[0]].map(([label, align]) => ({ label, align })),
+      cmpRows: items.map((f, i) => ({ bg: i === idx ? '#F4F7FF' : '#FFFFFF', cells: rowOf(f) })),
+      allRows: all
+    };
+  }
+  renderVals() {
+    const s = this.state, v2 = this.isV2(), TABS = this.tabs();
+    const wide = s.quadW == null || s.quadW >= 900;
+    const T = TABS.find(t => t.id === s.tab) || TABS[0];
+    const title = v2 ? '연수원 안내' : '연수원 소개';
+    const tl = s.hist === 'award' ? AWARDS : HISTORY;
+    const eraOf = y => +y >= 2020 ? '2020' : +y >= 2010 ? '2010' : +y >= 2000 ? '2000' : '1990';
+    const eraLabels = { '2020': '2020년대', '2010': '2010년대', '2000': '2000년대', '1990': '1990년대' };
+    const eras = [...new Set(tl.map(([y]) => eraOf(y)))];
+    const era = s.era && eras.includes(s.era) ? s.era : eras[0];
+    const rows = v2 ? (s.more ? tl : tl.filter(([y]) => +y >= 2016)) : tl.filter(([y]) => eraOf(y) === era);
+    return {
+      v1: !v2, v2, title, gnbVer: v2 ? 'new' : 'old',
+      crumbs: [title, T.label], tabLabel: T.label,
+      tabItems: TABS.map(t => ({ label: t.label, on: t.id === T.id, off: t.id !== T.id, hasSubs: t.subs.length > 0,
+        pick: () => { history.replaceState(null, '', '#' + t.id); this.setState({ tab: t.id }); window.scrollTo(0, 0); },
+        subs: t.subs.map(([label, id]) => ({ label, go: () => this.goSec(id) })) })),
+      isWay: T.id === 'way', isGreeting: T.id === 'greeting', isFacility: T.id === 'facility', isGuide: T.id === 'guide', isMap: T.id === 'map',
+      ways: WAYS.map(w => ({ ...w, iconBg: `url(${w.icon})` })).map(w => w.navy
+        ? { ...w, bg: '#002060', border: '#002060', ink: '#FFFFFF', sub: '#B9CCFF' }
+        : { ...w, bg: '#FFFFFF', border: '#E3E7ED', ink: '#2A2A2A', sub: '#1C59FE' }),
+      wayQuad: WAYS.map((w, i) => { const right = i % 2 === 1, gray = i === 1 || i === 2;
+        return { ...w, value: w.navy ? '즐겁게 / 치열하게 / 깨끗하게 / 빠르게' : w.value, iconBg: `url(${w.icon})`, bg: gray ? '#EEF0F3' : '#FFFFFF',
+          align: right ? 'flex-end' : 'flex-start', ta: right ? 'right' : 'left', dir: right ? 'row-reverse' : 'row',
+          padL: right && wide ? '172px' : '44px', padR: !right && wide ? '172px' : '44px' }; }),
+      quadRef: this.quadRef, mapRef: this.mapRef, quadWide: wide,
+      way3: WAYS.slice(0, 3).map((w, i) => ({ ...w, no: '0' + (i + 1), iconBg: `url(${w.icon})`, enUp: w.en.toUpperCase() })), spirits: ['즐겁게', '치열하게', '깨끗하게', '빠르게'],
+      histTabs: [['history', '연혁'], ['award', '수상기록']].map(([id, label]) => ({ label, on: s.hist === id, off: s.hist !== id, pick: () => this.setState({ hist: id, era: null, more: false }) })),
+      eras: eras.map(e => ({ label: eraLabels[e], on: e === era, pick: () => this.setState({ era: e }) })),
+      timeline: rows.map(([year, items], i) => ({ year, items, dot: i === 0 ? '#1C59FE' : '#002060', yInk: i === 0 ? '#1C59FE' : '#002060', left: i % 2 === 0, right: i % 2 === 1 })),
+      ...(() => {
+        const hl = 'A';
+        const k = !v2 ? '' : hl.startsWith('B') ? 'B' : hl.startsWith('C') ? 'C' : 'A';
+        const decades = [];
+        rows.forEach(([year, items]) => { const d = year.slice(0, 3) + '0s'; let g = decades.find(x => x.label === d); if (!g) decades.push(g = { label: d, years: [] }); g.years.push({ year, items }); });
+        return { hlA: k === 'A', hlB: k === 'B', hlC: k === 'C', moreOuter: k === 'A' || k === 'C', decades };
+      })(),
+      moreLabel: s.more ? '접기' : s.hist === 'award' ? '이전 수상 기록 더보기' : '이전 연혁 더보기', moreIcon: s.more ? 'chevron-up' : 'chevron-down',
+      toggleMore: () => this.setState(st => ({ more: !st.more })),
+      talents: TALENTS.map((t, i) => ({ ...t, desc: v2 ? t.desc2 : t.desc, slotId: 'talent-' + (i + 1), illustBg: 'url(assets/talent/' + ['communication', 'focus', 'sharing', 'leadership'][i] + '.svg)', alt: `${t.k1} ${t.k2} 사진` })),
+      hrDirs: HR_DIRS.map((d, i) => ({ ...d, iconBg: `url(assets/talent/${['dir_growth', 'dir_global'][i]}.png)` })), hrRules: HR_RULES.map((r, i, a) => { const w = r.title.split(' '); return { ...r, num: r.step.replace('STEP ', ''), kw: w.pop(), lead: w.join(' '), rise: ['56px', '28px', '0'][i] || '0', icon: ['flag', 'award', 'trend-up'][i] || 'check', notLast: i < a.length - 1 }; }),
+      dirA: false, dirB: true, dirC: false,
+      ruleA: false, ruleB: false, ruleC: false, ruleD: true,
+      greeting: GREETING, centerInfo: CENTER_INFO,
+      centerStats: stat(CENTER_STATS), aims: AIMS,
+      ...this.facVals(),
+      pageToastOpen: !!this.state.pageToast,
+      soonToast: () => { this.setState({ pageToast: true }); clearTimeout(this._pt); this._pt = setTimeout(() => this.setState({ pageToast: false }), 3000); },
+      facStats: stat(FAC_STATS),
+      facTabs: FAC_TABS.map(([id, label]) => ({ label, on: s.fac === id, off: s.fac !== id, pick: () => this.setState({ fac: id }) })),
+      facCards: (FAC[s.fac] || FAC.edu).map(c => ({ ...c, bgImg: U(c.img), alt: c.name + ' 사진', rows: c.rows.map(([k, v]) => ({ k, v })) })),
+      hours: HOURS.map(h => ({ k: h.k, v: h.v.map(([k, t]) => ({ k, t })) })),
+      rules: RULES.map((t, i) => ({ t, n: i + 1, line: i ? '1px solid #EEF0F3' : '0' })),
+      routes: ROUTES.map(r => ({ ...r, mask: MI(ROUTE_ICONS[r.k] || '') })), contact: CONTACT
+    };
+  }
+}
+</script>
+</body>
+</html>

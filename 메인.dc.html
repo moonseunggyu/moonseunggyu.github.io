@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400..500,0..1,0&amp;display=block">
+<link rel="stylesheet" href="ds/tokens.css">
+<link rel="stylesheet" href="ds/bundle.css">
+<script src="ds/bundle.js"></script>
+<style>
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; background: #F4F6F9; overflow-x: clip; }
+body { font-family: "Pretendard Variable", Pretendard, -apple-system, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif; color: #2A2A2A; font-size: 14px; line-height: 22px; -webkit-font-smoothing: antialiased; word-break: keep-all; }
+a { color: #1A47D1; }
+a:hover { color: #1438A6; }
+@keyframes ss-spin { to { transform: rotate(360deg); } }
+@keyframes fam-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.fam-track:hover { animation-play-state: paused !important; }
+.fam-logo img { filter: grayscale(1); opacity: 0.55; transition: filter .25s ease, opacity .25s ease; }
+.fam-logo:hover img { filter: none; opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .fam-track, .fam-slow { animation: none !important; } }
+@media (prefers-reduced-motion: reduce) { .ss-ring-spin { animation: none !important; } }
+</style>
+</helmet>
+<dc-import name="GNB" active="없음" hint-size="100%,72px" style="position:relative;z-index:50"></dc-import>
+
+<div ref="{{ famRef }}" data-screen-label="패밀리 사이트 바로가기" style="position:fixed;right:32px;bottom:32px;z-index:60;display:flex;flex-direction:column;align-items:flex-end;gap:12px">
+  <sc-if value="{{ famOpen }}" hint-placeholder-val="{{ false }}">
+    <nav id="family-sites" aria-label="패밀리 사이트" style="width:240px;background:#FFFFFF;border:1px solid #E3E7ED;border-radius:12px;box-shadow:0 12px 32px rgba(16,24,40,0.16);overflow:hidden">
+      <div style="padding:14px 20px;border-bottom:1px solid #E3E7ED;font-size:14px;line-height:22px;font-weight:700;color:#2A2A2A">패밀리 사이트</div>
+      <ul style="list-style:none;margin:0;padding:6px 0">
+        <sc-for list="{{ famSites }}" as="f" hint-placeholder-count="4">
+          <li><a href="{{ f.href }}" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:space-between;gap:12px;height:44px;padding:0 20px;font-size:15px;font-weight:500;color:#2A2A2A;text-decoration:none" style-hover="background:#F4F6F9;color:#1A47D1">{{ f.name }}<x-import component-from-global-scope="Sangsang.Icon" name="arrow-right" size="{{ 16 }}" hint-size="16px,16px"></x-import></a></li>
+        </sc-for>
+      </ul>
+    </nav>
+  </sc-if>
+  <button type="button" onClick="{{ toggleFam }}" aria-expanded="{{ famOpen }}" aria-controls="family-sites" aria-label="패밀리 사이트 바로가기" title="패밀리 사이트" style="position:relative;width:104px;height:104px;padding:0;border:0;border-radius:9999px;background:#002060;color:#FFFFFF;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(0,22,64,0.28);cursor:pointer;font:inherit;transition:background-color .2s, transform .2s" style-hover="background:#1C59FE;transform:translateY(-2px)">
+    {{ ring }}
+    <span style="position:relative;width:36px;height:36px;border-radius:9999px;background:#FFFFFF;color:#002060;display:flex;align-items:center;justify-content:center">
+      <sc-if value="{{ famOpen }}" hint-placeholder-val="{{ false }}"><x-import component-from-global-scope="Sangsang.Icon" name="x" size="{{ 18 }}" hint-size="18px,18px"></x-import></sc-if>
+      <sc-if value="{{ famClosed }}" hint-placeholder-val="{{ true }}"><x-import component-from-global-scope="Sangsang.Icon" name="plus" size="{{ 18 }}" hint-size="18px,18px"></x-import></sc-if>
+    </span>
+  </button>
+</div>
+
+<main data-screen-label="메인" style="max-width:1348px;margin:0 auto;padding:24px 24px 80px;display:flex;flex-direction:column;gap:80px">
+
+  <div style="display:flex;flex-direction:column;gap:16px">
+    <sc-if value="{{ heroB }}" hint-placeholder-val="{{ false }}">
+    <section data-screen-label="히어로 B" aria-label="미코스쿨 상상이상 소개" style="position:relative;width:100vw;margin:-24px 0 0 calc(50% - 50vw);height:640px;overflow:hidden;background:#0D1421">
+      <img src="assets/hero/campus-aerial.jpg" alt="잔디마당을 둘러싼 붉은 벽돌 연수원 건물들을 하늘에서 내려다본 모습" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;opacity:{{ o0 }};transition:opacity .8s ease">
+      <img src="assets/hero/campus-lawn.jpg" alt="잔디밭과 소나무 사이로 이어진 붉은 벽돌 숙소동" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 50%;opacity:{{ o1 }};transition:opacity .8s ease">
+      <img src="assets/hero/classroom.jpg" alt="책상이 줄지어 놓인 현대식 빈 강의실" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:{{ o2 }};transition:opacity .8s ease">
+      <div aria-hidden="true" style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(8,12,20,0.8) 0,rgba(8,12,20,0.6) 45%,rgba(8,12,20,0.4) 100%)"></div>
+      <div style="position:relative;height:100%;max-width:1348px;margin:0 auto;padding:64px 24px 56px;display:flex;align-items:stretch;justify-content:space-between;gap:40px">
+        <div style="display:flex;flex-direction:column;justify-content:space-between;min-width:0">
+          <div style="display:flex;flex-direction:column;gap:20px;max-width:620px">
+            <span aria-hidden="true" style="width:40px;height:3px;background:#8AABFF"></span>
+            <span style="margin-top:-6px;font-size:20px;line-height:28px;font-weight:700;color:#8AABFF">MiCo School · 학습 포털</span>
+            <h1 style="margin: 0; font-size: 64px; line-height: 1.22; font-weight: 800; letter-spacing: -0.025em; color: #FFFFFF; text-wrap: balance">미코스쿨<br>상상이상</h1>
+            <p style="margin:0;font-size:22px;line-height:34px;font-weight:500;color:#FFFFFF;text-wrap:pretty">미코인이 머물고, 배우고, 연결되는 성장의 공간</p>
+          </div>
+          <div style="display: flex; align-items: center; gap: 24px">
+            <span style="font-size:14px;color:#B9CCFF;white-space:nowrap;flex-shrink:0"><b style="color:#FFFFFF">{{ slideNo }}</b> / 03</span>
+            <div style="display:flex;gap:6px">
+              <button type="button" aria-label="이전 사진" onClick="{{ prev }}" style="width:32px;height:32px;border-radius:9999px;border:1px solid rgba(220,230,255,0.4);background:rgba(8,12,20,0.5);color:#FFFFFF;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0" style-hover="background:rgba(220,230,255,0.12)"><x-import component-from-global-scope="Sangsang.Icon" name="chevron-left" size="{{ 16 }}" hint-size="16px,16px"></x-import></button>
+              <button type="button" aria-label="{{ pauseLabel }}" onClick="{{ togglePause }}" style="width:32px;height:32px;border-radius:9999px;border:1px solid rgba(220,230,255,0.4);background:rgba(8,12,20,0.5);color:#FFFFFF;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0" style-hover="background:rgba(220,230,255,0.12)">
+                <sc-if value="{{ isPlaying }}" hint-placeholder-val="{{ true }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M9 5v14M15 5v14"></path></svg></sc-if>
+                <sc-if value="{{ isPaused }}" hint-placeholder-val="{{ false }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M7 4.5v15l12-7.5z"></path></svg></sc-if>
+              </button>
+              <button type="button" aria-label="다음 사진" onClick="{{ next }}" style="width:32px;height:32px;border-radius:9999px;border:1px solid rgba(220,230,255,0.4);background:rgba(8,12,20,0.5);color:#FFFFFF;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0" style-hover="background:rgba(220,230,255,0.12)"><x-import component-from-global-scope="Sangsang.Icon" name="chevron-right" size="{{ 16 }}" hint-size="16px,16px"></x-import></button>
+            </div>
+          </div>
+        </div>
+        <nav aria-label="바로가기" style="flex:none;align-self:center;display:flex;flex-direction:column;gap:16px">
+          <a href="나의 학습.dc.html#classroom" style="width:150px;height:136px;border-radius:20px;background:rgba(18,22,30,0.62);border:1px solid rgba(255,255,255,0.22);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:#FFFFFF;text-decoration:none;transition:background .2s,border-color .2s" style-hover="background:rgba(28,89,254,0.72);border-color:rgba(255,255,255,0.4);color:#FFFFFF">
+            <span aria-hidden="true" style="font-family:'Material Symbols Rounded';font-size:32px;line-height:1;font-weight:normal;font-variation-settings:'FILL' 0,'wght' 400;overflow:hidden">school</span>
+            <span style="font-size:16px;line-height:22px;font-weight:700">나의 강의실</span>
+          </a>
+          <a href="#" style="width:150px;height:136px;border-radius:20px;background:rgba(18,22,30,0.62);border:1px solid rgba(255,255,255,0.22);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:#FFFFFF;text-decoration:none;transition:background .2s,border-color .2s" style-hover="background:rgba(28,89,254,0.72);border-color:rgba(255,255,255,0.4);color:#FFFFFF">
+            <span aria-hidden="true" style="font-family:'Material Symbols Rounded';font-size:32px;line-height:1;font-weight:normal;font-variation-settings:'FILL' 0,'wght' 400;overflow:hidden">workspace_premium</span>
+            <span style="font-size:16px;line-height:22px;font-weight:700">수료증 발급</span>
+          </a>
+          <a href="#" style="width:150px;height:136px;border-radius:20px;background:rgba(18,22,30,0.62);border:1px solid rgba(255,255,255,0.22);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:#FFFFFF;text-decoration:none;transition:background .2s,border-color .2s" style-hover="background:rgba(28,89,254,0.72);border-color:rgba(255,255,255,0.4);color:#FFFFFF">
+            <span aria-hidden="true" style="font-family:'Material Symbols Rounded';font-size:32px;line-height:1;font-weight:normal;font-variation-settings:'FILL' 0,'wght' 400;overflow:hidden">contact_support</span>
+            <span style="font-size:16px;line-height:22px;font-weight:700">자주 묻는 질문</span>
+          </a>
+        </nav>
+      </div>
+    </section>
+    </sc-if>
+    <sc-if value="{{ heroA }}" hint-placeholder-val="{{ true }}">
+    <section data-screen-label="히어로" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(240px,312px);gap:24px;height:400px">
+      <div style="position:relative;border-radius:12px;overflow:hidden;background:#0B1F5C">
+        <img src="assets/hero/hero-01.jpg" alt="회로 아이콘이 떠 있는 화면을 가리키는 손" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:right center;opacity:{{ o0 }};transition:opacity .6s ease">
+        <img src="assets/hero/hero-02.jpg" alt="반도체 회로와 빛의 점으로 그린 자동차" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:right center;opacity:{{ o1 }};transition:opacity .6s ease">
+        <img src="assets/hero/hero-03.jpg" alt="어둠 속에 펼쳐진 반도체 칩 기판" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:right center;opacity:{{ o2 }};transition:opacity .6s ease">
+        <div aria-hidden="true" style="position:absolute;inset:0;background:linear-gradient(90deg, rgba(0,22,64,0.9) 0, rgba(0,22,64,0.72) 400px, rgba(0,22,64,0) 680px), linear-gradient(0deg, rgba(0,22,64,0.7) 0, rgba(0,22,64,0) 120px)"></div>
+          <div style="position:relative;height:100%;padding:40px;display:flex;flex-direction:column;justify-content:space-between">
+            <div style="display:flex;flex-direction:column;gap:12px;max-width:440px">
+              <span style="font-size:12px;line-height:18px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#B9CCFF;white-space:nowrap">MiCo School · Learning Portal</span>
+              <h1 style="margin:0;font-size:32px;line-height:42px;font-weight:700;letter-spacing:-0.02em;color:#FFFFFF">미코스쿨 상상이상</h1>
+              <p style="margin:0;font-size:16px;line-height:26px;color:#DCE6FF;text-wrap:pretty;max-width:360px">미코인이 머물고, 배우고, 연결되며, 상상이상의 성장을 경험하는 공간</p>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px">
+              <span style="font-size:14px;color:#8AABFF;white-space:nowrap;flex-shrink:0"><b style="color:#FFFFFF">{{ slideNo }}</b> / 03</span>
+              <div style="display:flex;gap:6px">
+                <button type="button" aria-label="이전 사진" onClick="{{ prev }}" style="width:32px;height:32px;border-radius:9999px;border:1px solid rgba(220,230,255,0.4);background:rgba(0,22,64,0.5);color:#FFFFFF;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0" style-hover="background:rgba(220,230,255,0.12)"><x-import component-from-global-scope="Sangsang.Icon" name="chevron-left" size="{{ 16 }}" hint-size="16px,16px"></x-import></button>
+                <button type="button" aria-label="{{ pauseLabel }}" onClick="{{ togglePause }}" style="width:32px;height:32px;border-radius:9999px;border:1px solid rgba(220,230,255,0.4);background:rgba(0,22,64,0.5);color:#FFFFFF;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0" style-hover="background:rgba(220,230,255,0.12)">
+                  <sc-if value="{{ isPlaying }}" hint-placeholder-val="{{ true }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M9 5v14M15 5v14"></path></svg></sc-if>
+                  <sc-if value="{{ isPaused }}" hint-placeholder-val="{{ false }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M7 4.5v15l12-7.5z"></path></svg></sc-if>
+                </button>
+                <button type="button" aria-label="다음 사진" onClick="{{ next }}" style="width:32px;height:32px;border-radius:9999px;border:1px solid rgba(220,230,255,0.4);background:rgba(0,22,64,0.5);color:#FFFFFF;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0" style-hover="background:rgba(220,230,255,0.12)"><x-import component-from-global-scope="Sangsang.Icon" name="chevron-right" size="{{ 16 }}" hint-size="16px,16px"></x-import></button>
+              </div>
+            </div>
+          </div>
+      </div>
+
+      <nav aria-label="바로가기" style="display:flex;flex-direction:column;gap:12px">
+        <a href="나의 학습.dc.html#classroom" style="flex:1;display:flex;align-items:center;gap:16px;padding:0 20px;background:#FFFFFF;border:1px solid #E3E7ED;border-radius:12px;color:#2A2A2A;text-decoration:none;transition:border-color .15s, box-shadow .15s" style-hover="border-color:#D5DAE1;box-shadow:0 1px 2px rgba(16,24,40,0.06);color:#2A2A2A">
+          <span aria-hidden="true" style="width:48px;height:48px;border-radius:14px;background:#EAF0FF;color:#1C59FE;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'Material Symbols Rounded';font-size:28px;line-height:1;font-weight:normal;font-variation-settings:'FILL' 1,'wght' 500;overflow:hidden">school</span>
+          <span style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px"><span style="font-size:16px;line-height:24px;font-weight:600">나의 강의실</span><span style="font-size:13px;line-height:20px;color:#666E7A">학습 중인 과정 3개</span></span>
+          <span style="color:#666E7A;display:flex"><x-import component-from-global-scope="Sangsang.Icon" name="chevron-right" size="{{ 20 }}" hint-size="20px,20px"></x-import></span>
+        </a>
+        <a href="#" style="flex:1;display:flex;align-items:center;gap:16px;padding:0 20px;background:#FFFFFF;border:1px solid #E3E7ED;border-radius:12px;color:#2A2A2A;text-decoration:none;transition:border-color .15s, box-shadow .15s" style-hover="border-color:#D5DAE1;box-shadow:0 1px 2px rgba(16,24,40,0.06);color:#2A2A2A">
+          <span aria-hidden="true" style="width:48px;height:48px;border-radius:14px;background:#EAF0FF;color:#1C59FE;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'Material Symbols Rounded';font-size:28px;line-height:1;font-weight:normal;font-variation-settings:'FILL' 1,'wght' 500;overflow:hidden">workspace_premium</span>
+          <span style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px"><span style="font-size:16px;line-height:24px;font-weight:600">수료증 발급</span><span style="font-size:13px;line-height:20px;color:#666E7A">발급할 수 있는 수료증 2건</span></span>
+          <span style="color:#666E7A;display:flex"><x-import component-from-global-scope="Sangsang.Icon" name="chevron-right" size="{{ 20 }}" hint-size="20px,20px"></x-import></span>
+        </a>
+        <a href="#" style="flex:1;display:flex;align-items:center;gap:16px;padding:0 20px;background:#FFFFFF;border:1px solid #E3E7ED;border-radius:12px;color:#2A2A2A;text-decoration:none;transition:border-color .15s, box-shadow .15s" style-hover="border-color:#D5DAE1;box-shadow:0 1px 2px rgba(16,24,40,0.06);color:#2A2A2A">
+          <span aria-hidden="true" style="width:48px;height:48px;border-radius:14px;background:#EAF0FF;color:#1C59FE;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'Material Symbols Rounded';font-size:28px;line-height:1;font-weight:normal;font-variation-settings:'FILL' 1,'wght' 500;overflow:hidden">contact_support</span>
+          <span style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px"><span style="font-size:16px;line-height:24px;font-weight:600">자주 묻는 질문</span><span style="font-size:13px;line-height:20px;color:#666E7A">로그인 · 수강 · 수료 안내</span></span>
+          <span style="color:#666E7A;display:flex"><x-import component-from-global-scope="Sangsang.Icon" name="chevron-right" size="{{ 20 }}" hint-size="20px,20px"></x-import></span>
+        </a>
+      </nav>
+    </section>
+    </sc-if>
+  </div>
+
+  
+
+  <sc-if value="{{ showAI }}" hint-placeholder-val="{{ true }}">
+  <section data-screen-label="추천 강의" style="display:flex;flex-direction:column;gap:16px">
+    <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px">
+      <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap">
+        <h2 style="margin:0;font-size:22px;line-height:32px;font-weight:700">추천 강의</h2>
+        <span style="font-size:15px;color:#666E7A">이번 달 새로 열린 과정이에요</span>
+      </div>
+      <a href="교육 과정.dc.html" style="display:flex;align-items:center;gap:2px;font-size:15px;font-weight:500;color:#4A5260;text-decoration:none" style-hover="color:#2A2A2A">전체 과정<x-import component-from-global-scope="Sangsang.Icon" name="chevron-right" size="{{ 16 }}" hint-size="16px,16px"></x-import></a>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(clamp((100% - 60px) / 4, (250px - (100% - 60px) / 4) * 9999, (100% - 20px) / 2),1fr));gap:20px">
+      <div style="display:flex;flex-direction:column;gap:8px;min-width:0">
+        <x-import component-from-global-scope="Sangsang.CourseCard" href="과정 상세.dc.html" type="elective" status="not-started" title="반도체 장비 유지보수 실무" period="2026.11.10 – 12.31" hours="6시간" thumbnail="https://images.unsplash.com/photo-1640955785023-1854685dae05?auto=format&amp;fit=crop&amp;w=840&amp;q=80" thumbnail-alt="핀셋으로 회로 기판에 칩을 올리는 손" hint-size="100%,400px"></x-import>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;min-width:0">
+        <x-import component-from-global-scope="Sangsang.CourseCard" href="과정 상세.dc.html" type="elective" status="not-started" title="데이터 기반 품질 분석" period="2026.11.15 – 12.31" hours="3시간" thumbnail="https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&amp;fit=crop&amp;w=840&amp;q=80" thumbnail-alt="화이트보드에 자료를 붙이는 손" hint-size="100%,400px"></x-import>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;min-width:0">
+        <x-import component-from-global-scope="Sangsang.CourseCard" href="과정 상세.dc.html" type="elective" status="not-started" title="신임 리더를 위한 피드백 대화법" period="2026.12.01 – 12.31" hours="2시간 30분" thumbnail="https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?auto=format&amp;fit=crop&amp;w=840&amp;q=80" thumbnail-alt="생각을 적어 붙인 메모지" hint-size="100%,400px"></x-import>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;min-width:0">
+        <x-import component-from-global-scope="Sangsang.CourseCard" href="과정 상세.dc.html" type="elective" status="not-started" title="ESG 경영과 탄소중립 기초" period="2026.11.20 – 12.31" hours="1시간 30분" thumbnail="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&amp;fit=crop&amp;w=840&amp;q=80" thumbnail-alt="노트에 필기하는 손" hint-size="100%,360px"></x-import>
+      </div>
+    </div>
+  </section>
+  </sc-if>
+
+  <sc-if value="{{ showRequired }}" hint-placeholder-val="{{ false }}">
+  <section data-screen-label="필수 교육" style="display:flex;flex-direction:column;gap:16px">
+    <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px">
+      <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap">
+        <h2 style="margin:0;font-size:22px;line-height:32px;font-weight:700">필수 교육</h2>
+        <span style="font-size:14px;color:#666E7A">올해 꼭 들어야 하는 교육 3개 중 1개를 듣고 있어요</span>
+      </div>
+      <a href="교육 과정.dc.html" style="display:flex;align-items:center;gap:2px;font-size:15px;font-weight:500;color:#4A5260;text-decoration:none" style-hover="color:#2A2A2A">전체 과정<x-import component-from-global-scope="Sangsang.Icon" name="chevron-right" size="{{ 16 }}" hint-size="16px,16px"></x-import></a>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px">
+      <x-import component-from-global-scope="Sangsang.CourseCard" type="required" status="not-started" title="2026 하반기 정보보안 교육" period="2026.11.01 – 11.30" hours="1시간 30분" thumbnail="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&amp;fit=crop&amp;w=840&amp;q=80" thumbnail-alt="회로 기판 확대 사진" hint-size="100%,400px"></x-import>
+      <x-import component-from-global-scope="Sangsang.CourseCard" type="required" status="not-started" title="직장 내 괴롭힘 예방교육" period="2026.11.01 – 12.15" hours="1시간" thumbnail="https://images.unsplash.com/photo-1512758017271-d7b84c2113f1?auto=format&amp;fit=crop&amp;w=840&amp;q=80" thumbnail-alt="포스트잇 메모가 붙은 기획 보드" hint-size="100%,400px"></x-import>
+      <x-import component-from-global-scope="Sangsang.CourseCard" type="required" status="in-progress" title="품질경영시스템(ISO 9001) 기초" period="2026.10.15 – 12.31" hours="4시간" progress="{{ 20 }}" thumbnail="https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&amp;fit=crop&amp;w=840&amp;q=80" thumbnail-alt="노트북과 휴대폰으로 작업하는 손" hint-size="100%,400px"></x-import>
+    </div>
+  </section>
+  </sc-if>
+
+  <section data-screen-label="미코그룹 계열사" aria-labelledby="fam-title" style="width:100%;display:flex;flex-direction:column;align-items:center;gap:48px">
+  <div style="display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center">
+    <span style="font-size:17px;line-height:26px;font-weight:500;color:#4A5260">첨단 소재 부품 산업을 선도하는 미코그룹</span>
+    <h2 id="fam-title" style="margin:0;font-size:32px;line-height:44px;font-weight:700;color:#2A2A2A;text-wrap:balance">“도전과 혁신을 통해 글로벌 첨단 부품 시장을 선도합니다”</h2>
+    <p style="margin:0;font-size:17px;line-height:28px;color:#4A5260;text-wrap:pretty">인재를 소중히 여기는 기업 미코그룹, 실력있는 인재 양성을 통해 기업 가치를 높이고 지속적인 성장을 추구합니다.</p>
+  </div>
+  <div style="width:100%;overflow:hidden;padding:16px 0 24px;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 8%,#000 92%,transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 8%,#000 92%,transparent 100%)">{{ famMarquee }}</div>
+</section><div style="display:grid;grid-template-columns:minmax(0,6fr) minmax(0,4fr);gap:24px;align-items:stretch">
+  <section data-screen-label="공지사항" style="display:flex;flex-direction:column;gap:16px;min-width:0">
+      <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px">
+        <h2 style="margin:0;font-size:22px;line-height:32px;font-weight:700">공지사항</h2>
+        <a href="지원센터.dc.html#notice" style="display:flex;align-items:center;gap:2px;font-size:15px;font-weight:500;color:#4A5260;text-decoration:none" style-hover="color:#2A2A2A">더보기<x-import component-from-global-scope="Sangsang.Icon" name="chevron-right" size="{{ 16 }}" hint-size="16px,16px"></x-import></a>
+      </div>
+      <ul style="flex:1;list-style:none;margin:0;padding:4px 24px;display:flex;flex-direction:column;justify-content:center;background:#FFFFFF;border:1px solid #E3E7ED;border-radius:12px">
+        <li><a href="#" style="display:flex;align-items:center;gap:8px;padding:14px 0;color:#2A2A2A;text-decoration:none" style-hover="color:#1A47D1"><span style="display:inline-flex;align-items:center;height:20px;padding:0 6px;border-radius:4px;background:#E5EAF4;color:#002060;font-size:12px;font-weight:700;flex-shrink:0">중요</span><span style="flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:600">11월 시스템 점검 안내</span><span style="font-size:13px;color:#666E7A;flex-shrink:0">2026.11.03</span></a></li>
+        <li><a href="#" style="display:flex;align-items:center;gap:8px;padding:14px 0;border-top:1px solid #E3E7ED;color:#2A2A2A;text-decoration:none" style-hover="color:#1A47D1"><span style="display:inline-flex;align-items:center;height:20px;padding:0 6px;border-radius:4px;background:#EAF0FF;color:#1A47D1;font-size:12px;font-weight:700;flex-shrink:0">NEW</span><span style="flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">2026 하반기 법정 의무교육 이수 안내</span><span style="font-size:13px;color:#666E7A;flex-shrink:0">2026.11.01</span></a></li>
+        <li><a href="#" style="display:flex;align-items:center;gap:8px;padding:14px 0;border-top:1px solid #E3E7ED;color:#2A2A2A;text-decoration:none" style-hover="color:#1A47D1"><span style="flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">연수원 출석 체크인(QR · NFC) 이용 방법</span><span style="font-size:13px;color:#666E7A;flex-shrink:0">2026.10.27</span></a></li>
+        <li><a href="#" style="display:flex;align-items:center;gap:8px;padding:14px 0;border-top:1px solid #E3E7ED;color:#2A2A2A;text-decoration:none" style-hover="color:#1A47D1"><span style="flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">수료증 발급 기준 안내</span><span style="font-size:13px;color:#666E7A;flex-shrink:0">2026.10.20</span></a></li>
+        <li><a href="#" style="display:flex;align-items:center;gap:8px;padding:14px 0;border-top:1px solid #E3E7ED;color:#2A2A2A;text-decoration:none" style-hover="color:#1A47D1"><span style="flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">외부교육 · 자격증 등록 절차 안내</span><span style="font-size:13px;color:#666E7A;flex-shrink:0">2026.10.14</span></a></li>
+      </ul>
+    </section><section data-screen-label="연수원 안내" style="display:flex;flex-direction:column;gap:16px;min-width:0">
+    <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px">
+      <h2 style="margin:0;font-size:22px;line-height:32px;font-weight:700">연수원 안내</h2>
+      
+    </div>
+  <div aria-label="연수원 안내 배너" style="position:relative;flex:1;min-height:280px;border-radius:12px;overflow:hidden;background:#0B1F5C;display:flex;align-items:flex-end">
+    <img src="assets/hero/campus-main.jpg?v=2" alt="유리창이 둥근 붉은 벽돌 연수원 본관과 진입로" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
+    <div aria-hidden="true" style="position:absolute;inset:0;background:linear-gradient(0deg, rgba(0,22,64,0.92) 0, rgba(0,22,64,0.6) 55%, rgba(0,22,64,0.15) 100%)"></div>
+    <div style="position:relative;width:100%;padding:28px 32px;display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px 24px">
+      <div style="display:flex;flex-direction:column;gap:6px;max-width:520px">
+        <h3 style="margin:0;font-size:24px;line-height:34px;font-weight:700;color:#FFFFFF">미코스쿨 연수원 이용 안내</h3>
+        <p style="margin:0;font-size:15px;line-height:24px;color:#DCE6FF;text-wrap:pretty">시설 · 이용 시간 · 오시는 길을 확인하세요.</p>
+      </div>
+      <a href="연수원 소개.dc.html#guide" style="display:flex;text-decoration:none"><x-import component-from-global-scope="Sangsang.Button" variant="outline" iconRight="arrow-right" hint-size="104px,40px">바로가기</x-import></a>
+    </div>
+  </div>
+  </section>
+
+    
+  </div>
+</main>
+
+<dc-import name="Footer" hint-size="100%,200px"></dc-import>
+
+<sc-if value="{{ popupOpen }}" hint-placeholder-val="{{ false }}">
+  <div onClick="{{ closePopup }}" style="position:fixed;inset:0;background:rgba(13,20,33,0.48);display:flex;align-items:center;justify-content:center;padding:16px;z-index:300">
+    <div role="dialog" aria-modal="true" aria-labelledby="popup-title" onClick="{{ stop }}" style="width:100%;max-width:440px;background:#FFFFFF;border-radius:16px;box-shadow:0 16px 40px rgba(16,24,40,0.18);overflow:hidden;display:flex;flex-direction:column">
+      <div style="position:relative;background:#002060;overflow:hidden">
+        <div aria-hidden="true" style="position:absolute;inset:0"><x-import component-from-global-scope="Sangsang.GridPattern" width="{{ 440 }}" height="{{ 112 }}" cell="{{ 32 }}" tone="dark" fade="left" lit="{{ 4 }}" seed="{{ 21 }}" hint-size="100%,100%"></x-import></div>
+        <div style="position:relative;padding:28px 28px 24px;display:flex;flex-direction:column;gap:6px">
+          <span style="font-size:12px;line-height:18px;font-weight:700;letter-spacing:0.08em;color:#8AABFF">NOTICE</span>
+          <h2 id="popup-title" style="margin:0;font-size:22px;line-height:32px;font-weight:700;color:#FFFFFF">11월 시스템 점검 안내</h2>
+        </div>
+      </div>
+      <div style="padding:24px 28px;display:flex;flex-direction:column;gap:16px">
+        <p style="margin:0;color:#4A5260;text-wrap:pretty">더 안정적인 학습 환경을 위해 서버를 점검해요. 점검 시간에는 강의를 볼 수 없으니 미리 학습을 마쳐 주세요.</p>
+        <dl style="margin:0;display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px 16px;padding:16px;border-radius:8px;background:#F4F6F9">
+          <dt style="color:#666E7A">점검 일시</dt><dd style="margin:0;font-weight:600"><span style="font-family:inherit">2026.11.08</span>(일) <span style="font-family:inherit">02:00 – 06:00</span></dd>
+          <dt style="color:#666E7A">멈추는 기능</dt><dd style="margin:0;font-weight:600">강의 시청 · 평가 응시 · 수료증 발급</dd>
+        </dl>
+        <x-import component-from-global-scope="Sangsang.Button" variant="secondary" block="{{ true }}" iconRight="arrow-right" hint-size="100%,40px">공지 자세히 보기</x-import>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 16px 10px 24px;border-top:1px solid #E3E7ED;background:#F8F9FB">
+        <label style="display:inline-flex;align-items:center;gap:8px;cursor:pointer;font-size:14px;color:#2A2A2A"><input type="checkbox" checked="{{ hideToday }}" onChange="{{ toggleHide }}" style="width:18px;height:18px;margin:0;accent-color:#1C59FE;cursor:pointer">오늘 하루 보지 않기</label>
+        <x-import component-from-global-scope="Sangsang.Button" variant="ghost" size="sm" onClick="{{ closePopup }}" hint-size="56px,32px">닫기</x-import>
+      </div>
+    </div>
+  </div>
+</sc-if>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;heroLayout&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;A · 카드형&quot;,&quot;B · 풀블리드&quot;],&quot;default&quot;:&quot;B · 풀블리드&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;메인&quot;},&quot;recommendSection&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;추천 강의&quot;,&quot;필수 교육&quot;],&quot;default&quot;:&quot;추천 강의&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;메인&quot;},&quot;showPopup&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;메인&quot;},&quot;heroAutoplay&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;메인&quot;}}">
+class Component extends DCLogic {
+  state = { slide: 0, paused: false, popupOpen: this.props.showPopup ?? true, hideToday: false };
+  courses = [
+    { type: 'required', title: '2026 산업안전보건교육', img: 'photo-1586528116311-ad8dd3c8310d', alt: '설비가 늘어선 생산 현장', pct: 62, next: '4차시 · 위험성평가 실습', resume: '12:30' },
+    { type: 'required', title: '반도체 8대 공정 이해', img: 'photo-1576141546153-3e04370b5ff7', alt: '클린룸에서 공정 장비를 다루는 엔지니어', pct: 35, next: '3차시 · 포토 공정', resume: '05:12' },
+    { type: 'elective', title: '신임 리더 코칭 스킬', img: 'photo-1606857521015-7f9fcf423740', alt: '모니터가 놓인 사무실 전경', pct: 80, next: '8차시 · 피드백 대화 실습', resume: '18:40' }
+  ];
+  captions = ['현장 안전 교육 · 연수원 실습장', '반도체 공정 실습 · 클린룸', '직무 역량 강의 · 세미나실'];
+  famLogos = [['sangsang', 'MiCo School 상상이상'], ['mico', 'MiCo'], ['komico', 'KoMiCo'], ['mico-ceramics', 'MiCo Ceramics'], ['micopower', 'MiCoPower'], ['mico-hightech', 'MiCo HighTech'], ['hhi-power', '현대중공업파워시스템'], ['aicess', 'AICESS'], ['buddeul', '(주)부뜰정보시스템']];
+  famEl = (() => {
+    const h = React.createElement;
+    const item = ([k, name], i, dup) => h('li', { key: (dup ? 'd' : 'o') + i, className: 'fam-logo', 'aria-hidden': dup ? 'true' : undefined,
+      style: { flex: '0 0 auto', width: 190, height: 190, borderRadius: 9999, background: '#FFFFFF', boxShadow: '0 4px 16px rgba(16,24,40,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center' } },
+      h('img', { src: k === 'mico' ? 'assets/mico_logo.webp' : `assets/family/${k}.png`, alt: dup ? '' : name, draggable: false, style: { maxWidth: 136, maxHeight: k === 'sangsang' ? 64 : 44, width: 'auto', height: 'auto', display: 'block', userSelect: 'none' } }));
+    const list = this.famLogos;
+    const rate = (e, r) => { const a = e.currentTarget.getAnimations && e.currentTarget.getAnimations()[0]; if (a) a.updatePlaybackRate ? a.updatePlaybackRate(r) : (a.playbackRate = r); };
+    return h('ul', { className: 'fam-slow', 'aria-label': '미코그룹 계열사', onMouseEnter: e => rate(e, 0.3), onMouseLeave: e => rate(e, 1),
+      style: { listStyle: 'none', margin: 0, padding: 0, display: 'flex', alignItems: 'center', gap: 48, width: 'max-content', paddingRight: 48, animation: 'fam-marquee 50s linear infinite' } },
+      [...list.map((l, i) => item(l, i, false)), ...list.map((l, i) => item(l, i, true))]);
+  })();
+  componentDidMount() {
+    document.addEventListener('mousedown', this.onDocDown);
+    document.addEventListener('keydown', this.onDocKey);
+    this.tick = setInterval(() => {
+      if ((this.props.heroAutoplay ?? true) && !this.state.paused) this.setState(s => ({ slide: (s.slide + 1) % 3 }));
+    }, 5000);
+  }
+  componentDidUpdate(prev) {
+    if (prev.showPopup !== this.props.showPopup) this.setState({ popupOpen: !!this.props.showPopup });
+  }
+  famRef = React.createRef();
+  onDocDown = e => { if (this.state.famOpen && this.famRef.current && !this.famRef.current.contains(e.target)) this.setState({ famOpen: false }); };
+  onDocKey = e => { if (e.key === 'Escape' && this.state.famOpen) this.setState({ famOpen: false }); };
+  componentWillUnmount() { clearInterval(this.tick); document.removeEventListener('mousedown', this.onDocDown); document.removeEventListener('keydown', this.onDocKey); }
+  ringEl(paused) {
+    const h = React.createElement, r = 40, C = 2 * Math.PI * r;
+    return h('svg', { key: 'ring', className: 'ss-ring-spin', width: 104, height: 104, viewBox: '0 0 104 104', 'aria-hidden': 'true',
+      style: { position: 'absolute', inset: 0, animation: 'ss-spin 20s linear infinite' } },
+      h('defs', null, h('path', { id: 'ss-ring-path', d: `M52,52 m-${r},0 a${r},${r} 0 1,1 ${r * 2},0 a${r},${r} 0 1,1 -${r * 2},0` })),
+      h('text', { fill: 'currentColor', fontSize: 9, fontWeight: 700, fontFamily: 'inherit' },
+        h('textPath', { href: '#ss-ring-path', textLength: C - 1, lengthAdjust: 'spacing' }, 'MICO SCHOOL · 상상이상 · MICO SCHOOL · 상상이상 · ')));
+  }
+  renderVals() {
+    const { slide, paused } = this.state;
+    const autoplay = this.props.heroAutoplay ?? true;
+    const playing = autoplay && !paused;
+    const heroB = String(this.props.heroLayout ?? 'B')[0] === 'B';
+    const CLS = {
+      '1': ['1762176264161-09219da49794', '책상이 줄지어 놓인 현대식 빈 강의실'],
+      '2': ['1762176263996-a0713a49ee4d', '큰 창과 긴 책상이 있는 밝은 빈 강의실'],
+      '3': ['1511578314322-379afb476865', '원형 테이블과 스크린 3개가 있는 빈 대형 교육장'],
+      '4': ['1541829070764-84a7d30dd3f3', '나무 책상과 의자가 줄지어 놓인 빈 강의실']
+    };
+    const cls = CLS['1'];
+    return {
+      classBg: `url(https://images.unsplash.com/photo-${cls[0]}?fm=jpg&q=75&w=2400&auto=format&fit=crop)`, classAlt: cls[1],
+      heroA: !heroB, heroB,
+      heroDots: [0, 1, 2].map(i => ({ label: `${i + 1}번 사진 보기`, current: i === slide ? 'true' : undefined, color: i === slide ? '#1C59FE' : 'rgba(255,255,255,0.55)', go: () => this.setState({ slide: i }) })),
+      famMarquee: this.famEl,
+      o0: slide === 0 ? 1 : 0, o1: slide === 1 ? 1 : 0, o2: slide === 2 ? 1 : 0,
+      slideNo: '0' + (slide + 1),
+      caption: this.captions[slide],
+      prev: () => this.setState(s => ({ slide: (s.slide + 2) % 3 })),
+      next: () => this.setState(s => ({ slide: (s.slide + 1) % 3 })),
+      togglePause: () => this.setState(s => ({ paused: !s.paused })),
+      isPlaying: playing, isPaused: !playing, ring: this.ringEl(!playing),
+      famOpen: !!this.state.famOpen, famClosed: !this.state.famOpen, famRef: this.famRef,
+      toggleFam: () => this.setState(s => ({ famOpen: !s.famOpen })),
+      famSites: [{ name: '미코', href: '#' }, { name: '미코파워', href: '#' }, { name: '미코세라믹스', href: '#' }, { name: 'MiCo Vietnam', href: '#' }],
+      pauseLabel: playing ? '자동 넘김 멈춤' : '자동 넘김 시작',
+      showAI: (this.props.recommendSection ?? '추천 강의') !== '필수 교육',
+      showRequired: (this.props.recommendSection ?? '추천 강의') === '필수 교육',
+      popupOpen: this.state.popupOpen,
+      closePopup: () => this.setState({ popupOpen: false }),
+      hideToday: this.state.hideToday,
+      toggleHide: () => this.setState(s => ({ hideToday: !s.hideToday })),
+      stop: e => e.stopPropagation()
+    };
+  }
+}
+</script>
+</body>
+</html>
