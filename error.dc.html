@@ -112,7 +112,7 @@ class Component extends DCLogic {
       isError: kind === '일시 오류',
       isMaint: kind === '시스템 점검',
       kinds: this.kinds.map(k => ({ label: k, on: k === kind, off: k !== kind, pick: () => this.setState({ kind: k }) })),
-      goHome: () => { window.location.href = '메인.dc.html'; },
+      goHome: () => { window.location.href = 'main.dc.html'; },
       goBack: () => window.history.back(),
       reload: () => window.location.reload()
     };

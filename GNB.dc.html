@@ -27,7 +27,7 @@ a:hover { color: #1438A6; }
     </div>
   </sc-if>
   <div style="position:relative;z-index:2;max-width:1348px;margin:0 auto;padding:0 24px;height:72px;display:flex;align-items:center;gap:32px">
-    <a href="메인.dc.html" aria-label="미코스쿨 상상이상 메인" style="display:flex;align-items:center;width:160px;flex-shrink:0"><img src="assets/logo.png" alt="MiCo School 상상이상" style="height:40px;width:auto;display:block"></a>
+    <a href="main.dc.html" aria-label="미코스쿨 상상이상 메인" style="display:flex;align-items:center;width:160px;flex-shrink:0"><img src="assets/logo.png" alt="MiCo School 상상이상" style="height:40px;width:auto;display:block"></a>
     <nav aria-label="주 메뉴" style="flex:1 1 760px;max-width:800px;min-width:0;display:grid;grid-template-columns:repeat(5,minmax(max-content,1fr));column-gap:8px;height:72px">
       <sc-for list="{{ menus }}" as="m" hint-placeholder-count="4">
         <div onMouseEnter="{{ m.onEnter }}" style="position:relative;min-width:0">
@@ -67,7 +67,7 @@ a:hover { color: #1438A6; }
     <div style="margin-left:auto;flex-shrink:0;display:flex;align-items:center;gap:12px">
       <sc-if value="{{ loggedIn }}" hint-placeholder-val="{{ true }}">
         <div style="display:flex;align-items:center;gap:6px">
-          <a href="나의 학습.dc.html#notes" aria-label="쪽지함 (안 읽은 쪽지 있음)" title="쪽지함" style="position:relative;width:44px;height:44px;border-radius:9999px;display:flex;align-items:center;justify-content:center;color:#2A2A2A;text-decoration:none" style-hover="background:#F4F6F9;color:#1C59FE">
+          <a href="my-learning.dc.html#notes" aria-label="쪽지함 (안 읽은 쪽지 있음)" title="쪽지함" style="position:relative;width:44px;height:44px;border-radius:9999px;display:flex;align-items:center;justify-content:center;color:#2A2A2A;text-decoration:none" style-hover="background:#F4F6F9;color:#1C59FE">
             <x-import component-from-global-scope="Sangsang.Icon" name="bell" size="{{ 24 }}" hint-size="24px,24px"></x-import>
             <span aria-hidden="true" style="position:absolute;top:10px;right:11px;width:8px;height:8px;border-radius:9999px;background:#E5484D;box-shadow:0 0 0 2px #FFFFFF"></span>
           </a>
@@ -112,12 +112,12 @@ a:hover { color: #1438A6; }
 class Component extends DCLogic {
   state = { hover: null, mega: false, confirm: false, loggedOut: false, toast: false };
   get menus() { const v2 = (this.props.aboutVersion ?? 'new') !== 'old'; return [
-    v2 ? { label: '연수원 안내', href: '연수원 소개.dc.html', subs: ['미코 Way', '연수원 소개', '시설 안내', '이용 안내', '오시는 길'], hrefs: ['연수원 소개.dc.html#way', '연수원 소개.dc.html#greeting', '연수원 소개.dc.html#facility', '연수원 소개.dc.html#guide', '연수원 소개.dc.html#map'] }
-       : { label: '연수원 소개', href: '연수원 소개.dc.html', subs: ['미코 WAY · 인재상', '인사말 · 연수원 소개'], hrefs: ['연수원 소개.dc.html#way', '연수원 소개.dc.html#greeting'] },
-    { label: '교육 과정', href: '교육 과정.dc.html', subs: ['전체 과정', '필수 교육', '선택 교육'] },
+    v2 ? { label: '연수원 안내', href: 'about.dc.html', subs: ['미코 Way', '연수원 소개', '시설 안내', '이용 안내', '오시는 길'], hrefs: ['about.dc.html#way', 'about.dc.html#greeting', 'about.dc.html#facility', 'about.dc.html#guide', 'about.dc.html#map'] }
+       : { label: '연수원 소개', href: 'about.dc.html', subs: ['미코 WAY · 인재상', '인사말 · 연수원 소개'], hrefs: ['about.dc.html#way', 'about.dc.html#greeting'] },
+    { label: '교육 과정', href: 'courses.dc.html', subs: ['전체 과정', '필수 교육', '선택 교육'] },
     { label: '공동학습', href: '#', subs: ['Open Lab', '학습 동아리', '멘토링', '커뮤니티', '성과 공유'], soon: true, soonSubs: [0, 1, 2, 3, 4] },
-    { label: '지원센터', href: '지원센터.dc.html', subs: ['FAQ', '공지사항', '1:1 문의', '자료실'], hrefs: ['지원센터.dc.html#faq', '지원센터.dc.html#notice', '지원센터.dc.html#qna', '지원센터.dc.html#archive'] },
-    { label: '나의 학습', href: '나의 학습.dc.html', subs: ['학습 관리', '학습 기록', '역량 분석'], hrefs: ['나의 학습.dc.html#classroom', '나의 학습.dc.html#history', '#'], soonSubs: [2] }
+    { label: '지원센터', href: 'support-center.dc.html', subs: ['FAQ', '공지사항', '1:1 문의', '자료실'], hrefs: ['support-center.dc.html#faq', 'support-center.dc.html#notice', 'support-center.dc.html#qna', 'support-center.dc.html#archive'] },
+    { label: '나의 학습', href: 'my-learning.dc.html', subs: ['학습 관리', '학습 기록', '역량 분석'], hrefs: ['my-learning.dc.html#classroom', 'my-learning.dc.html#history', '#'], soonSubs: [2] }
   ]; }
   componentDidMount() {
     this.lastY = window.scrollY;

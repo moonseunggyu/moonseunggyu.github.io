@@ -70,7 +70,7 @@ a:hover { color: #1438A6; }
   <div style="display:flex;flex-direction:column;gap:12px">
     <nav aria-label="현재 위치">
       <ol style="display:flex;align-items:center;flex-wrap:wrap;gap:4px;list-style:none;margin:0;padding:0;font-size:13px;line-height:20px;color:#666E7A">
-        <li style="display:flex;align-items:center"><a href="메인.dc.html" aria-label="홈" style="display:inline-flex;align-items:center;color:#666E7A;text-decoration:none" style-hover="color:#2A2A2A"><x-import component-from-global-scope="Sangsang.Icon" name="home" size="{{ 15 }}" hint-size="15px,15px"></x-import></a></li>
+        <li style="display:flex;align-items:center"><a href="main.dc.html" aria-label="홈" style="display:inline-flex;align-items:center;color:#666E7A;text-decoration:none" style-hover="color:#2A2A2A"><x-import component-from-global-scope="Sangsang.Icon" name="home" size="{{ 15 }}" hint-size="15px,15px"></x-import></a></li>
         <sc-for list="{{ crumbItems }}" as="c" hint-placeholder-count="2">
           <li style="display:flex;align-items:center;gap:4px">
             <x-import component-from-global-scope="Sangsang.Icon" name="chevron-right" size="{{ 14 }}" hint-size="14px,14px"></x-import>
@@ -118,7 +118,7 @@ a:hover { color: #1438A6; }
               <span style="display:flex;justify-content:center"><x-import component-from-global-scope="Sangsang.TypeTag" type="{{ c.type }}" size="sm" hint-size="40px,20px"></x-import></span>
               <span style="align-self:stretch;margin:-12px 0;min-width:0;display:flex">
                 <sc-if value="{{ c.link }}" hint-placeholder-val="{{ false }}">
-                  <a href="과정 상세.dc.html" style="flex:1;min-width:0;padding:12px 16px;display:flex;align-items:center;color:#2A2A2A;text-decoration:none" style-hover="color:#1A47D1"><span style="min-width:0;font-size:17px;line-height:26px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ c.title }}</span></a>
+                  <a href="course-detail.dc.html" style="flex:1;min-width:0;padding:12px 16px;display:flex;align-items:center;color:#2A2A2A;text-decoration:none" style-hover="color:#1A47D1"><span style="min-width:0;font-size:17px;line-height:26px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ c.title }}</span></a>
                 </sc-if>
                 <sc-if value="{{ c.noLink }}" hint-placeholder-val="{{ true }}">
                   <span style="flex:1;min-width:0;padding:12px 16px;display:flex;align-items:center"><span style="min-width:0;font-size:17px;line-height:26px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ c.title }}</span></span>
@@ -370,7 +370,7 @@ a:hover { color: #1438A6; }
                       <x-import component-from-global-scope="Sangsang.StatusBadge" status="{{ c.status }}" size="sm" hint-size="56px,20px"></x-import>
                       <span style="font-size:13px;color:#666E7A">{{ c.cat }}</span>
                     </div>
-                    <h3 style="margin:2px 0 0;font-size:18px;line-height:27px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><a href="과정 상세.dc.html" style="color:#2A2A2A;text-decoration:none" style-hover="color:#1A47D1">{{ c.title }}</a></h3>
+                    <h3 style="margin:2px 0 0;font-size:18px;line-height:27px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><a href="course-detail.dc.html" style="color:#2A2A2A;text-decoration:none" style-hover="color:#1A47D1">{{ c.title }}</a></h3>
                     <div style="display:flex;gap:16px;font-size:14px;line-height:22px;color:#666E7A;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">
                       <span>학습 기간 <span style="color:#2A2A2A;font-weight:600">{{ c.period }}</span></span>
                       <span>학습 시간 <span style="color:#2A2A2A;font-weight:600">{{ c.hours }}</span></span>
@@ -415,7 +415,7 @@ a:hover { color: #1438A6; }
           <div style="width:320px;max-width:100%"><x-import component-from-global-scope="Sangsang.GridHub" icon="book" tone="neutral" width="{{ 320 }}" height="{{ 128 }}" size="{{ 48 }}" lit="{{ 3 }}" seed="{{ 5 }}" hint-size="100%,128px"></x-import></div>
           <h3 style="margin:8px 0 0;font-size:18px;line-height:27px;font-weight:600">아직 듣고 있는 과정이 없어요</h3>
           <p style="margin:0;color:#4A5260;text-wrap:pretty">교육 과정에서 듣고 싶은 과정을 찾아 신청해 보세요. 관리자가 배정한 과정은 여기에 바로 나타나요.</p>
-          <a href="교육 과정.dc.html" style="margin-top:12px;display:flex;align-items:center;gap:6px;height:40px;padding:0 18px;border-radius:8px;background:#1C59FE;color:#FFFFFF;font-size:15px;font-weight:600;text-decoration:none" style-hover="background:#1A47D1;color:#FFFFFF">교육 과정 보기</a>
+          <a href="courses.dc.html" style="margin-top:12px;display:flex;align-items:center;gap:6px;height:40px;padding:0 18px;border-radius:8px;background:#1C59FE;color:#FFFFFF;font-size:15px;font-weight:600;text-decoration:none" style-hover="background:#1A47D1;color:#FFFFFF">교육 과정 보기</a>
         </div>
       </sc-if>
     </div>
@@ -432,7 +432,7 @@ a:hover { color: #1438A6; }
           <sc-for list="{{ applies }}" as="a" hint-placeholder-count="4">
             <li style="display:grid;grid-template-columns:72px minmax(0,1fr) 120px 112px 104px;align-items:center;min-height:68px;padding:12px 4px;background:{{ a.bg }};border-bottom:1px solid #D5DAE1">
               <span style="text-align:center;font-size:15px;color:#666E7A">{{ a.no }}</span>
-              <a href="과정 상세.dc.html" style="align-self:stretch;margin:-12px 0;padding:12px 16px;min-width:0;display:flex;flex-direction:column;justify-content:center;gap:4px;color:#2A2A2A;text-decoration:none" style-hover="color:#1A47D1">
+              <a href="course-detail.dc.html" style="align-self:stretch;margin:-12px 0;padding:12px 16px;min-width:0;display:flex;flex-direction:column;justify-content:center;gap:4px;color:#2A2A2A;text-decoration:none" style-hover="color:#1A47D1">
                 <span style="display:flex;align-items:center;gap:8px;min-width:0">
                   <x-import component-from-global-scope="Sangsang.TypeTag" type="{{ a.type }}" size="sm" hint-size="40px,20px"></x-import>
                   <span style="min-width:0;font-size:17px;line-height:26px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ a.title }}</span>
@@ -1152,7 +1152,7 @@ class Component extends DCLogic {
       csTabs: [['ongoing', '수강 중인 과정'], ['ended', '종료된 과정']].map(([id, label]) => ({ label, on: csTab === id, off: csTab !== id, pick: () => this.setState({ csTab: id }) })),
       ongoingCount: ongoingList.length, endedCount: endedList.length,
       ongoing: ongoingList.map((c, i) => ({ ...c, bg: i % 2 ? '#F8F9FA' : '#FFFFFF', pctText: pctOf(c), pctInk: c.status === 'not-started' ? '#666E7A' : '#2A2A2A',
-        doneText: c.done || '–', enter: () => { window.location.href = '과정 상세.dc.html'; } })),
+        doneText: c.done || '–', enter: () => { window.location.href = 'course-detail.dc.html'; } })),
       ended: endedList.map((c, i) => ({ ...c, bg: i % 2 ? '#F8F9FA' : '#FFFFFF', pctText: c.pct ? c.pct + '%' : '–',
         hasResult: c.status === 'completed' || c.status === 'incomplete', noResult: !(c.status === 'completed' || c.status === 'incomplete') })),
       navGroups: NAV.map(g => {

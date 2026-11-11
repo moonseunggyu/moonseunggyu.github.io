@@ -79,7 +79,7 @@ a:hover { color: #1438A6; }
           </div>
         </div>
         <nav aria-label="바로가기" style="flex:none;align-self:center;display:flex;flex-direction:column;gap:16px">
-          <a href="나의 학습.dc.html#classroom" style="width:150px;height:136px;border-radius:20px;background:rgba(18,22,30,0.62);border:1px solid rgba(255,255,255,0.22);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:#FFFFFF;text-decoration:none;transition:background .2s,border-color .2s" style-hover="background:rgba(28,89,254,0.72);border-color:rgba(255,255,255,0.4);color:#FFFFFF">
+          <a href="my-learning.dc.html#classroom" style="width:150px;height:136px;border-radius:20px;background:rgba(18,22,30,0.62);border:1px solid rgba(255,255,255,0.22);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:#FFFFFF;text-decoration:none;transition:background .2s,border-color .2s" style-hover="background:rgba(28,89,254,0.72);border-color:rgba(255,255,255,0.4);color:#FFFFFF">
             <span aria-hidden="true" style="font-family:'Material Symbols Rounded';font-size:32px;line-height:1;font-weight:normal;font-variation-settings:'FILL' 0,'wght' 400;overflow:hidden">school</span>
             <span style="font-size:16px;line-height:22px;font-weight:700">나의 강의실</span>
           </a>
@@ -123,7 +123,7 @@ a:hover { color: #1438A6; }
       </div>
 
       <nav aria-label="바로가기" style="display:flex;flex-direction:column;gap:12px">
-        <a href="나의 학습.dc.html#classroom" style="flex:1;display:flex;align-items:center;gap:16px;padding:0 20px;background:#FFFFFF;border:1px solid #E3E7ED;border-radius:12px;color:#2A2A2A;text-decoration:none;transition:border-color .15s, box-shadow .15s" style-hover="border-color:#D5DAE1;box-shadow:0 1px 2px rgba(16,24,40,0.06);color:#2A2A2A">
+        <a href="my-learning.dc.html#classroom" style="flex:1;display:flex;align-items:center;gap:16px;padding:0 20px;background:#FFFFFF;border:1px solid #E3E7ED;border-radius:12px;color:#2A2A2A;text-decoration:none;transition:border-color .15s, box-shadow .15s" style-hover="border-color:#D5DAE1;box-shadow:0 1px 2px rgba(16,24,40,0.06);color:#2A2A2A">
           <span aria-hidden="true" style="width:48px;height:48px;border-radius:14px;background:#EAF0FF;color:#1C59FE;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'Material Symbols Rounded';font-size:28px;line-height:1;font-weight:normal;font-variation-settings:'FILL' 1,'wght' 500;overflow:hidden">school</span>
           <span style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px"><span style="font-size:16px;line-height:24px;font-weight:600">나의 강의실</span><span style="font-size:13px;line-height:20px;color:#666E7A">학습 중인 과정 3개</span></span>
           <span style="color:#666E7A;display:flex"><x-import component-from-global-scope="Sangsang.Icon" name="chevron-right" size="{{ 20 }}" hint-size="20px,20px"></x-import></span>
@@ -152,20 +152,20 @@ a:hover { color: #1438A6; }
         <h2 style="margin:0;font-size:22px;line-height:32px;font-weight:700">추천 강의</h2>
         <span style="font-size:15px;color:#666E7A">이번 달 새로 열린 과정이에요</span>
       </div>
-      <a href="교육 과정.dc.html" style="display:flex;align-items:center;gap:2px;font-size:15px;font-weight:500;color:#4A5260;text-decoration:none" style-hover="color:#2A2A2A">전체 과정<x-import component-from-global-scope="Sangsang.Icon" name="chevron-right" size="{{ 16 }}" hint-size="16px,16px"></x-import></a>
+      <a href="courses.dc.html" style="display:flex;align-items:center;gap:2px;font-size:15px;font-weight:500;color:#4A5260;text-decoration:none" style-hover="color:#2A2A2A">전체 과정<x-import component-from-global-scope="Sangsang.Icon" name="chevron-right" size="{{ 16 }}" hint-size="16px,16px"></x-import></a>
     </div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(clamp((100% - 60px) / 4, (250px - (100% - 60px) / 4) * 9999, (100% - 20px) / 2),1fr));gap:20px">
       <div style="display:flex;flex-direction:column;gap:8px;min-width:0">
-        <x-import component-from-global-scope="Sangsang.CourseCard" href="과정 상세.dc.html" type="elective" status="not-started" title="반도체 장비 유지보수 실무" period="2026.11.10 – 12.31" hours="6시간" thumbnail="https://images.unsplash.com/photo-1640955785023-1854685dae05?auto=format&amp;fit=crop&amp;w=840&amp;q=80" thumbnail-alt="핀셋으로 회로 기판에 칩을 올리는 손" hint-size="100%,400px"></x-import>
+        <x-import component-from-global-scope="Sangsang.CourseCard" href="course-detail.dc.html" type="elective" status="not-started" title="반도체 장비 유지보수 실무" period="2026.11.10 – 12.31" hours="6시간" thumbnail="https://images.unsplash.com/photo-1640955785023-1854685dae05?auto=format&amp;fit=crop&amp;w=840&amp;q=80" thumbnail-alt="핀셋으로 회로 기판에 칩을 올리는 손" hint-size="100%,400px"></x-import>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;min-width:0">
-        <x-import component-from-global-scope="Sangsang.CourseCard" href="과정 상세.dc.html" type="elective" status="not-started" title="데이터 기반 품질 분석" period="2026.11.15 – 12.31" hours="3시간" thumbnail="https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&amp;fit=crop&amp;w=840&amp;q=80" thumbnail-alt="화이트보드에 자료를 붙이는 손" hint-size="100%,400px"></x-import>
+        <x-import component-from-global-scope="Sangsang.CourseCard" href="course-detail.dc.html" type="elective" status="not-started" title="데이터 기반 품질 분석" period="2026.11.15 – 12.31" hours="3시간" thumbnail="https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&amp;fit=crop&amp;w=840&amp;q=80" thumbnail-alt="화이트보드에 자료를 붙이는 손" hint-size="100%,400px"></x-import>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;min-width:0">
-        <x-import component-from-global-scope="Sangsang.CourseCard" href="과정 상세.dc.html" type="elective" status="not-started" title="신임 리더를 위한 피드백 대화법" period="2026.12.01 – 12.31" hours="2시간 30분" thumbnail="https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?auto=format&amp;fit=crop&amp;w=840&amp;q=80" thumbnail-alt="생각을 적어 붙인 메모지" hint-size="100%,400px"></x-import>
+        <x-import component-from-global-scope="Sangsang.CourseCard" href="course-detail.dc.html" type="elective" status="not-started" title="신임 리더를 위한 피드백 대화법" period="2026.12.01 – 12.31" hours="2시간 30분" thumbnail="https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?auto=format&amp;fit=crop&amp;w=840&amp;q=80" thumbnail-alt="생각을 적어 붙인 메모지" hint-size="100%,400px"></x-import>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;min-width:0">
-        <x-import component-from-global-scope="Sangsang.CourseCard" href="과정 상세.dc.html" type="elective" status="not-started" title="ESG 경영과 탄소중립 기초" period="2026.11.20 – 12.31" hours="1시간 30분" thumbnail="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&amp;fit=crop&amp;w=840&amp;q=80" thumbnail-alt="노트에 필기하는 손" hint-size="100%,360px"></x-import>
+        <x-import component-from-global-scope="Sangsang.CourseCard" href="course-detail.dc.html" type="elective" status="not-started" title="ESG 경영과 탄소중립 기초" period="2026.11.20 – 12.31" hours="1시간 30분" thumbnail="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&amp;fit=crop&amp;w=840&amp;q=80" thumbnail-alt="노트에 필기하는 손" hint-size="100%,360px"></x-import>
       </div>
     </div>
   </section>
@@ -178,7 +178,7 @@ a:hover { color: #1438A6; }
         <h2 style="margin:0;font-size:22px;line-height:32px;font-weight:700">필수 교육</h2>
         <span style="font-size:14px;color:#666E7A">올해 꼭 들어야 하는 교육 3개 중 1개를 듣고 있어요</span>
       </div>
-      <a href="교육 과정.dc.html" style="display:flex;align-items:center;gap:2px;font-size:15px;font-weight:500;color:#4A5260;text-decoration:none" style-hover="color:#2A2A2A">전체 과정<x-import component-from-global-scope="Sangsang.Icon" name="chevron-right" size="{{ 16 }}" hint-size="16px,16px"></x-import></a>
+      <a href="courses.dc.html" style="display:flex;align-items:center;gap:2px;font-size:15px;font-weight:500;color:#4A5260;text-decoration:none" style-hover="color:#2A2A2A">전체 과정<x-import component-from-global-scope="Sangsang.Icon" name="chevron-right" size="{{ 16 }}" hint-size="16px,16px"></x-import></a>
     </div>
     <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px">
       <x-import component-from-global-scope="Sangsang.CourseCard" type="required" status="not-started" title="2026 하반기 정보보안 교육" period="2026.11.01 – 11.30" hours="1시간 30분" thumbnail="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&amp;fit=crop&amp;w=840&amp;q=80" thumbnail-alt="회로 기판 확대 사진" hint-size="100%,400px"></x-import>
@@ -199,7 +199,7 @@ a:hover { color: #1438A6; }
   <section data-screen-label="공지사항" style="display:flex;flex-direction:column;gap:16px;min-width:0">
       <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px">
         <h2 style="margin:0;font-size:22px;line-height:32px;font-weight:700">공지사항</h2>
-        <a href="지원센터.dc.html#notice" style="display:flex;align-items:center;gap:2px;font-size:15px;font-weight:500;color:#4A5260;text-decoration:none" style-hover="color:#2A2A2A">더보기<x-import component-from-global-scope="Sangsang.Icon" name="chevron-right" size="{{ 16 }}" hint-size="16px,16px"></x-import></a>
+        <a href="support-center.dc.html#notice" style="display:flex;align-items:center;gap:2px;font-size:15px;font-weight:500;color:#4A5260;text-decoration:none" style-hover="color:#2A2A2A">더보기<x-import component-from-global-scope="Sangsang.Icon" name="chevron-right" size="{{ 16 }}" hint-size="16px,16px"></x-import></a>
       </div>
       <ul style="flex:1;list-style:none;margin:0;padding:4px 24px;display:flex;flex-direction:column;justify-content:center;background:#FFFFFF;border:1px solid #E3E7ED;border-radius:12px">
         <li><a href="#" style="display:flex;align-items:center;gap:8px;padding:14px 0;color:#2A2A2A;text-decoration:none" style-hover="color:#1A47D1"><span style="display:inline-flex;align-items:center;height:20px;padding:0 6px;border-radius:4px;background:#E5EAF4;color:#002060;font-size:12px;font-weight:700;flex-shrink:0">중요</span><span style="flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:600">11월 시스템 점검 안내</span><span style="font-size:13px;color:#666E7A;flex-shrink:0">2026.11.03</span></a></li>
@@ -221,7 +221,7 @@ a:hover { color: #1438A6; }
         <h3 style="margin:0;font-size:24px;line-height:34px;font-weight:700;color:#FFFFFF">미코스쿨 연수원 이용 안내</h3>
         <p style="margin:0;font-size:15px;line-height:24px;color:#DCE6FF;text-wrap:pretty">시설 · 이용 시간 · 오시는 길을 확인하세요.</p>
       </div>
-      <a href="연수원 소개.dc.html#guide" style="display:flex;text-decoration:none"><x-import component-from-global-scope="Sangsang.Button" variant="outline" iconRight="arrow-right" hint-size="104px,40px">바로가기</x-import></a>
+      <a href="about.dc.html#guide" style="display:flex;text-decoration:none"><x-import component-from-global-scope="Sangsang.Button" variant="outline" iconRight="arrow-right" hint-size="104px,40px">바로가기</x-import></a>
     </div>
   </div>
   </section>

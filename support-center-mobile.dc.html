@@ -27,10 +27,10 @@ a:hover { color: #1438A6; }
   <div ref="{{ scrollRef }}" class="m-scroll" style="position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;scrollbar-width:none">
 
     <header style="position:sticky;top:0;z-index:20;height:56px;padding:0 4px 0 16px;background:#FFFFFF;border-bottom:1px solid #E3E7ED;display:flex;align-items:center;justify-content:space-between">
-      <a href="메인 모바일.dc.html" style="display:flex;align-items:center"><img src="assets/logo.png" alt="MiCo School 상상이상" style="height:26px;width:auto;display:block"></a>
+      <a href="main-mobile.dc.html" style="display:flex;align-items:center"><img src="assets/logo.png" alt="MiCo School 상상이상" style="height:26px;width:auto;display:block"></a>
       <div style="display:flex">
         
-        <a href="나의 학습 모바일.dc.html#notes" aria-label="쪽지 2건 안 읽음" style="position:relative;width:44px;height:44px;display:flex;align-items:center;justify-content:center;color:#2A2A2A;text-decoration:none"><span aria-hidden="true" style="font-family:'Material Symbols Rounded';font-size:24px;line-height:1;font-weight:normal;font-variation-settings:'FILL' 0,'wght' 400;overflow:hidden">notifications</span><span aria-hidden="true" style="position:absolute;top:10px;right:11px;width:7px;height:7px;border-radius:9999px;background:#D52B33;box-shadow:0 0 0 2px #FFFFFF"></span></a>
+        <a href="my-learning-mobile.dc.html#notes" aria-label="쪽지 2건 안 읽음" style="position:relative;width:44px;height:44px;display:flex;align-items:center;justify-content:center;color:#2A2A2A;text-decoration:none"><span aria-hidden="true" style="font-family:'Material Symbols Rounded';font-size:24px;line-height:1;font-weight:normal;font-variation-settings:'FILL' 0,'wght' 400;overflow:hidden">notifications</span><span aria-hidden="true" style="position:absolute;top:10px;right:11px;width:7px;height:7px;border-radius:9999px;background:#D52B33;box-shadow:0 0 0 2px #FFFFFF"></span></a>
         <button type="button" onClick="{{ openMenu }}" aria-label="전체 메뉴" style="width:44px;height:44px;padding:0;border:0;background:transparent;color:#2A2A2A;display:flex;align-items:center;justify-content:center;cursor:pointer"><span aria-hidden="true" style="font-family:'Material Symbols Rounded';font-size:24px;line-height:1;font-weight:normal;font-variation-settings:'FILL' 0,'wght' 400;overflow:hidden">menu</span></button>
       </div>
     </header>
@@ -277,7 +277,7 @@ a:hover { color: #1438A6; }
       <nav aria-label="푸터 메뉴" style="display:flex;flex-wrap:wrap;gap:0 20px;font-size:13px;line-height:20px">
         <a href="#" style="min-height:44px;display:flex;align-items:center;color:#FFFFFF;font-weight:700;text-decoration:none">개인정보처리방침</a>
         <a href="#" style="min-height:44px;display:flex;align-items:center;color:#DCE6FF;text-decoration:none">이용약관</a>
-        <a href="지원센터 모바일.dc.html" style="min-height:44px;display:flex;align-items:center;color:#DCE6FF;text-decoration:none">지원센터</a>
+        <a href="support-center-mobile.dc.html" style="min-height:44px;display:flex;align-items:center;color:#DCE6FF;text-decoration:none">지원센터</a>
       </nav>
       <div style="display:flex;flex-direction:column;gap:4px;font-size:12px;line-height:18px;color:#B9CCFF">
         <span style="color:#FFFFFF;font-weight:600">미코그룹 인재개발 · 미코스쿨 상상이상</span>
@@ -380,13 +380,13 @@ const TABS = [
   { id: 'archive', label: '자료실', desc: '교육 운영에 필요한 양식과 안내 자료예요.' }
 ];
 const TAB_IDS = TABS.map(t => t.id);
-const SELF = '지원센터 모바일.dc.html';
+const SELF = 'support-center-mobile.dc.html';
 const MENUS = [
-  { label: '연수원 소개', subs: [['미코 WAY · 인재상', '연수원 소개.dc.html#way'], ['인사말 · 연수원 소개', '연수원 소개.dc.html#greeting']] },
-  { label: '교육 과정', subs: [['전체 과정', '교육 과정 모바일.dc.html'], ['필수 교육', '교육 과정 모바일.dc.html'], ['선택 교육', '교육 과정 모바일.dc.html']] },
+  { label: '연수원 소개', subs: [['미코 WAY · 인재상', 'about.dc.html#way'], ['인사말 · 연수원 소개', 'about.dc.html#greeting']] },
+  { label: '교육 과정', subs: [['전체 과정', 'courses-mobile.dc.html'], ['필수 교육', 'courses-mobile.dc.html'], ['선택 교육', 'courses-mobile.dc.html']] },
   { label: '공동학습', subs: [] },
   { label: '지원센터', subs: TABS.map(t => [t.label, `${SELF}#${t.id}`, t.id]) },
-  { label: '나의 학습', subs: [['나의 강의실', '나의 학습 모바일.dc.html#classroom'], ['신청 내역', '나의 학습 모바일.dc.html#apply'], ['수료증 · 배지', '나의 학습 모바일.dc.html#cert'], ['외부교육 · 자격', '나의 학습 모바일.dc.html#external']] }
+  { label: '나의 학습', subs: [['나의 강의실', 'my-learning-mobile.dc.html#classroom'], ['신청 내역', 'my-learning-mobile.dc.html#apply'], ['수료증 · 배지', 'my-learning-mobile.dc.html#cert'], ['외부교육 · 자격', 'my-learning-mobile.dc.html#external']] }
 ];
 const fmtSize = n => n >= 1048576 ? (n / 1048576).toFixed(1) + 'MB' : Math.max(1, Math.round(n / 1024)) + 'KB';
 const okFile = f => /\.(pdf|jpe?g|png)$/i.test(f.name) && f.size <= 10 * 1048576;
