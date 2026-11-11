@@ -71,7 +71,12 @@ a:hover { color: #1438A6; }
     <sc-if value="{{ showCards }}" hint-placeholder-val="{{ true }}">
       <div data-screen-label="카드형" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:20px">
         <sc-for list="{{ items }}" as="c" hint-placeholder-count="8">
+          <div style="position:relative;align-self:start;display:flex;flex-direction:column;border-radius:12px;transition:transform .35s cubic-bezier(.2,.7,.2,1), box-shadow .35s ease" style-hover="transform:translateY(-6px);box-shadow:0 16px 32px -8px rgba(16,24,40,0.18)">
           <x-import component-from-global-scope="Sangsang.CourseCard" href="course-detail.dc.html" type="{{ c.type }}" status="{{ c.status }}" title="{{ c.title }}" period="{{ c.period }}" hours="{{ c.hours }}" progress="{{ c.progress }}" thumbnail="{{ c.img }}" thumbnail-alt="{{ c.alt }}" hint-size="100%,340px"></x-import>
+          <sc-if value="{{ c.hasPromo }}" hint-placeholder-val="{{ false }}">
+            <span style="position:absolute;top:12px;left:12px;z-index:1;pointer-events:none;height:24px;padding:0 10px;border-radius:9999px;background:{{ c.promoBg }};color:#FFFFFF;font-size:12px;line-height:24px;font-weight:700;letter-spacing:0.02em;box-shadow:0 2px 6px rgba(0,0,0,0.18)">{{ c.promo }}</span>
+          </sc-if>
+          </div>
         </sc-for>
       </div>
     </sc-if>
@@ -81,14 +86,14 @@ a:hover { color: #1438A6; }
         <sc-for list="{{ items }}" as="c" hint-placeholder-count="6">
           <li>
             <a href="course-detail.dc.html" style="display:grid;grid-template-columns:clamp(140px,26%,240px) minmax(0,1fr) 176px;min-height:160px;background:#FFFFFF;border:1px solid #E3E7ED;border-radius:12px;overflow:hidden;color:#2A2A2A;text-decoration:none;transition:border-color .15s, box-shadow .15s" style-hover="border-color:#D5DAE1;box-shadow:0 1px 2px rgba(16,24,40,0.06);color:#2A2A2A">
-              <div style="position:relative;background:#EAF0FF"><div role="img" aria-label="{{ c.alt }}" style="position:absolute;inset:0;background:#EAF0FF center/cover no-repeat;background-image:{{ c.bgImg }}"></div></div>
+              <div style="position:relative;align-self:center;aspect-ratio:1.618/1;margin:16px 0 16px 16px;border-radius:8px;overflow:hidden;background:#EAF0FF"><div role="img" aria-label="{{ c.alt }}" style="position:absolute;inset:0;background:#EAF0FF center/cover no-repeat;background-image:{{ c.bgImg }}"></div><sc-if value="{{ c.hasPromo }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;top:10px;left:10px;height:24px;padding:0 10px;border-radius:9999px;background:{{ c.promoBg }};color:#FFFFFF;font-size:12px;line-height:24px;font-weight:700;letter-spacing:0.02em;box-shadow:0 2px 6px rgba(0,0,0,0.18)">{{ c.promo }}</span></sc-if></div>
               <div style="min-width:0;padding:20px 24px;display:flex;flex-direction:column;justify-content:center;gap:6px">
                 <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
                   <x-import component-from-global-scope="Sangsang.TypeTag" type="{{ c.type }}" size="sm" hint-size="40px,20px"></x-import>
                   <sc-if value="{{ c.hasStatus }}" hint-placeholder-val="{{ false }}"><x-import component-from-global-scope="Sangsang.StatusBadge" status="{{ c.status }}" size="sm" hint-size="56px,20px"></x-import></sc-if>
                   <span style="font-size:13px;color:#666E7A">{{ c.cat }}</span>
                 </div>
-                <h3 style="margin:2px 0 0;font-size:18px;line-height:27px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ c.title }}</h3>
+                <h3 style="margin:2px 0 0;font-size:20px;line-height:28px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ c.title }}</h3>
                 <div style="display:flex;gap:16px;font-size:14px;line-height:22px;color:#666E7A;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">
                   <span>학습 기간 <span style="color:#2A2A2A;font-weight:600">{{ c.period }}</span></span>
                   <span>학습 시간 <span style="color:#2A2A2A;font-weight:600">{{ c.hours }}</span></span>
@@ -131,6 +136,17 @@ a:hover { color: #1438A6; }
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;defaultView&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;카드형&quot;,&quot;목록형&quot;],&quot;default&quot;:&quot;카드형&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
 const U = (id, w) => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${w || 840}&q=80`;
+const PROMO_BG = { '추천': '#1C59FE', 'NEW': '#002060', '인기': '#E8590C' };
+const DEMO_STATES = [
+  { status: 'pending', promo: '추천' },
+  { status: 'in-progress', progress: 45, promo: 'NEW' },
+  { status: 'completed', progress: 100, promo: '인기' },
+  { type: 'elective' },
+  { status: 'not-started', progress: 0 },
+  { status: 'incomplete' },
+  { status: 'recruiting', promo: 'NEW' },
+  { status: 'closed' }
+];
 const COURSES = [
   { type: 'required', cat: '공통 역량', title: '2026 하반기 정보보안 교육', summary: '개인정보와 기술 자산을 지키는 보안 수칙과 사고 대응 절차를 익혀요.', period: '2026.11.01 – 11.30', hours: '1시간 30분', img: '1518770660439-4636190af475', alt: '회로 기판 확대 사진' },
   { type: 'required', cat: '법정 · 안전', title: '직장 내 괴롭힘 예방교육', summary: '법이 정한 괴롭힘의 기준과 신고·조치 절차를 사례로 알아봐요.', period: '2026.11.01 – 12.15', hours: '1시간', img: '1512758017271-d7b84c2113f1', alt: '포스트잇 메모가 붙은 기획 보드' },
@@ -144,7 +160,8 @@ const COURSES = [
   { type: 'elective', cat: '공통 역량', title: 'ESG 경영과 탄소중립 기초', summary: 'ESG 공시 흐름과 우리 사업장의 탄소 감축 과제를 쉽게 정리해요.', period: '2026.11.20 – 12.31', hours: '1시간 30분', img: '1434030216411-0b793f4b4173', alt: '노트에 필기하는 손' },
   { type: 'elective', cat: '공통 역량', title: '한 장으로 끝내는 보고서 작성', summary: '핵심을 먼저 말하는 보고서 구조와 표·그래프 정리법을 익혀요.', period: '2026.11.01 – 12.31', hours: '2시간', img: '1454165804606-c3d57bc86b40', alt: '책상 위에서 서류를 검토하는 사람' },
   { type: 'elective', cat: '직무', title: '생산 데이터 대시보드 읽기', summary: '설비 가동률·수율 지표를 읽고 이상 신호를 빠르게 찾는 법을 배워요.', period: '2026.11.10 – 12.31', hours: '2시간', img: '1551288049-bebda4e38f71', alt: '노트북 화면의 데이터 대시보드' }
-].map(c => ({ ...c, img: U(c.img), bgImg: `url("${U(c.img)}")`, hasStatus: !!c.status, hasProgress: c.progress != null, pct: (c.progress || 0) + '%' }));
+].map((c, i) => ({ ...c, ...(DEMO_STATES[i] || {}) })).map(c => ({ ...c, img: U(c.img), bgImg: `url("${U(c.img)}")`, hasStatus: !!c.status, hasProgress: c.progress != null, pct: (c.progress || 0) + '%',
+  hasPromo: !!c.promo, promoBg: PROMO_BG[c.promo] || '#1C59FE' }));
 const CATS = ['전체', '직무', '리더십', '공통 역량', '법정 · 안전'];
 const TABS = [{ id: 'all', label: '전체 과정' }, { id: 'required', label: '필수 교육' }, { id: 'elective', label: '선택 교육' }];
 const isReq = c => c.type === 'required';

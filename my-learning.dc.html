@@ -362,7 +362,7 @@ a:hover { color: #1438A6; }
           <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px">
             <sc-for list="{{ items }}" as="c" hint-placeholder-count="5">
               <li style="display:grid;grid-template-columns:clamp(140px,26%,240px) minmax(0,1fr) 176px;min-height:160px;background:#FFFFFF;border:1px solid #E3E7ED;border-radius:12px;overflow:hidden">
-                <div style="position:relative;background:#EAF0FF"><div role="img" aria-label="{{ c.alt }}" style="position:absolute;inset:0;background:#EAF0FF center/cover no-repeat;background-image:{{ c.bgImg }}"></div></div>
+                <div style="position:relative;align-self:center;aspect-ratio:1.618/1;margin:16px 0 16px 16px;border-radius:8px;overflow:hidden;background:#EAF0FF"><div role="img" aria-label="{{ c.alt }}" style="position:absolute;inset:0;background:#EAF0FF center/cover no-repeat;background-image:{{ c.bgImg }}"></div></div>
                 <div style="display:contents">
                   <div style="min-width:0;padding:20px 24px;display:flex;flex-direction:column;justify-content:center;gap:6px">
                     <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
@@ -370,7 +370,7 @@ a:hover { color: #1438A6; }
                       <x-import component-from-global-scope="Sangsang.StatusBadge" status="{{ c.status }}" size="sm" hint-size="56px,20px"></x-import>
                       <span style="font-size:13px;color:#666E7A">{{ c.cat }}</span>
                     </div>
-                    <h3 style="margin:2px 0 0;font-size:18px;line-height:27px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><a href="course-detail.dc.html" style="color:#2A2A2A;text-decoration:none" style-hover="color:#1A47D1">{{ c.title }}</a></h3>
+                    <h3 style="margin:2px 0 0;font-size:20px;line-height:28px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><a href="course-detail.dc.html" style="color:#2A2A2A;text-decoration:none" style-hover="color:#1A47D1">{{ c.title }}</a></h3>
                     <div style="display:flex;gap:16px;font-size:14px;line-height:22px;color:#666E7A;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">
                       <span>학습 기간 <span style="color:#2A2A2A;font-weight:600">{{ c.period }}</span></span>
                       <span>학습 시간 <span style="color:#2A2A2A;font-weight:600">{{ c.hours }}</span></span>

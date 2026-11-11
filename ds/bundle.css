@@ -284,7 +284,7 @@ a.ss-card:hover, .ss-card.is-link:hover { border-color: var(--border-strong); bo
 .ss-thumb-progress i { display: block; height: 100%; background: var(--primary); }
 .ss-thumb-progress i.is-done { background: var(--success-500); }
 .ss-course-body { min-height: 38.2cqw; padding: var(--space-4) var(--space-5); display: flex; flex-direction: column; gap: var(--space-2); }
-.ss-course .ss-card-title { font-size: 16px; line-height: 24px; min-height: 48px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.ss-course .ss-card-title { font-size: 18px; line-height: 26px; min-height: 52px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .ss-course-meta { display: flex; justify-content: space-between; align-items: center; gap: var(--space-2); margin-top: auto; }
 .ss-course-meta .ss-card-meta { flex-wrap: nowrap; min-width: 0; overflow: hidden; white-space: nowrap; }
 .ss-course-pct { font-size: 15px; font-weight: 700; color: var(--ink); flex-shrink: 0; }

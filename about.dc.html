@@ -435,7 +435,7 @@ a:hover { color: #1438A6; }
             </div>
             <div style="position:sticky;top:calc(var(--gnb-offset, 0px) + 24px);transition:top .25s ease;width:252px;padding:2px;background:#FFFFFF;border:1px solid #D5DAE1;display:flex;flex-direction:column">
               <div style="height:270px">
-                <image-slot id="greeting-portrait" shape="rect" placeholder="연수원장 사진"></image-slot>
+                <img src="assets/greeting-portrait-v2.jpg" alt="연수원장 프로필 사진" style="display:block;width:100%;height:100%;object-fit:cover;object-position:center 30%">
               </div>
               <div style="background:#002060;padding:20px 20px 22px;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center">
                 <span style="font-size:15px;line-height:22px;font-weight:500;color:#B9CCFF">미코스쿨상상이상 연수원장</span>
@@ -447,7 +447,7 @@ a:hover { color: #1438A6; }
 
         <section id="sec-center" data-screen-label="연수원 소개" style="display:flex;flex-direction:column;gap:24px;scroll-margin-top:24px">
           <h3 style="margin:0;padding-bottom:14px;border-bottom:2px solid #2A2A2A;font-size:22px;line-height:32px;font-weight:700">연수원 소개</h3>
-          <div style="position:relative;width:100%;aspect-ratio:2.4/1">
+          <div style="position:relative;width:100%;aspect-ratio:1.8/1">
             <image-slot id="center-hero" shape="rounded" radius="12" placeholder="연수원 전경 사진" style="position:absolute;inset:0;width:100%;height:100%"></image-slot>
           </div>
           <sc-if value="{{ v1 }}" hint-placeholder-val="{{ false }}">
@@ -512,7 +512,7 @@ a:hover { color: #1438A6; }
               <h4 style="margin:0;font-size:22px;line-height:32px;font-weight:700">공간 이야기</h4>
               <div style="display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);grid-template-rows:240px 240px;gap:16px">
                 <figure style="margin:0;grid-row:span 2;position:relative;border-radius:12px;overflow:hidden;background:#D5DAE1">
-                  <div role="img" aria-label="붉은 벽돌 연수원 본관 외관" style="position:absolute;inset:0;background:#D5DAE1 url(assets/hero/campus-main.jpg?v=2) center/cover no-repeat"></div>
+                  <div role="img" aria-label="붉은 벽돌 연수원 본관 외관" style="position:absolute;inset:0;background:#D5DAE1 url(assets/hero/campus-main.jpg?v=2) center/cover no-repeat;filter:{{ toneMain }}"></div>
                   <figcaption style="position:absolute;left:0;right:0;bottom:0;padding:64px 28px 26px;background:linear-gradient(180deg,rgba(0,16,48,0) 0%,rgba(0,16,48,0.82) 100%);pointer-events:none;z-index:2;display:flex;flex-direction:column;gap:4px">
                     <span style="font-size:24px;line-height:34px;font-weight:700;color:#FFFFFF">1979 한국건축가협회상 수상 건축물</span>
                     <span style="font-size:16px;line-height:24px;color:#FFFFFF">40년 넘게 연수원으로 쓰여온 공간</span>
@@ -526,7 +526,7 @@ a:hover { color: #1438A6; }
                   </figcaption>
                 </figure>
                 <figure style="margin:0;position:relative;border-radius:12px;overflow:hidden;background:#D5DAE1">
-                  <div role="img" aria-label="파라솔과 테이블이 놓인 야외 테라스" style="position:absolute;inset:0;background:#D5DAE1 url(assets/space/terrace-hd.jpg) center/cover no-repeat"></div>
+                  <div role="img" aria-label="파라솔과 테이블이 놓인 야외 테라스" style="position:absolute;inset:0;background:#D5DAE1 url(assets/space/terrace-hd.jpg) center/cover no-repeat;filter:{{ toneTerrace }}"></div>
                   <figcaption style="position:absolute;left:0;right:0;bottom:0;padding:48px 24px 20px;background:linear-gradient(180deg,rgba(0,16,48,0) 0%,rgba(0,16,48,0.82) 100%);pointer-events:none;z-index:2;display:flex;flex-direction:column;gap:2px">
                     <span style="font-size:20px;line-height:30px;font-weight:700;color:#FFFFFF">몸도 쉬어가는 곳</span>
                     <span style="font-size:15px;line-height:22px;color:#FFFFFF">운동장과 테니스장 등 옥외 공간</span>
@@ -759,7 +759,7 @@ a:hover { color: #1438A6; }
 
 <dc-import name="Footer" hint-size="100%,200px"></dc-import>
 </x-dc>
-<script type="text/x-dc" data-dc-script>
+<script type="text/x-dc" data-dc-script data-props="{&quot;photoTone&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;보정&quot;,&quot;원본&quot;],&quot;default&quot;:&quot;보정&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;공간 이야기&quot;}}">
 const U = id => `url(https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=800&q=80)`;
 const TABS_OLD = [
   { id: 'way', label: '미코 WAY · 인재상', subs: [['미코 WAY', 'sec-way'], ['연혁', 'sec-history'], ['인재상', 'sec-talent']] },
@@ -959,7 +959,34 @@ class Component extends DCLogic {
     };
     init();
   };
-  componentDidUpdate() { this.watchQuad(); }
+  componentDidUpdate() { this.watchQuad(); this.watchReveal(); }
+  watchReveal() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const ease = 'cubic-bezier(.2,.7,.2,1)';
+    if (!this.io) this.io = new IntersectionObserver(es => es.forEach(e => {
+      if (!e.isIntersecting) return;
+      const el = e.target; this.io.unobserve(el);
+      el.style.opacity = el.__o; el.style.transform = el.__tf;
+      setTimeout(() => { el.style.transition = el.__t; }, 2600);
+    }), { rootMargin: '0px 0px -8% 0px', threshold: 0.1 });
+    const inSticky = (el, root) => { for (let n = el; n && n !== root.parentNode; n = n.parentElement) if (getComputedStyle(n).position === 'sticky') return true; return false; };
+    document.querySelectorAll('section[id^="sec-"], [data-screen-label="시설 안내"]').forEach(sec => {
+      [...sec.children, ...sec.querySelectorAll('li')].forEach(el => {
+        if (el.__rv) return; el.__rv = true;
+        if (inSticky(el, sec)) return;
+        const li = el.tagName === 'LI';
+        const idx = Math.min([...el.parentNode.children].indexOf(el), li ? 8 : 5);
+        const d = (this.revealBase || 0) + idx * (li ? 0.1 : 0.15);
+        el.__o = el.style.opacity; el.__tf = el.style.transform; el.__t = el.style.transition;
+        el.style.transition = 'none';
+        el.style.opacity = '0';
+        el.style.transform = (li ? 'translateY(32px) ' : 'translateY(48px) ') + (el.__tf || '');
+        el.getBoundingClientRect();
+        el.style.transition = `opacity 1s ${ease} ${d}s, transform 1s ${ease} ${d}s`;
+        setTimeout(() => this.io.observe(el), 60);
+      });
+    });
+  }
   watchQuad() {
     const el = this.quadRef.current;
     if (el === this.quadEl) return;
@@ -971,6 +998,8 @@ class Component extends DCLogic {
   }
   componentDidMount() {
     this.watchQuad();
+    this.revealBase = 0.15;
+    requestAnimationFrame(() => { this.watchReveal(); this.revealBase = 0; });
     this.onHash = () => {
       const h = location.hash.slice(1);
       if (this.tabs().some(t => t.id === h)) { this.setState({ tab: h }); window.scrollTo(0, 0); }
@@ -1067,6 +1096,8 @@ class Component extends DCLogic {
       toggleMore: () => this.setState(st => ({ more: !st.more })),
       talents: TALENTS.map((t, i) => ({ ...t, desc: v2 ? t.desc2 : t.desc, slotId: 'talent-' + (i + 1), illustBg: 'url(assets/talent/' + ['communication', 'focus', 'sharing', 'leadership'][i] + '.svg)', alt: `${t.k1} ${t.k2} 사진` })),
       hrDirs: HR_DIRS.map((d, i) => ({ ...d, iconBg: `url(assets/talent/${['dir_growth', 'dir_global'][i]}.png)` })), hrRules: HR_RULES.map((r, i, a) => { const w = r.title.split(' '); return { ...r, num: r.step.replace('STEP ', ''), kw: w.pop(), lead: w.join(' '), rise: ['56px', '28px', '0'][i] || '0', icon: ['flag', 'award', 'trend-up'][i] || 'check', notLast: i < a.length - 1 }; }),
+      ...(() => { const on = !String(this.props.photoTone ?? '보정').startsWith('원본');
+        return { toneMain: on ? 'saturate(0.85) contrast(0.95)' : 'none', toneTerrace: on ? 'contrast(1.1) saturate(1.1) brightness(1.03)' : 'none' }; })(),
       dirA: false, dirB: true, dirC: false,
       ruleA: false, ruleB: false, ruleC: false, ruleD: true,
       greeting: GREETING, centerInfo: CENTER_INFO,

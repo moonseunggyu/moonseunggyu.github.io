@@ -3,16 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="./support.js"></script>
+<script src="../support.js"></script>
 </head>
 <body>
 <x-dc>
 <helmet>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400..500,0..1,0&amp;display=block">
-<link rel="stylesheet" href="ds/tokens.css">
-<link rel="stylesheet" href="ds/bundle.css">
-<script src="ds/bundle.js"></script>
-<script src="ds/drag-scroll.js"></script>
+<link rel="stylesheet" href="../ds/tokens.css">
+<link rel="stylesheet" href="../ds/bundle.css">
+<script src="../ds/bundle.js"></script>
+<script src="../ds/drag-scroll.js"></script>
 <style>
 *, *::before, *::after { box-sizing: border-box; }
 html, body { margin: 0; background: #DDE2E9; }
@@ -27,7 +27,7 @@ a:hover { color: #1438A6; }
   <div ref="{{ scrollRef }}" class="m-scroll" style="position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;scrollbar-width:none">
 
     <header style="position:sticky;top:0;z-index:20;height:56px;padding:0 4px 0 16px;background:#FFFFFF;border-bottom:1px solid #E3E7ED;display:flex;align-items:center;justify-content:space-between">
-      <a href="main-mobile.dc.html" style="display:flex;align-items:center"><img src="assets/logo.png" alt="MiCo School 상상이상" style="height:26px;width:auto;display:block"></a>
+      <a href="../main.dc.html" style="display:flex;align-items:center"><img src="../assets/logo.png" alt="MiCo School 상상이상" style="height:26px;width:auto;display:block"></a>
       <div style="display:flex">
         
         <a href="my-learning-mobile.dc.html#notes" aria-label="쪽지 2건 안 읽음" style="position:relative;width:44px;height:44px;display:flex;align-items:center;justify-content:center;color:#2A2A2A;text-decoration:none"><span aria-hidden="true" style="font-family:'Material Symbols Rounded';font-size:24px;line-height:1;font-weight:normal;font-variation-settings:'FILL' 0,'wght' 400;overflow:hidden">notifications</span><span aria-hidden="true" style="position:absolute;top:10px;right:11px;width:7px;height:7px;border-radius:9999px;background:#D52B33;box-shadow:0 0 0 2px #FFFFFF"></span></a>
@@ -273,7 +273,7 @@ a:hover { color: #1438A6; }
     </main>
 
     <footer style="background:#002060;color:#FFFFFF;padding:28px 20px 32px;display:flex;flex-direction:column;gap:18px">
-      <img src="assets/logo_white.png" alt="MiCo School 상상이상" style="height:28px;width:auto;align-self:flex-start;display:block">
+      <img src="../assets/logo_white.png" alt="MiCo School 상상이상" style="height:28px;width:auto;align-self:flex-start;display:block">
       <nav aria-label="푸터 메뉴" style="display:flex;flex-wrap:wrap;gap:0 20px;font-size:13px;line-height:20px">
         <a href="#" style="min-height:44px;display:flex;align-items:center;color:#FFFFFF;font-weight:700;text-decoration:none">개인정보처리방침</a>
         <a href="#" style="min-height:44px;display:flex;align-items:center;color:#DCE6FF;text-decoration:none">이용약관</a>
@@ -382,7 +382,7 @@ const TABS = [
 const TAB_IDS = TABS.map(t => t.id);
 const SELF = 'support-center-mobile.dc.html';
 const MENUS = [
-  { label: '연수원 소개', subs: [['미코 WAY · 인재상', 'about.dc.html#way'], ['인사말 · 연수원 소개', 'about.dc.html#greeting']] },
+  { label: '연수원 소개', subs: [['미코 WAY · 인재상', '../about.dc.html#way'], ['인사말 · 연수원 소개', '../about.dc.html#greeting']] },
   { label: '교육 과정', subs: [['전체 과정', 'courses-mobile.dc.html'], ['필수 교육', 'courses-mobile.dc.html'], ['선택 교육', 'courses-mobile.dc.html']] },
   { label: '공동학습', subs: [] },
   { label: '지원센터', subs: TABS.map(t => [t.label, `${SELF}#${t.id}`, t.id]) },
