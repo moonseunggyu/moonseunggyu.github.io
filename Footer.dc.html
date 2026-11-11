@@ -7,10 +7,18 @@
 </head>
 <body>
 <x-dc>
+<helmet>
+<style>
+@media (max-width: 767px) {
+  .ft-inner { padding: 32px 16px 112px !important; gap: 20px !important; }
+  .ft-logo { height: 28px !important; }
+}
+</style>
+</helmet>
 <footer style="background:#002060;color:#FFFFFF;font-family:'Pretendard Variable',Pretendard,-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif">
-  <div style="max-width:1348px;margin:0 auto;padding:40px 24px 48px;display:flex;flex-direction:column;gap:24px">
+  <div class="ft-inner" style="max-width:1348px;margin:0 auto;padding:40px 24px 48px;display:flex;flex-direction:column;gap:24px">
     <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px">
-      <img src="assets/logo_white.png" alt="MiCo School 상상이상" style="height:36px;width:auto;display:block">
+      <img class="ft-logo" src="assets/logo_white.png" alt="MiCo School 상상이상" style="height:36px;width:auto;display:block">
       <nav aria-label="푸터 메뉴" style="display:flex;flex-wrap:wrap;gap:8px 28px;font-size:14px;line-height:22px">
         <a href="#" style="color:#FFFFFF;font-weight:700;text-decoration:none">개인정보처리방침</a>
         <a href="#" style="color:#DCE6FF;text-decoration:none">이용약관</a>

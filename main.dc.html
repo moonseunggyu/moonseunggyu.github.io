@@ -25,13 +25,59 @@ a:hover { color: #1438A6; }
 .fam-logo:hover img { filter: none; opacity: 1; }
 @media (prefers-reduced-motion: reduce) { .fam-track, .fam-slow { animation: none !important; } }
 @media (prefers-reduced-motion: reduce) { .ss-ring-spin { animation: none !important; } }
+
+/* ===== 반응형 (태블릿 ≤1023px · 모바일 ≤767px) ===== */
+.m-quick { display: none !important; }
+@media (max-width: 1023px) {
+  .hb { height: 540px !important; }
+  .hb-h1 { font-size: 52px !important; }
+  .hb-quick a { width: 128px !important; height: 116px !important; border-radius: 16px !important; }
+  .ha { grid-template-columns: minmax(0,1fr) !important; height: auto !important; }
+  .ha > div:first-child { height: 360px; }
+  .ha > nav { flex-direction: row !important; }
+  .ha > nav > a { min-height: 88px; }
+}
+@media (max-width: 767px) {
+  .mp-main { padding: 24px 16px 64px !important; gap: 48px !important; }
+  .hb { height: 420px !important; }
+  .hb-inner { padding: 40px 20px 16px !important; }
+  .hb-quick { display: none !important; }
+  .hb-top { gap: 12px !important; }
+  .hb-eyebrow { font-size: 15px !important; line-height: 22px !important; }
+  .hb-h1 { font-size: 38px !important; }
+  .hb-p { font-size: 16px !important; line-height: 26px !important; }
+  .m-quick { display: grid !important; margin: -16px -16px 0; }
+  .ha > nav { flex-direction: column !important; }
+  .mp-h2 { font-size: 18px !important; line-height: 27px !important; }
+  .mp-sub { font-size: 13px !important; }
+  .mp-cards { display: flex !important; gap: 12px !important; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding: 0 16px; margin: 0 -16px; padding: 0 16px 4px; scrollbar-width: none; }
+  .mp-cards::-webkit-scrollbar { display: none; }
+  .mp-card { flex: 0 0 260px; scroll-snap-align: start; }
+  .fam-sec { gap: 24px !important; }
+  .fam-eyebrow { font-size: 14px !important; line-height: 22px !important; }
+  .fam-h2 { font-size: 22px !important; line-height: 32px !important; }
+  .fam-p { font-size: 15px !important; line-height: 24px !important; }
+  .fam-logo { width: 120px !important; height: 120px !important; }
+  .fam-logo img { max-width: 84px !important; max-height: 30px !important; }
+  .fam-slow { gap: 20px !important; padding-right: 20px !important; }
+  .mp-2col { grid-template-columns: minmax(0,1fr) !important; gap: 48px !important; }
+  .mp-notice { padding: 4px 16px !important; }
+  .mp-banner { min-height: 220px !important; }
+  .mp-banner-body { padding: 20px !important; }
+  .mp-banner-title { font-size: 20px !important; line-height: 28px !important; }
+  .fam-fab-wrap { right: 16px !important; bottom: 16px !important; }
+  .fam-fab { width: 72px !important; height: 72px !important; }
+  .fam-fab > svg { width: 72px; height: 72px; }
+  .fam-fab > span { width: 28px !important; height: 28px !important; }
+  .fam-nav { width: min(260px, calc(100vw - 32px)) !important; }
+}
 </style>
 </helmet>
 <dc-import name="GNB" active="없음" hint-size="100%,72px" style="position:relative;z-index:50"></dc-import>
 
-<div ref="{{ famRef }}" data-screen-label="패밀리 사이트 바로가기" style="position:fixed;right:32px;bottom:32px;z-index:60;display:flex;flex-direction:column;align-items:flex-end;gap:12px">
+<div ref="{{ famRef }}" class="fam-fab-wrap" data-screen-label="패밀리 사이트 바로가기" style="position:fixed;right:32px;bottom:32px;z-index:60;display:flex;flex-direction:column;align-items:flex-end;gap:12px">
   <sc-if value="{{ famOpen }}" hint-placeholder-val="{{ false }}">
-    <nav id="family-sites" aria-label="패밀리 사이트" style="width:240px;background:#FFFFFF;border:1px solid #E3E7ED;border-radius:12px;box-shadow:0 12px 32px rgba(16,24,40,0.16);overflow:hidden">
+    <nav id="family-sites" class="fam-nav" aria-label="패밀리 사이트" style="width:240px;background:#FFFFFF;border:1px solid #E3E7ED;border-radius:12px;box-shadow:0 12px 32px rgba(16,24,40,0.16);overflow:hidden">
       <div style="padding:14px 20px;border-bottom:1px solid #E3E7ED;font-size:14px;line-height:22px;font-weight:700;color:#2A2A2A">패밀리 사이트</div>
       <ul style="list-style:none;margin:0;padding:6px 0">
         <sc-for list="{{ famSites }}" as="f" hint-placeholder-count="4">
@@ -40,7 +86,7 @@ a:hover { color: #1438A6; }
       </ul>
     </nav>
   </sc-if>
-  <button type="button" onClick="{{ toggleFam }}" aria-expanded="{{ famOpen }}" aria-controls="family-sites" aria-label="패밀리 사이트 바로가기" title="패밀리 사이트" style="position:relative;width:104px;height:104px;padding:0;border:0;border-radius:9999px;background:#002060;color:#FFFFFF;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(0,22,64,0.28);cursor:pointer;font:inherit;transition:background-color .2s, transform .2s" style-hover="background:#1C59FE;transform:translateY(-2px)">
+  <button type="button" onClick="{{ toggleFam }}" aria-expanded="{{ famOpen }}" aria-controls="family-sites" aria-label="패밀리 사이트 바로가기" title="패밀리 사이트" class="fam-fab" style="position:relative;width:104px;height:104px;padding:0;border:0;border-radius:9999px;background:#002060;color:#FFFFFF;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(0,22,64,0.28);cursor:pointer;font:inherit;transition:background-color .2s, transform .2s" style-hover="background:#1C59FE;transform:translateY(-2px)">
     {{ ring }}
     <span style="position:relative;width:36px;height:36px;border-radius:9999px;background:#FFFFFF;color:#002060;display:flex;align-items:center;justify-content:center">
       <sc-if value="{{ famOpen }}" hint-placeholder-val="{{ false }}"><x-import component-from-global-scope="Sangsang.Icon" name="x" size="{{ 18 }}" hint-size="18px,18px"></x-import></sc-if>
@@ -49,22 +95,22 @@ a:hover { color: #1438A6; }
   </button>
 </div>
 
-<main data-screen-label="메인" style="max-width:1348px;margin:0 auto;padding:24px 24px 80px;display:flex;flex-direction:column;gap:80px">
+<main class="mp-main" data-screen-label="메인" style="max-width:1348px;margin:0 auto;padding:24px 24px 80px;display:flex;flex-direction:column;gap:80px">
 
   <div style="display:flex;flex-direction:column;gap:16px">
     <sc-if value="{{ heroB }}" hint-placeholder-val="{{ false }}">
-    <section data-screen-label="히어로 B" aria-label="미코스쿨 상상이상 소개" style="position:relative;width:100vw;margin:-24px 0 0 calc(50% - 50vw);height:640px;overflow:hidden;background:#0D1421">
+    <section class="hb" data-screen-label="히어로 B" aria-label="미코스쿨 상상이상 소개" style="position:relative;width:100vw;margin:-24px 0 0 calc(50% - 50vw);height:640px;overflow:hidden;background:#0D1421">
       <img src="assets/hero/campus-aerial.jpg" alt="잔디마당을 둘러싼 붉은 벽돌 연수원 건물들을 하늘에서 내려다본 모습" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;opacity:{{ o0 }};transition:opacity .8s ease">
       <img src="assets/hero/campus-lawn.jpg" alt="잔디밭과 소나무 사이로 이어진 붉은 벽돌 숙소동" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 50%;opacity:{{ o1 }};transition:opacity .8s ease">
       <img src="assets/hero/classroom.jpg" alt="책상이 줄지어 놓인 현대식 빈 강의실" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:{{ o2 }};transition:opacity .8s ease">
       <div aria-hidden="true" style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(8,12,20,0.8) 0,rgba(8,12,20,0.6) 45%,rgba(8,12,20,0.4) 100%)"></div>
-      <div style="position:relative;height:100%;max-width:1348px;margin:0 auto;padding:64px 24px 56px;display:flex;align-items:stretch;justify-content:space-between;gap:40px">
+      <div class="hb-inner" style="position:relative;height:100%;max-width:1348px;margin:0 auto;padding:64px 24px 56px;display:flex;align-items:stretch;justify-content:space-between;gap:40px">
         <div style="display:flex;flex-direction:column;justify-content:space-between;min-width:0">
-          <div style="display:flex;flex-direction:column;gap:20px;max-width:620px">
+          <div class="hb-top" style="display:flex;flex-direction:column;gap:20px;max-width:620px">
             <span aria-hidden="true" style="width:40px;height:3px;background:#8AABFF"></span>
-            <span style="margin-top:-6px;font-size:20px;line-height:28px;font-weight:700;color:#8AABFF">MiCo School · 학습 포털</span>
-            <h1 style="margin: 0; font-size: 64px; line-height: 1.22; font-weight: 800; letter-spacing: -0.025em; color: #FFFFFF; text-wrap: balance">미코스쿨<br>상상이상</h1>
-            <p style="margin:0;font-size:22px;line-height:34px;font-weight:500;color:#FFFFFF;text-wrap:pretty">미코인이 머물고, 배우고, 연결되는 성장의 공간</p>
+            <span class="hb-eyebrow" style="margin-top:-6px;font-size:20px;line-height:28px;font-weight:700;color:#8AABFF">MiCo School · 학습 포털</span>
+            <h1 class="hb-h1" style="margin: 0; font-size: 64px; line-height: 1.22; font-weight: 800; letter-spacing: -0.025em; color: #FFFFFF; text-wrap: balance">미코스쿨<br>상상이상</h1>
+            <p class="hb-p" style="margin:0;font-size:22px;line-height:34px;font-weight:500;color:#FFFFFF;text-wrap:pretty">미코인이 머물고, 배우고, 연결되는 성장의 공간</p>
           </div>
           <div style="display: flex; align-items: center; gap: 24px">
             <span style="font-size:14px;color:#B9CCFF;white-space:nowrap;flex-shrink:0"><b style="color:#FFFFFF">{{ slideNo }}</b> / 03</span>
@@ -78,25 +124,40 @@ a:hover { color: #1438A6; }
             </div>
           </div>
         </div>
-        <nav aria-label="바로가기" style="flex:none;align-self:center;display:flex;flex-direction:column;gap:16px">
+        <nav class="hb-quick" aria-label="바로가기" style="flex:none;align-self:center;display:flex;flex-direction:column;gap:16px">
           <a href="my-learning.dc.html#classroom" style="width:150px;height:136px;border-radius:20px;background:rgba(18,22,30,0.62);border:1px solid rgba(255,255,255,0.22);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:#FFFFFF;text-decoration:none;transition:background .2s,border-color .2s" style-hover="background:rgba(28,89,254,0.72);border-color:rgba(255,255,255,0.4);color:#FFFFFF">
             <span aria-hidden="true" style="font-family:'Material Symbols Rounded';font-size:32px;line-height:1;font-weight:normal;font-variation-settings:'FILL' 0,'wght' 400;overflow:hidden">school</span>
             <span style="font-size:16px;line-height:22px;font-weight:700">나의 강의실</span>
           </a>
-          <a href="#" style="width:150px;height:136px;border-radius:20px;background:rgba(18,22,30,0.62);border:1px solid rgba(255,255,255,0.22);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:#FFFFFF;text-decoration:none;transition:background .2s,border-color .2s" style-hover="background:rgba(28,89,254,0.72);border-color:rgba(255,255,255,0.4);color:#FFFFFF">
+          <a href="my-learning.dc.html#cert" style="width:150px;height:136px;border-radius:20px;background:rgba(18,22,30,0.62);border:1px solid rgba(255,255,255,0.22);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:#FFFFFF;text-decoration:none;transition:background .2s,border-color .2s" style-hover="background:rgba(28,89,254,0.72);border-color:rgba(255,255,255,0.4);color:#FFFFFF">
             <span aria-hidden="true" style="font-family:'Material Symbols Rounded';font-size:32px;line-height:1;font-weight:normal;font-variation-settings:'FILL' 0,'wght' 400;overflow:hidden">workspace_premium</span>
             <span style="font-size:16px;line-height:22px;font-weight:700">수료증 발급</span>
           </a>
-          <a href="#" style="width:150px;height:136px;border-radius:20px;background:rgba(18,22,30,0.62);border:1px solid rgba(255,255,255,0.22);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:#FFFFFF;text-decoration:none;transition:background .2s,border-color .2s" style-hover="background:rgba(28,89,254,0.72);border-color:rgba(255,255,255,0.4);color:#FFFFFF">
+          <a href="support-center.dc.html#faq" style="width:150px;height:136px;border-radius:20px;background:rgba(18,22,30,0.62);border:1px solid rgba(255,255,255,0.22);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:#FFFFFF;text-decoration:none;transition:background .2s,border-color .2s" style-hover="background:rgba(28,89,254,0.72);border-color:rgba(255,255,255,0.4);color:#FFFFFF">
             <span aria-hidden="true" style="font-family:'Material Symbols Rounded';font-size:32px;line-height:1;font-weight:normal;font-variation-settings:'FILL' 0,'wght' 400;overflow:hidden">contact_support</span>
             <span style="font-size:16px;line-height:22px;font-weight:700">자주 묻는 질문</span>
           </a>
         </nav>
       </div>
     </section>
+
+    <nav class="m-quick" aria-label="바로가기" style="grid-template-columns:repeat(3,minmax(0,1fr));background:#FFFFFF;border-bottom:1px solid #E3E7ED">
+      <a href="my-learning.dc.html#classroom" style="min-height:104px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:#2A2A2A;text-decoration:none">
+        <span aria-hidden="true" style="width:48px;height:48px;border-radius:14px;background:#EAF0FF;color:#1C59FE;display:flex;align-items:center;justify-content:center;font-family:'Material Symbols Rounded';font-size:28px;line-height:1;font-weight:normal;font-variation-settings:'FILL' 1,'wght' 500;overflow:hidden">school</span>
+        <span style="font-size:14px;line-height:20px;font-weight:600">나의 강의실</span>
+      </a>
+      <a href="my-learning.dc.html#cert" style="min-height:104px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:#2A2A2A;text-decoration:none;border-left:1px solid #EEF0F3">
+        <span aria-hidden="true" style="width:48px;height:48px;border-radius:14px;background:#EAF0FF;color:#1C59FE;display:flex;align-items:center;justify-content:center;font-family:'Material Symbols Rounded';font-size:28px;line-height:1;font-weight:normal;font-variation-settings:'FILL' 1,'wght' 500;overflow:hidden">workspace_premium</span>
+        <span style="font-size:14px;line-height:20px;font-weight:600">수료증 발급</span>
+      </a>
+      <a href="support-center.dc.html#faq" style="min-height:104px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:#2A2A2A;text-decoration:none;border-left:1px solid #EEF0F3">
+        <span aria-hidden="true" style="width:48px;height:48px;border-radius:14px;background:#EAF0FF;color:#1C59FE;display:flex;align-items:center;justify-content:center;font-family:'Material Symbols Rounded';font-size:28px;line-height:1;font-weight:normal;font-variation-settings:'FILL' 1,'wght' 500;overflow:hidden">contact_support</span>
+        <span style="font-size:14px;line-height:20px;font-weight:600">자주 묻는 질문</span>
+      </a>
+    </nav>
     </sc-if>
     <sc-if value="{{ heroA }}" hint-placeholder-val="{{ true }}">
-    <section data-screen-label="히어로" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(240px,312px);gap:24px;height:400px">
+    <section class="ha" data-screen-label="히어로" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(240px,312px);gap:24px;height:400px">
       <div style="position:relative;border-radius:12px;overflow:hidden;background:#0B1F5C">
         <img src="assets/hero/hero-01.jpg" alt="회로 아이콘이 떠 있는 화면을 가리키는 손" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:right center;opacity:{{ o0 }};transition:opacity .6s ease">
         <img src="assets/hero/hero-02.jpg" alt="반도체 회로와 빛의 점으로 그린 자동차" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:right center;opacity:{{ o1 }};transition:opacity .6s ease">
@@ -149,22 +210,22 @@ a:hover { color: #1438A6; }
   <section data-screen-label="추천 강의" style="display:flex;flex-direction:column;gap:16px">
     <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px">
       <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap">
-        <h2 style="margin:0;font-size:22px;line-height:32px;font-weight:700">추천 강의</h2>
-        <span style="font-size:15px;color:#666E7A">이번 달 새로 열린 과정이에요</span>
+        <h2 class="mp-h2" style="margin:0;font-size:22px;line-height:32px;font-weight:700">추천 강의</h2>
+        <span class="mp-sub" style="font-size:15px;color:#666E7A">이번 달 새로 열린 과정이에요</span>
       </div>
       <a href="courses.dc.html" style="display:flex;align-items:center;gap:2px;font-size:15px;font-weight:500;color:#4A5260;text-decoration:none" style-hover="color:#2A2A2A">전체 과정<x-import component-from-global-scope="Sangsang.Icon" name="chevron-right" size="{{ 16 }}" hint-size="16px,16px"></x-import></a>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(clamp((100% - 60px) / 4, (250px - (100% - 60px) / 4) * 9999, (100% - 20px) / 2),1fr));gap:20px">
-      <div style="display:flex;flex-direction:column;gap:8px;min-width:0">
+    <div class="mp-cards" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(clamp((100% - 60px) / 4, (250px - (100% - 60px) / 4) * 9999, (100% - 20px) / 2),1fr));gap:20px">
+      <div class="mp-card" style="display:flex;flex-direction:column;gap:8px;min-width:0">
         <x-import component-from-global-scope="Sangsang.CourseCard" href="course-detail.dc.html" type="elective" status="not-started" title="반도체 장비 유지보수 실무" period="2026.11.10 – 12.31" hours="6시간" thumbnail="https://images.unsplash.com/photo-1640955785023-1854685dae05?auto=format&amp;fit=crop&amp;w=840&amp;q=80" thumbnail-alt="핀셋으로 회로 기판에 칩을 올리는 손" hint-size="100%,400px"></x-import>
       </div>
-      <div style="display:flex;flex-direction:column;gap:8px;min-width:0">
+      <div class="mp-card" style="display:flex;flex-direction:column;gap:8px;min-width:0">
         <x-import component-from-global-scope="Sangsang.CourseCard" href="course-detail.dc.html" type="elective" status="not-started" title="데이터 기반 품질 분석" period="2026.11.15 – 12.31" hours="3시간" thumbnail="https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&amp;fit=crop&amp;w=840&amp;q=80" thumbnail-alt="화이트보드에 자료를 붙이는 손" hint-size="100%,400px"></x-import>
       </div>
-      <div style="display:flex;flex-direction:column;gap:8px;min-width:0">
+      <div class="mp-card" style="display:flex;flex-direction:column;gap:8px;min-width:0">
         <x-import component-from-global-scope="Sangsang.CourseCard" href="course-detail.dc.html" type="elective" status="not-started" title="신임 리더를 위한 피드백 대화법" period="2026.12.01 – 12.31" hours="2시간 30분" thumbnail="https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?auto=format&amp;fit=crop&amp;w=840&amp;q=80" thumbnail-alt="생각을 적어 붙인 메모지" hint-size="100%,400px"></x-import>
       </div>
-      <div style="display:flex;flex-direction:column;gap:8px;min-width:0">
+      <div class="mp-card" style="display:flex;flex-direction:column;gap:8px;min-width:0">
         <x-import component-from-global-scope="Sangsang.CourseCard" href="course-detail.dc.html" type="elective" status="not-started" title="ESG 경영과 탄소중립 기초" period="2026.11.20 – 12.31" hours="1시간 30분" thumbnail="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&amp;fit=crop&amp;w=840&amp;q=80" thumbnail-alt="노트에 필기하는 손" hint-size="100%,360px"></x-import>
       </div>
     </div>
@@ -175,8 +236,8 @@ a:hover { color: #1438A6; }
   <section data-screen-label="필수 교육" style="display:flex;flex-direction:column;gap:16px">
     <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px">
       <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap">
-        <h2 style="margin:0;font-size:22px;line-height:32px;font-weight:700">필수 교육</h2>
-        <span style="font-size:14px;color:#666E7A">올해 꼭 들어야 하는 교육 3개 중 1개를 듣고 있어요</span>
+        <h2 class="mp-h2" style="margin:0;font-size:22px;line-height:32px;font-weight:700">필수 교육</h2>
+        <span class="mp-sub" style="font-size:14px;color:#666E7A">올해 꼭 들어야 하는 교육 3개 중 1개를 듣고 있어요</span>
       </div>
       <a href="courses.dc.html" style="display:flex;align-items:center;gap:2px;font-size:15px;font-weight:500;color:#4A5260;text-decoration:none" style-hover="color:#2A2A2A">전체 과정<x-import component-from-global-scope="Sangsang.Icon" name="chevron-right" size="{{ 16 }}" hint-size="16px,16px"></x-import></a>
     </div>
@@ -188,20 +249,20 @@ a:hover { color: #1438A6; }
   </section>
   </sc-if>
 
-  <section data-screen-label="미코그룹 계열사" aria-labelledby="fam-title" style="width:100%;display:flex;flex-direction:column;align-items:center;gap:48px">
+  <section data-screen-label="미코그룹 계열사" aria-labelledby="fam-title" class="fam-sec" style="width:100%;display:flex;flex-direction:column;align-items:center;gap:48px">
   <div style="display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center">
-    <span style="font-size:17px;line-height:26px;font-weight:500;color:#4A5260">첨단 소재 부품 산업을 선도하는 미코그룹</span>
-    <h2 id="fam-title" style="margin:0;font-size:32px;line-height:44px;font-weight:700;color:#2A2A2A;text-wrap:balance">“도전과 혁신을 통해 글로벌 첨단 부품 시장을 선도합니다”</h2>
-    <p style="margin:0;font-size:17px;line-height:28px;color:#4A5260;text-wrap:pretty">인재를 소중히 여기는 기업 미코그룹, 실력있는 인재 양성을 통해 기업 가치를 높이고 지속적인 성장을 추구합니다.</p>
+    <span class="fam-eyebrow" style="font-size:17px;line-height:26px;font-weight:500;color:#4A5260">첨단 소재 부품 산업을 선도하는 미코그룹</span>
+    <h2 id="fam-title" class="fam-h2" style="margin:0;font-size:32px;line-height:44px;font-weight:700;color:#2A2A2A;text-wrap:balance">“도전과 혁신을 통해 글로벌 첨단 부품 시장을 선도합니다”</h2>
+    <p class="fam-p" style="margin:0;font-size:17px;line-height:28px;color:#4A5260;text-wrap:pretty">인재를 소중히 여기는 기업 미코그룹, 실력있는 인재 양성을 통해 기업 가치를 높이고 지속적인 성장을 추구합니다.</p>
   </div>
   <div style="width:100%;overflow:hidden;padding:16px 0 24px;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 8%,#000 92%,transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 8%,#000 92%,transparent 100%)">{{ famMarquee }}</div>
-</section><div style="display:grid;grid-template-columns:minmax(0,6fr) minmax(0,4fr);gap:24px;align-items:stretch">
+</section><div class="mp-2col" style="display:grid;grid-template-columns:minmax(0,6fr) minmax(0,4fr);gap:24px;align-items:stretch">
   <section data-screen-label="공지사항" style="display:flex;flex-direction:column;gap:16px;min-width:0">
       <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px">
-        <h2 style="margin:0;font-size:22px;line-height:32px;font-weight:700">공지사항</h2>
+        <h2 class="mp-h2" style="margin:0;font-size:22px;line-height:32px;font-weight:700">공지사항</h2>
         <a href="support-center.dc.html#notice" style="display:flex;align-items:center;gap:2px;font-size:15px;font-weight:500;color:#4A5260;text-decoration:none" style-hover="color:#2A2A2A">더보기<x-import component-from-global-scope="Sangsang.Icon" name="chevron-right" size="{{ 16 }}" hint-size="16px,16px"></x-import></a>
       </div>
-      <ul style="flex:1;list-style:none;margin:0;padding:4px 24px;display:flex;flex-direction:column;justify-content:center;background:#FFFFFF;border:1px solid #E3E7ED;border-radius:12px">
+      <ul class="mp-notice" style="flex:1;list-style:none;margin:0;padding:4px 24px;display:flex;flex-direction:column;justify-content:center;background:#FFFFFF;border:1px solid #E3E7ED;border-radius:12px">
         <li><a href="#" style="display:flex;align-items:center;gap:8px;padding:14px 0;color:#2A2A2A;text-decoration:none" style-hover="color:#1A47D1"><span style="display:inline-flex;align-items:center;height:20px;padding:0 6px;border-radius:4px;background:#E5EAF4;color:#002060;font-size:12px;font-weight:700;flex-shrink:0">중요</span><span style="flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:600">11월 시스템 점검 안내</span><span style="font-size:13px;color:#666E7A;flex-shrink:0">2026.11.03</span></a></li>
         <li><a href="#" style="display:flex;align-items:center;gap:8px;padding:14px 0;border-top:1px solid #E3E7ED;color:#2A2A2A;text-decoration:none" style-hover="color:#1A47D1"><span style="display:inline-flex;align-items:center;height:20px;padding:0 6px;border-radius:4px;background:#EAF0FF;color:#1A47D1;font-size:12px;font-weight:700;flex-shrink:0">NEW</span><span style="flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">2026 하반기 법정 의무교육 이수 안내</span><span style="font-size:13px;color:#666E7A;flex-shrink:0">2026.11.01</span></a></li>
         <li><a href="#" style="display:flex;align-items:center;gap:8px;padding:14px 0;border-top:1px solid #E3E7ED;color:#2A2A2A;text-decoration:none" style-hover="color:#1A47D1"><span style="flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">연수원 출석 체크인(QR · NFC) 이용 방법</span><span style="font-size:13px;color:#666E7A;flex-shrink:0">2026.10.27</span></a></li>
@@ -210,15 +271,15 @@ a:hover { color: #1438A6; }
       </ul>
     </section><section data-screen-label="연수원 안내" style="display:flex;flex-direction:column;gap:16px;min-width:0">
     <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px">
-      <h2 style="margin:0;font-size:22px;line-height:32px;font-weight:700">연수원 안내</h2>
+      <h2 class="mp-h2" style="margin:0;font-size:22px;line-height:32px;font-weight:700">연수원 안내</h2>
       
     </div>
-  <div aria-label="연수원 안내 배너" style="position:relative;flex:1;min-height:280px;border-radius:12px;overflow:hidden;background:#0B1F5C;display:flex;align-items:flex-end">
+  <div class="mp-banner" aria-label="연수원 안내 배너" style="position:relative;flex:1;min-height:280px;border-radius:12px;overflow:hidden;background:#0B1F5C;display:flex;align-items:flex-end">
     <img src="assets/hero/campus-main.jpg?v=2" alt="유리창이 둥근 붉은 벽돌 연수원 본관과 진입로" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
     <div aria-hidden="true" style="position:absolute;inset:0;background:linear-gradient(0deg, rgba(0,22,64,0.92) 0, rgba(0,22,64,0.6) 55%, rgba(0,22,64,0.15) 100%)"></div>
-    <div style="position:relative;width:100%;padding:28px 32px;display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px 24px">
+    <div class="mp-banner-body" style="position:relative;width:100%;padding:28px 32px;display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px 24px">
       <div style="display:flex;flex-direction:column;gap:6px;max-width:520px">
-        <h3 style="margin:0;font-size:24px;line-height:34px;font-weight:700;color:#FFFFFF">미코스쿨 연수원 이용 안내</h3>
+        <h3 class="mp-banner-title" style="margin:0;font-size:24px;line-height:34px;font-weight:700;color:#FFFFFF">미코스쿨 연수원 이용 안내</h3>
         <p style="margin:0;font-size:15px;line-height:24px;color:#DCE6FF;text-wrap:pretty">시설 · 이용 시간 · 오시는 길을 확인하세요.</p>
       </div>
       <a href="about.dc.html#guide" style="display:flex;text-decoration:none"><x-import component-from-global-scope="Sangsang.Button" variant="outline" iconRight="arrow-right" hint-size="104px,40px">바로가기</x-import></a>

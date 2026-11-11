@@ -15,10 +15,28 @@
 *, *::before, *::after { box-sizing: border-box; }
 a { color: #1A47D1; }
 a:hover { color: #1438A6; }
+/* 반응형: 1023px 이하 햄버거 메뉴, 767px 이하 56px 헤더 */
+:root { --gnb-h: 73px; }
+.gnb-burger { display: none !important; }
+html.gnb-menu-open { overflow: hidden; }
+html.gnb-menu-open .fam-fab-wrap { display: none !important; }
+@media (min-width: 1024px) { .gnb-drawer { display: none !important; } }
+@media (max-width: 1023px) {
+  .gnb-nav, .gnb-name, .gnb-div, .gnb-logout { display: none !important; }
+  .gnb-burger { display: flex !important; }
+  .gnb-bar { gap: 16px !important; }
+  .gnb-right { gap: 0 !important; }
+}
+@media (max-width: 767px) {
+  :root { --gnb-h: 57px; }
+  .gnb-bar { height: 56px !important; padding: 0 4px 0 16px !important; }
+  .gnb-logo-link { width: auto !important; }
+  .gnb-logo { height: 28px !important; }
+}
 </style>
 </helmet>
-<div aria-hidden="true" style="height:73px"></div>
-<header onMouseLeave="{{ closeMega }}" style="position:fixed;top:calc(var(--gnb-offset, 73px) - 73px);left:0;right:0;transition:top .25s ease;z-index:50;background:#FFFFFF;border-bottom:1px solid #E3E7ED;font-family:'Pretendard Variable',Pretendard,-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#2A2A2A">
+<div aria-hidden="true" style="height:var(--gnb-h, 73px)"></div>
+<header onMouseLeave="{{ closeMega }}" style="position:fixed;top:calc(var(--gnb-offset, 73px) - var(--gnb-h, 73px));left:0;right:0;transition:top .25s ease;z-index:50;background:#FFFFFF;border-bottom:1px solid #E3E7ED;font-family:'Pretendard Variable',Pretendard,-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#2A2A2A">
   <sc-if value="{{ megaOpen }}" hint-placeholder-val="{{ false }}">
     <div aria-hidden="true" style="position:absolute;left:0;right:0;top:72px;height:{{ megaH }};z-index:1;background:#FFFFFF;border-top:1px solid #E3E7ED;border-bottom:1px solid #E3E7ED;box-shadow:0 6px 16px rgba(16,24,40,0.10)">
       <div style="max-width:1348px;margin:0 auto;padding:28px 24px 0">
@@ -26,9 +44,9 @@ a:hover { color: #1438A6; }
       </div>
     </div>
   </sc-if>
-  <div style="position:relative;z-index:2;max-width:1348px;margin:0 auto;padding:0 24px;height:72px;display:flex;align-items:center;gap:32px">
-    <a href="main.dc.html" aria-label="미코스쿨 상상이상 메인" style="display:flex;align-items:center;width:160px;flex-shrink:0"><img src="assets/logo.png" alt="MiCo School 상상이상" style="height:40px;width:auto;display:block"></a>
-    <nav aria-label="주 메뉴" style="flex:1 1 760px;max-width:800px;min-width:0;display:grid;grid-template-columns:repeat(5,minmax(max-content,1fr));column-gap:8px;height:72px">
+  <div class="gnb-bar" style="position:relative;z-index:2;max-width:1348px;margin:0 auto;padding:0 24px;height:72px;display:flex;align-items:center;gap:32px">
+    <a href="main.dc.html" class="gnb-logo-link" aria-label="미코스쿨 상상이상 메인" style="display:flex;align-items:center;width:160px;flex-shrink:0"><img class="gnb-logo" src="assets/logo.png" alt="MiCo School 상상이상" style="height:40px;width:auto;display:block"></a>
+    <nav class="gnb-nav" aria-label="주 메뉴" style="flex:1 1 760px;max-width:800px;min-width:0;display:grid;grid-template-columns:repeat(5,minmax(max-content,1fr));column-gap:8px;height:72px">
       <sc-for list="{{ menus }}" as="m" hint-placeholder-count="4">
         <div onMouseEnter="{{ m.onEnter }}" style="position:relative;min-width:0">
           <sc-if value="{{ m.on }}" hint-placeholder-val="{{ false }}">
@@ -64,26 +82,69 @@ a:hover { color: #1438A6; }
         </div>
       </sc-for>
     </nav>
-    <div style="margin-left:auto;flex-shrink:0;display:flex;align-items:center;gap:12px">
+    <div class="gnb-right" style="margin-left:auto;flex-shrink:0;display:flex;align-items:center;gap:12px">
       <sc-if value="{{ loggedIn }}" hint-placeholder-val="{{ true }}">
         <div style="display:flex;align-items:center;gap:6px">
           <a href="my-learning.dc.html#notes" aria-label="쪽지함 (안 읽은 쪽지 있음)" title="쪽지함" style="position:relative;width:44px;height:44px;border-radius:9999px;display:flex;align-items:center;justify-content:center;color:#2A2A2A;text-decoration:none" style-hover="background:#F4F6F9;color:#1C59FE">
             <x-import component-from-global-scope="Sangsang.Icon" name="bell" size="{{ 24 }}" hint-size="24px,24px"></x-import>
             <span aria-hidden="true" style="position:absolute;top:10px;right:11px;width:8px;height:8px;border-radius:9999px;background:#E5484D;box-shadow:0 0 0 2px #FFFFFF"></span>
           </a>
-          <span style="display:flex;flex-direction:column;white-space:nowrap;padding:0 4px">
+          <span class="gnb-name" style="display:flex;flex-direction:column;white-space:nowrap;padding:0 4px">
             <span style="font-size:14px;line-height:20px;font-weight:600;color:#2A2A2A">{{ userName }} 님</span>
             <span style="font-size:12px;line-height:18px;color:#666E7A">{{ userOrg }}</span>
           </span>
         </div>
-        <span aria-hidden="true" style="width:1px;height:16px;background:#E3E7ED"></span>
-        <x-import component-from-global-scope="Sangsang.Button" variant="ghost" size="sm" onClick="{{ askLogout }}" hint-size="72px,32px">로그아웃</x-import>
+        <span class="gnb-div" aria-hidden="true" style="width:1px;height:16px;background:#E3E7ED"></span>
+        <span class="gnb-logout" style="display:flex"><x-import component-from-global-scope="Sangsang.Button" variant="ghost" size="sm" onClick="{{ askLogout }}" hint-size="72px,32px">로그아웃</x-import></span>
       </sc-if>
       <sc-if value="{{ loggedOut }}" hint-placeholder-val="{{ false }}">
         <x-import component-from-global-scope="Sangsang.Button" variant="primary" size="sm" onClick="{{ login }}" hint-size="72px,32px">로그인</x-import>
       </sc-if>
+      <button type="button" class="gnb-burger" onClick="{{ openMenu }}" aria-label="전체 메뉴 열기" aria-expanded="{{ menuOpen }}" style="width:44px;height:44px;padding:0;border:0;border-radius:9999px;background:transparent;color:#2A2A2A;align-items:center;justify-content:center;cursor:pointer" style-hover="background:#F4F6F9"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"></path></svg></button>
     </div>
   </div>
+
+  <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+    <div class="gnb-drawer" onClick="{{ closeMenu }}" style="position:fixed;inset:0;z-index:190;background:rgba(13,20,33,0.48);display:flex;justify-content:flex-end">
+      <nav aria-label="전체 메뉴" onClick="{{ stop }}" style="width:min(320px, 86vw);height:100%;background:#FFFFFF;display:flex;flex-direction:column;box-shadow:-8px 0 24px rgba(16,24,40,0.16)">
+        <div style="height:56px;flex-shrink:0;padding:0 4px 0 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #E3E7ED">
+          <span style="font-size:16px;font-weight:700">전체 메뉴</span>
+          <button type="button" onClick="{{ closeMenu }}" aria-label="메뉴 닫기" style="width:44px;height:44px;padding:0;border:0;background:transparent;color:#2A2A2A;display:flex;align-items:center;justify-content:center;cursor:pointer"><x-import component-from-global-scope="Sangsang.Icon" name="x" size="{{ 22 }}" hint-size="22px,22px"></x-import></button>
+        </div>
+        <sc-if value="{{ loggedIn }}" hint-placeholder-val="{{ true }}">
+          <div style="flex-shrink:0;padding:20px;display:flex;align-items:center;gap:12px;background:#F8F9FA;border-bottom:1px solid #E3E7ED">
+            <x-import component-from-global-scope="Sangsang.Avatar" name="{{ userName }}" size="{{ 44 }}" hint-size="44px,44px"></x-import>
+            <div style="display:flex;flex-direction:column;min-width:0">
+              <span style="font-size:16px;line-height:24px;font-weight:700">{{ userName }} 님</span>
+              <span style="font-size:13px;line-height:20px;color:#666E7A">{{ userOrg }}</span>
+            </div>
+          </div>
+        </sc-if>
+        <ul style="flex:1;overflow-y:auto;list-style:none;margin:0;padding:0">
+          <sc-for list="{{ drawerMenus }}" as="m" hint-placeholder-count="5">
+            <li style="border-bottom:1px solid #EEF0F3">
+              <button type="button" onClick="{{ m.toggle }}" aria-expanded="{{ m.open }}" style="width:100%;height:56px;padding:0 20px;border:0;background:transparent;font:inherit;font-size:16px;font-weight:{{ m.weight }};color:{{ m.color }};display:flex;align-items:center;justify-content:space-between;cursor:pointer;text-align:left">{{ m.label }}<span style="display:flex;color:#666E7A;transform:rotate({{ m.rot }});transition:transform .2s"><x-import component-from-global-scope="Sangsang.Icon" name="chevron-down" size="{{ 18 }}" hint-size="18px,18px"></x-import></span></button>
+              <sc-if value="{{ m.open }}" hint-placeholder-val="{{ false }}">
+                <ul style="list-style:none;margin:0;padding:0 0 10px">
+                  <sc-for list="{{ m.subs }}" as="s" hint-placeholder-count="3">
+                    <li><a href="{{ s.href }}" onClick="{{ s.onClick }}" style="height:44px;padding:0 20px 0 32px;display:flex;align-items:center;font-size:15px;color:{{ s.color }};text-decoration:none">{{ s.label }}</a></li>
+                  </sc-for>
+                </ul>
+              </sc-if>
+            </li>
+          </sc-for>
+        </ul>
+        <div style="flex-shrink:0;padding:16px 20px 24px;border-top:1px solid #E3E7ED">
+          <sc-if value="{{ loggedIn }}" hint-placeholder-val="{{ true }}">
+            <x-import component-from-global-scope="Sangsang.Button" variant="outline" block="{{ true }}" onClick="{{ drawerLogout }}" hint-size="100%,44px">로그아웃</x-import>
+          </sc-if>
+          <sc-if value="{{ loggedOut }}" hint-placeholder-val="{{ false }}">
+            <x-import component-from-global-scope="Sangsang.Button" variant="primary" block="{{ true }}" onClick="{{ login }}" hint-size="100%,44px">로그인</x-import>
+          </sc-if>
+        </div>
+      </nav>
+    </div>
+  </sc-if>
 
   <sc-if value="{{ confirmOpen }}" hint-placeholder-val="{{ false }}">
     <div onClick="{{ cancelLogout }}" style="position:fixed;inset:0;background:rgba(13,20,33,0.48);display:flex;align-items:center;justify-content:center;padding:16px;z-index:200">
@@ -121,17 +182,23 @@ class Component extends DCLogic {
   ]; }
   componentDidMount() {
     this.lastY = window.scrollY;
-    document.documentElement.style.setProperty('--gnb-offset', '73px');
+    document.documentElement.style.setProperty('--gnb-offset', 'var(--gnb-h, 73px)');
     this.onScroll = () => {
       const y = window.scrollY, d = y - this.lastY;
       if (Math.abs(d) < 6) return;
-      const hide = y > 80 && d > 0 && !this.state.mega;
-      if (hide !== !!this.state.gnbHidden) { document.documentElement.style.setProperty('--gnb-offset', hide ? '0px' : '73px'); this.setState({ gnbHidden: hide }); }
+      const hide = y > 80 && d > 0 && !this.state.mega && !this.state.menuOpen;
+      if (hide !== !!this.state.gnbHidden) { document.documentElement.style.setProperty('--gnb-offset', hide ? '0px' : 'var(--gnb-h, 73px)'); this.setState({ gnbHidden: hide }); }
       this.lastY = y;
     };
     window.addEventListener('scroll', this.onScroll, { passive: true });
+    this.onKey = e => { if (e.key === 'Escape' && this.state.menuOpen) this.setMenu(false); };
+    window.addEventListener('keydown', this.onKey);
   }
-  componentWillUnmount() { clearTimeout(this.t); window.removeEventListener('scroll', this.onScroll); }
+  componentWillUnmount() { clearTimeout(this.t); window.removeEventListener('scroll', this.onScroll); window.removeEventListener('keydown', this.onKey); document.documentElement.classList.remove('gnb-menu-open'); }
+  setMenu(open) {
+    document.documentElement.classList.toggle('gnb-menu-open', open);
+    this.setState({ menuOpen: open, mega: false, hover: null });
+  }
   showToast(msg, tone) {
     this.setState({ toast: msg, toastTone: tone || 'success' });
     clearTimeout(this.t);
@@ -153,6 +220,27 @@ class Component extends DCLogic {
           onClick: e => { if (m.soon) { e.preventDefault(); this.showToast('아직 준비중입니다.', 'info'); } },
           subs: m.subs.map((s, j) => { const soon = !!(m.soonSubs && m.soonSubs.includes(j)); return { label: s, href: m.hrefs ? m.hrefs[j] : m.href, soon, live: !soon,
             onClick: e => { if (soon) { e.preventDefault(); this.setState({ mega: false, hover: null }); this.showToast('아직 준비중입니다.', 'info'); } } }; })
+        };
+      }),
+      menuOpen: !!this.state.menuOpen,
+      openMenu: () => this.setMenu(true),
+      closeMenu: () => this.setMenu(false),
+      drawerLogout: () => { this.setMenu(false); this.setState({ confirm: true }); },
+      drawerMenus: this.menus.map((m, i) => {
+        const isActive = m.label === active || (i === 0 && (active === '연수원 소개' || active === '연수원 안내'));
+        const expanded = this.state.drawerOpen === undefined ? isActive : this.state.drawerOpen === i;
+        return {
+          label: m.label, open: expanded,
+          weight: expanded || isActive ? 700 : 600, color: expanded || isActive ? '#1C59FE' : '#2A2A2A', rot: expanded ? '180deg' : '0deg',
+          toggle: () => {
+            if (m.soon) { this.showToast('아직 준비중입니다.', 'info'); return; }
+            this.setState({ drawerOpen: expanded ? null : i });
+          },
+          subs: m.subs.map((s, j) => {
+            const soon = !!(m.soonSubs && m.soonSubs.includes(j));
+            return { label: s, href: soon ? '#' : (m.hrefs ? m.hrefs[j] : m.href), color: soon ? '#8A919C' : '#4A5260',
+              onClick: e => { if (soon) { e.preventDefault(); this.showToast('아직 준비중입니다.', 'info'); } else this.setMenu(false); } };
+          })
         };
       }),
       megaOpen: mega,
